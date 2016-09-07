@@ -1,5 +1,5 @@
 # cplint-installer
-A bash script that is able to build install cplint on swish
+A bash script that is able to build and install cplint on swish
 specifically for Arch GNU/Linux distributions.
 
 ## Status
