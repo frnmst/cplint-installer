@@ -3,8 +3,12 @@ A bash script that is able to build and install cplint on swish
 specifically for Arch GNU/Linux distributions.
 
 ## Status
-This script should hopefully be a prelude to decent PKGUILD files. It has not
-been thoroughly tested and it brand-new, so beware.
+This script should hopefully be a prelude to decent PKGUILD files. The idea is 
+to put Swish in `/opt`, to create a script that runs `swipl run.pl` and to 
+symlink it in `/usr/bin`. Finally it would be useful to write a systemd unit 
+file, so Cplint on Swish could run as daemon.
+
+It has not been thoroughly tested and it brand-new, so beware.
 
 ## Dependencies (install before running the script)
 ```
@@ -47,7 +51,9 @@ As easy as:
 ```
 $ ./install_cplint.sh
 ```
-A directory named `build` will contain the Swish installation.
+The directory `./src/build` will contain the Swish installation. You can change 
+this directory by editing the `build_dir` variable near the top of 
+`install_cplint.sh`.
 
 ## Warning
 I'm not 100% sure that all the software used in
