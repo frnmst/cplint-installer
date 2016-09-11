@@ -28,6 +28,7 @@
 # NOTE: Not all dependencies might be free (libre) software. I hope this will
 # be fixed as time goes by.
 
+root_dir="$(pwd)"
 build_dir="./build"
 swi_prolog_url="https://aur.archlinux.org/cgit/aur.git/snapshot/swi-prolog-devel.tar.gz"
 swish_url="https://github.com/friguzzi/swish"
@@ -52,7 +53,7 @@ prepare()
 check_dependencies()
 {
     pacman -Q $PACKAGE_DEPS $MAKE_DEPS 1>&- 2>&- \
-|| { printf "Error: check_dependencies: install: $PACKAGE_DEPS $MAKE_DEPS packages\n"; return 1; }
+|| { printf "Error: check_dependencies: install: $PACKAGE_DEPS $MAKE_DEPS\n"; return 1; }
 }
 
 # There's also a swi-prolog package in the community repo. Maybe it is better
@@ -62,7 +63,7 @@ install_swi_prolog()
     { wget "$swi_prolog_url" \
 && tar -zxvf swi-prolog-devel.tar.gz \
 && pushd swi-prolog-devel \
-&& makepkg -sri; } \
+&& makepkg --noconfirm -sri; } \
 || { printf "Error: install_swi_prolog\n"; return 1; }
 
     empty_directory_stack
@@ -81,10 +82,11 @@ install_swish()
     empty_directory_stack
 }
 
-# Cplint + other stuff.
+# install cplint and other swi modules.
 install_web_iface_dependencies()
 {
-     ./install_web_iface_deps.pl \
+    { cd "$root_dir" \
+&& ./install_web_iface_deps.pl; } \
 || { printf "Error: install_web_iface_deps\n"; return 1; }
 }
 
@@ -107,6 +109,11 @@ test()
     empty_directory_stack
 }
 
+print_howto()
+{
+    printf "Test: $ cd build/swish && swipl run.pl\n";
+}
+
 main()
 {
     local retval=""
@@ -116,12 +123,13 @@ main()
 && install_swi_prolog \
 && install_swish \
 && install_web_iface_dependencies \
-&& remove_sandbox_limitation; }
-&& test; }
+&& remove_sandbox_limitation \
+&& print_howto; }
+# && test; }
     retval=$?
 
     empty_directory_stack
-    cd "$OLDPWD"
+    cd "$root_dir"
 
     return $retval
 }

@@ -46,6 +46,9 @@ pack_install(package-name-0).
 pack_install(package-name-n).
 ```
 
+Currently I am testing with Antergos (sic) on qemu-system-x86_64
+to avoid dirtying the system.
+
 ## Usage
 As easy as:
 ```
