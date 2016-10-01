@@ -2,7 +2,7 @@
 
 /*
  *
- * install_web_iface_deps.pl
+ * remove_web_iface_deps.pl
  *
  * Copyright (C) 2016 frnmst (Franco Masotti) <franco.masotti@student.unife.it>
  *
@@ -25,15 +25,15 @@
 
 :- initialization main.
 
-install:-
-        pack_install(aleph, [interactive(false)]),
-        pack_install(auc, [interactive(false)]),
-        pack_install(real, [interactive(false)]),
-        pack_install(matrix, [interactive(false)]),
-        pack_install(cplint, [interactive(false)]).
+remove:-
+        pack_remove(aleph),
+        pack_remove(auc),
+        pack_remove(real),
+        pack_remove(matrix),
+        pack_remove(cplint).
 
 main:-
-        catch(install, E, (print_message(error, E), fail)),
+        catch(remove, E, (print_message(error, E), fail)),
         halt.
 main:-
         halt(1).

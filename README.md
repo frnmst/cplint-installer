@@ -60,7 +60,7 @@ this directory by editing the `build_dir` variable near the top of
 
 ## Warning
 I'm not 100% sure that all the software used in
-all components is free software. So, beware again :)
+every component is free software. So, beware again :)
 
 ## License
 ![https://www.gnu.org/graphics/gplv3-127x51.png](https://www.gnu.org/graphics/gplv3-127x51.png)
