@@ -25,6 +25,7 @@
 
 :- initialization main.
 
+/* Change pkg dest directory. */
 install:-
         pack_install(aleph, [interactive(false)]),
         pack_install(auc, [interactive(false)]),
