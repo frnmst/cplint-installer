@@ -27,8 +27,17 @@
 
 if [ "$UID" -eq 0 ]; then
     {
-        (exec swipl --quiet -f run.pl) &
+        (exec swipl --quiet -f /usr/share/swish-cplint/run.pl) &
+        pid="$!"
     } 1>/dev/null 2>/dev/null
+
+    if [ -n "$pid" ]; then
+        printf "Server running with pid $pid\n"
+    else
+        printf "Server error\n"
+        exit 1
+    fi
+
 else
     printf "User must be root\n"
     exit 1

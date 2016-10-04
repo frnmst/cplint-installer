@@ -3,64 +3,44 @@ A bash script that is able to build and install cplint on swish
 specifically for Arch GNU/Linux distributions.
 
 ## TODO
-- Test and correct the PKGBUILD.
+- Test and correct the PKGBUILD. (Mostly DONE).
 - Write systemd unit file (so it could run as daemon).
 - Transform script so that it's generic to any GNU/Linux distro.
 
-## Status
-The script has not been thoroughly tested and it brand-new, so beware.
-
-## Dependencies (install before running the script)
+## Instructions
+- Install `swi-prolog-devel` from the AUR.
+- Use the PKGBUILD:
 ```
-base-devel
-wget
-bower
-r
+$ cd aur
+$ makepkg -sri
+```
+The package `swish-cplint` will be installed.
+
+- Install `matrix` SWI prolog package separately and answer `Y` to all 
+questions.
+```
+# swipl
+?- pack_install(matrix).
+```
+
+We can finally run the server:
+```
+# swish-cplint
 ```
 
 ## Tests
-I have tested a manual installation on Parabola GNU/Linux-libre x86-64
-that was helpful to write the script.
-
-I then run the script on an i386 box, again with Parabola but with
-hardly anything installed (no X server, etc...). For some reason
-some dependencies have been removed during the installation (I guess because
-they are optdeps or something).
-Anyway, these are:
-```
-libxpm
-libxinerama
-unixobdc
-xineramaproto
-```
-Swish cannot run without these, so make sure to install them.
-
-I also noticed that the `real` library does not work for i386 platforms.
-
-Finally I had some compiling problems with other libraries. These are
-automatically installed while the script is running 
-(see `install_web_iface_deps.pl`). If you have problems with these run:
-```
-$ swipl
-pack_install(package-name-0).
-pack_install(package-name-n).
-```
-
 Currently I am testing with Antergos (sic) on qemu-system-x86_64
-to avoid dirtying the system.
+to avoid dirtying the system. I was able to manually install all the stuff on 
+Parabola GNU/Linux-libre, with and without the script. I guess the PKGBUILD 
+works just fine anyway.
 
-## Usage
-As easy as:
-```
-$ ./install_cplint.sh
-```
-The directory `./src/build` will contain the Swish installation. You can change 
-this directory by editing the `build_dir` variable near the top of 
-`install_cplint.sh`.
+## Other
+The script was helpful to write the PKGBUILD file but I don't recommend using 
+it.
 
 ## Warning
-I'm not 100% sure that all the software used in
-every component is free software. So, beware again :)
+I'm not 100% sure that all the software present in
+every component is free (libre) software.
 
 ## License
 ![https://www.gnu.org/graphics/gplv3-127x51.png](https://www.gnu.org/graphics/gplv3-127x51.png)

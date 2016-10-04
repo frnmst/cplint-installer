@@ -3,7 +3,7 @@ startdir=
 post_install() {
     ${startdir}/install_web_iface_deps.pl
     echo "Please install the matrix package \
-separately within swipl (run as root): pack_install(matrix).
+separately within swipl (run as root): pack_install(matrix)."
 }
 
 pre_remove() {
