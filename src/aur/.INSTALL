@@ -1,5 +1,6 @@
+startdir=
+
 post_install() {
+    ${startdir}/install_web_iface_deps.pl
 }
 
-post_upgrade() {
-}

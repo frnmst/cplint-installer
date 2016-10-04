@@ -25,6 +25,11 @@
 
 # This is the file called from the /usr/bin/swish-cplint symlink
 
-{
-    (exec swipl --quiet -f run.pl) &
-} 1>/dev/null 2>/dev/null
+if [ "$UID" -eq 0 ]; then
+    {
+        (exec swipl --quiet -f run.pl) &
+    } 1>/dev/null 2>/dev/null
+else
+    printf "User must be root\n"
+    exit 1
+fi
