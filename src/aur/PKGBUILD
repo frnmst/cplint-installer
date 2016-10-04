@@ -6,7 +6,7 @@ pkgdesc="SWI-Prolog for SHaring: a SWI-Prolog web IDE integrated with the cplint
 arch=('x86_64')
 url="git://github.com/friguzzi/swish"
 license=('BSD')
-depends=('swi-prolog-devel: from the AUR'
+depends=('swi-prolog-devel'
          'r')
 makedepends=('git'
              'bower'
