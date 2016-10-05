@@ -1,32 +1,17 @@
 # cplint-installer
-A bash script that is able to build and install cplint on swish
-specifically for Arch GNU/Linux distributions.
+A bash script and packages that are able to build and install
+Cplint on SWISH.
 
 ## TODO
 - Test and correct the PKGBUILD. (Mostly DONE).
-- Write systemd unit file (so it could run as daemon).
 - Transform script so that it's generic to any GNU/Linux distro.
 
 ## Instructions
-- Install `swi-prolog-devel` from the AUR.
-- Use the PKGBUILD:
 ```
-$ cd aur
-$ makepkg -sri
+$ cd src/<your distro>-based
+$ less README.md
 ```
-The package `swish-cplint` will be installed.
-
-- Install `matrix` SWI prolog package separately and answer `Y` to all 
-questions.
-```
-# swipl
-?- pack_install(matrix).
-```
-
-We can finally run the server:
-```
-# swish-cplint
-```
+Follow the distribution specific instructions in the readme.
 
 ## Tests
 Currently I am testing with Antergos (sic) on qemu-system-x86_64
@@ -34,9 +19,7 @@ to avoid dirtying the system. I was able to manually install all the stuff on
 Parabola GNU/Linux-libre, with and without the script. I guess the PKGBUILD 
 works just fine anyway.
 
-## Other
-The script was helpful to write the PKGBUILD file but I don't recommend using 
-it.
+This means that only Arch Linux based distros are supported.
 
 ## Warning
 I'm not 100% sure that all the software present in

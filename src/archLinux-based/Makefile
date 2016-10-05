@@ -1,8 +1,7 @@
-#!/usr/bin/env sh
+#!/usr/bin/make -f
 
 #
-#
-# run.sh
+# Makefile
 #
 # Copyright (C) 2016 frnmst (Franco Masotti) <franco.masotti@student.unife.it>
 #
@@ -23,22 +22,25 @@
 #
 #
 
-# This is the file called from the /usr/bin/swish-cplint symlink
+DESTDIR=aur
+DATADIR=data
+COMMONDIR=../common
 
-if [ "$UID" -eq 0 ]; then
-    {
-        (exec swipl --quiet -f /usr/share/swish-cplint/run.pl) &
-        pid="$!"
-    } 1>/dev/null 2>/dev/null
+default: aur
 
-    if [ -n "$pid" ]; then
-        printf "Server running with pid $pid\n"
-    else
-        printf "Server error\n"
-        exit 1
-    fi
+clean:
+	@echo "Removing $(DESTDIR)..."
+	@rm -rf $(DESTDIR)
+	@echo "Object files removed."
 
-else
-    printf "User must be root\n"
-    exit 1
-fi
+# Make the AUR package.
+aur:
+	@echo "Creating package..."
+	@mkdir -p $(DESTDIR)
+	@cp -r $(DATADIR)/* $(DESTDIR)
+	@cp -r $(DATADIR)/.INSTALL $(DESTDIR)
+	@cp -r $(COMMONDIR)/* $(DESTDIR)
+	@echo "Package created."
+
+
+.PHONY: default all clean aur

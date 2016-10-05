@@ -33,7 +33,7 @@ build() {
 }
 
 pkgver () {
-    cd ${srcdir}
+    cd ${srcdir}/swish
     ( set -o pipefail
       git describe --long 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
       printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
@@ -46,5 +46,6 @@ package() {
     install -d ${pkgdir}/usr/bin
     cp -r swish/* ${pkgdir}/usr/share/${pkgname}
     install -D -m644 swish/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    install -D -m644 ${startdir}/${pkgname}.service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
     ln -s /usr/share/${pkgname}/run.sh ${pkgdir}/usr/bin/${pkgname}
 }

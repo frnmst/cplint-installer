@@ -21,9 +21,6 @@
 # along with cplint-installer.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# A PKGBUILD that installs in /opt would be better than this. Currently this is
-# the build system.
-
 # Tested on Parabola GNU/Linux-libre.
 # NOTE: Not all dependencies might be free (libre) software. I hope this will
 # be fixed as time goes by.
@@ -86,7 +83,7 @@ install_swish()
 install_web_iface_dependencies()
 {
     { cd "$root_dir" \
-&& ./install_web_iface_deps.pl; } \
+&& ./common/install_web_iface_deps.pl; } \
 || { printf "Error: install_web_iface_deps\n"; return 1; }
 }
 
