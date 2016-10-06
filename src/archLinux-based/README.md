@@ -9,7 +9,7 @@ the package `swish-cplint`.
 
 It is as simple as:
 ```
-$ yaourt -Sa swish-cplint
+$ yaourt -Sa swish-cplint --noconfirm
 ```
 
 ### Without using an AUR helper
