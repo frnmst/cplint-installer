@@ -5,24 +5,34 @@
 You have at least three possibilities to install
 the package `swish-cplint`.
 
-#### Using an AUR helper (like yaourt)
+### Using an AUR helper (for example `yaourt`)
 
+It is as simple as:
 ```
-yaourt -Sa swish-cplint
+$ yaourt -Sa swish-cplint
 ```
 
-#### Without using an AUR helper
+### Without using an AUR helper
 
+- Install `swi-prolog-devel`:
+```
+$ wget "https://aur.archlinux.org/cgit/aur.git/snapshot/swi-prolog-devel.tar.gz"
+$ tar -zxvf swi-prolog-devel.tar.gz
+$ cd swi-prolog-devel
+$ makepkg -sri --noconfirm
+```
+
+- Install the package:
 ```
 $ wget "https://aur.archlinux.org/cgit/aur.git/snapshot/swish-cplint.tar.gz"
 $ tar -zxvf swish-cplint.tar.gz
 $ cd swish-cplint
-$ makepkg -sri
+$ makepkg -sri --noconfirm
 ```
 
-#### Without using the AUR (locally)
+### Without using the AUR (locally)
 
-- Install `swi-prolog-devel` from the AUR.
+- Install `swi-prolog-devel` (same as the previous method).
 
 - Clone this repository and move to this directory.
 
@@ -37,17 +47,9 @@ $ cd aur
 $ makepkg -sri
 ```
 
-### Finalization (must be done in any case)
-
-- Install `matrix` SWI prolog package separately and answer `Y` to all 
-questions.
-```
-# swipl
-?- pack_install(matrix).
-```
-
 ## Running the server
 
+Run directly:
 ```
 # swish-cplint
 ```
