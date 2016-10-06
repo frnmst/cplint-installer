@@ -40,6 +40,7 @@ aur:
 	@cp -r $(DATADIR)/* $(DESTDIR)
 	@cp -r $(DATADIR)/.INSTALL $(DESTDIR)
 	@cp -r $(COMMONDIR)/* $(DESTDIR)
+	@cd $(DESTDIR); makepkg --printsrcinfo > .SCRINFO
 	@echo "Package created."
 
 
