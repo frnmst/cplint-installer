@@ -1,12 +1,13 @@
 startdir=
 
 post_install() {
-    echo ""
-    echo ""
+    getent group swish &>/dev/null || groupadd -r swish >/dev/null
+    getent passwd swish &>/dev/null || useradd -r -g swish -s \
+/bin/false swish >/dev/null
     ${startdir}/install_web_iface_deps.pl
     echo ""
     echo ""
-    echo "You can now start and enable \
+    echo "You can start and enable \
 swish-cplint.service to run the server."
 }
 

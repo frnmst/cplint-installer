@@ -6,8 +6,8 @@ Documentation=http://github.com/friguzzi/cplint https://github.com/friguzzi/swis
 ExecStart=/usr/bin/swish-cplint
 Type=forking
 PIDFile=/run/swish-cplint.pid
-User=root
-Group=root
+User=swish
+Group=swish
 
 [Install]
 WantedBy=default.target
