@@ -49,12 +49,7 @@ $ makepkg -sri
 
 ## Running the server
 
-Run directly:
-```
-# swish-cplint
-```
-
-You can also run and enable the daemon with systemd:
+Run and enable the daemon with systemd:
 ```
 # systemctl start swish-cplint
 # systemctl enable swish-cplint
