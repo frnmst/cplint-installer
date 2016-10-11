@@ -1,10 +1,12 @@
 startdir=
 
 post_install() {
-    getent group swish &>/dev/null || groupadd -r swish >/dev/null
-    getent passwd swish &>/dev/null || useradd -r -g swish -s \
-/bin/false swish >/dev/null
+    # Post installation script fro preparation.
+    ${startdir}/post_installation.sh
+
+    # Post installation script to install web dependencies.
     ${startdir}/install_web_iface_deps.pl
+
     echo ""
     echo ""
     echo "You can start and enable \

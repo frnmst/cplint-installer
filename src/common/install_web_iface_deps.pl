@@ -26,12 +26,12 @@
 :- initialization main.
 
 install:-
-        pack_install(aleph, [interactive(false)]),
-        pack_install(auc, [interactive(false)]),
-        pack_install(real, [interactive(false)]),
-        pack_install(matrix, [interactive(false)]),
-        pack_install(cplint, [interactive(false)]),
-        pack_install('rserve_client', [interactive(false)]).
+        pack_install(aleph, [interactive(false),package_directory('/usr/share/swish-cplint/pack')]),
+        pack_install(auc, [interactive(false),package_directory('/usr/share/swish-cplint/pack')]),
+        pack_install(real, [interactive(false),package_directory('/usr/share/swish-cplint/pack')]),
+        pack_install(matrix, [interactive(false),package_directory('/usr/share/swish-cplint/pack')]),
+        pack_install(cplint, [interactive(false),package_directory('/usr/share/swish-cplint/pack')]),
+        pack_install('rserve_client', [interactive(false),package_directory('/usr/share/swish-cplint/pack')]).
 
 main:-
         catch(install, E, (print_message(error, E), fail)),

@@ -30,8 +30,11 @@
 #   (restart)
 
 pid_file="/run/swish-cplint.pid"
+user="swish"
+group="swish"
 
-if [ "$UID" -eq 0 ]; then
+if [ "$(id -un)" != "$user" ] || [ "$(id -gn)" != "$group" ]
+then
     {
         (exec swipl --quiet -f /usr/share/swish-cplint/run.pl) &
         pid="$!"
