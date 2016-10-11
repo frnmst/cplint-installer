@@ -1,4 +1,5 @@
 # Maintainer: Franco Masotti <franco dot masotti at student dot unife dot it>
+# Contributor: Franco Masotti <franco dot masotti at student dot unife dot it>
 pkgname=swish-cplint
 pkgver=r8.13b29c6
 pkgrel=4
