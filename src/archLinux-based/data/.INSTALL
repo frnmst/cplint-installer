@@ -4,11 +4,8 @@ post_install() {
     # Post installation script for preparation.
     ${startdir}/post_installation.sh
 
-    # Post installation script to install web dependencies.
-    su swish -l -c "${startdir}/install_web_iface_deps.pl"
+    install -D -m644 "${startdir}/install_web_iface_deps.pl" /home/swish/install_web_iface_deps.pl"
 
-    echo ""
-    echo ""
     echo "You can start and enable \
 swish-cplint.service to run the server."
 }

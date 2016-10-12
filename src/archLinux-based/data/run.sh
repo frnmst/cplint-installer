@@ -30,11 +30,20 @@
 #   (restart)
 
 pid_file="/run/swish-cplint.pid"
+installed_file="/home/swish/installed"
+deps_installer="/home/swish/install_web_iface_deps.pl"
 user="swish"
 group="swish"
 
 if [ "$(id -un)" == "$user" ] && [ "$(id -gn)" == "$group" ]
 then
+
+    if [ -f "$installed_file" ]; then
+        :
+    else
+        $deps_installer && echo "true" > "$installed_file"
+    fi
+
     {
         (exec swipl --quiet -f /usr/share/swish-cplint/run.pl) &
         pid="$!"
