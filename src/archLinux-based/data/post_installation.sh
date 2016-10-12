@@ -24,8 +24,9 @@
 
 # Create user and group.
 getent group swish &>/dev/null || groupadd -r swish >/dev/null
-getent passwd swish &>/dev/null || useradd -r -g swish -s \
-/bin/false swish >/dev/null
+getent passwd swish &>/dev/null || useradd -m -d /home/swish \
+-r -g swish swish >/dev/null
 
 # Create the dest pack directory.
-mkdir /usr/share/swish-cplint/pack
+mkdir /home/swish/pack
+chown -R swish:swish /home/swish/pack

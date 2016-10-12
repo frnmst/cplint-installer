@@ -1,11 +1,11 @@
 startdir=
 
 post_install() {
-    # Post installation script fro preparation.
+    # Post installation script for preparation.
     ${startdir}/post_installation.sh
 
     # Post installation script to install web dependencies.
-    ${startdir}/install_web_iface_deps.pl
+    su swish -l -c "${startdir}/install_web_iface_deps.pl"
 
     echo ""
     echo ""
@@ -13,10 +13,11 @@ post_install() {
 swish-cplint.service to run the server."
 }
 
+# Trivial remove.
 pre_remove() {
     echo ""
     echo ""
-    ${startdir}/remove_web_iface_deps.pl
+    rm -rf /usr/share/swish-cplint/pack
     echo ""
     echo ""
 }
