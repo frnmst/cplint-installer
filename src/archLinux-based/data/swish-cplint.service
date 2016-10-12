@@ -27,6 +27,9 @@ Description=Cplint on SWISH
 Documentation=http://github.com/friguzzi/cplint https://github.com/friguzzi/swish
 
 [Service]
+# Run ExecStartPre with root permissions.
+PermissionsStartOnly=true
+ExecStartPre=/usr/bin/systemd-tmpfiles --create swish-cplint.conf
 ExecStart=/usr/bin/swish-cplint
 Type=forking
 PIDFile=/run/swish-cplint.pid
