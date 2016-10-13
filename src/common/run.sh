@@ -83,9 +83,8 @@ initialize()
 
 start()
 {
-    ( initialize )
     {
-        (exec swipl --quiet -f /usr/share/swish-cplint/run.pl) &
+        ( initialize && exec swipl --quiet -f /usr/share/swish-cplint/run.pl ) &
         pid="$!"
     } 1>/dev/null 2>/dev/null
 
