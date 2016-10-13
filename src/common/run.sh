@@ -70,6 +70,7 @@ initialize()
     if [ -f "$installed_file" ]; then
         :
     else
+        printf "This may take a while.\n"
         $deps_installer
         if [ $? -eq 0 ]; then
             echo "true" > "$installed_file"
@@ -82,7 +83,7 @@ initialize()
 
 start()
 {
-    ( initialize ) &
+    ( initialize )
     {
         (exec swipl --quiet -f /usr/share/swish-cplint/run.pl) &
         pid="$!"

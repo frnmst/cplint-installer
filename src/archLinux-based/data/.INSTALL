@@ -1,21 +1,28 @@
 startdir=
 
 post_install() {
-    # Post installation script for preparation.
-    ${startdir}/post_installation.sh
+    # Add user and group.
+    getent group swish &>/dev/null || groupadd -r swish >/dev/null
+    getent passwd swish &>/dev/null || useradd -m -d /home/swish \
+-r -g swish swish >/dev/null
 
+    # Copy install script.
     install -D -m744 ${startdir}/install_web_iface_deps.pl /home/swish/install_web_iface_deps.pl
     chown swish:swish /home/swish/install_web_iface_deps.pl
 
+    echo ""
+    echo ""
     echo "You can start and enable \
 swish-cplint.service to run the server."
+    echo ""
+    echo ""
 }
 
 # Trivial remove.
 pre_remove() {
     echo ""
     echo ""
-    rm -rf /usr/share/swish-cplint/pack
+    rm -rf /home/swish/lib
     echo ""
     echo ""
 }
