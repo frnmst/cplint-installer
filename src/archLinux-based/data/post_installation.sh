@@ -28,5 +28,5 @@ getent passwd swish &>/dev/null || useradd -m -d /home/swish \
 -r -g swish swish >/dev/null
 
 # Create the dest pack directory.
-mkdir /home/swish/pack
+[ ! -d /home/swish/pack ] && mkdir /home/swish/pack
 chown -R swish:swish /home/swish/pack

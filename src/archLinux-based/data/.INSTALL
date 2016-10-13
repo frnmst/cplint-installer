@@ -4,7 +4,8 @@ post_install() {
     # Post installation script for preparation.
     ${startdir}/post_installation.sh
 
-    install -D -m644 "${startdir}/install_web_iface_deps.pl" /home/swish/install_web_iface_deps.pl"
+    install -D -m744 ${startdir}/install_web_iface_deps.pl /home/swish/install_web_iface_deps.pl
+    chown swish:swish /home/swish/install_web_iface_deps.pl
 
     echo "You can start and enable \
 swish-cplint.service to run the server."
