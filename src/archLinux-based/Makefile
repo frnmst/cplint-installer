@@ -22,26 +22,39 @@
 #
 #
 
-DESTDIR=aur
-DATADIR=data
-COMMONDIR=../common
+DESTDIR_SWISH=swish.aur
+DATADIR_SWISH=swish
+COMMONDIR_SWISH=../swish-common
 
-default: aur
+DESTDIR_RSERVE_SANDBOX=rserve-sandbox.aur
+DATADIR_RSERVE_SANDBOX=rserve-sandbox
+COMMONDIR_RSERVE_SANDBOX=../rserve-sandbox-common
+
+default: swish rserve_sandbox
 
 clean:
-	@echo "Removing $(DESTDIR)..."
-	@rm -rf $(DESTDIR)
+	@echo "Removing $(DESTDIR_SWISH) $(DESTDIR_RSERVE_SANDBOX)..."
+	@rm -rf $(DESTDIR_SWISH) $(DESTDIR_RSERVE_SANDBOX)
 	@echo "Object files removed."
 
-# Make the AUR package.
-aur:
+# Make the AUR packages.
+swish:
 	@echo "Creating package..."
-	@mkdir -p $(DESTDIR)
-	@cp -r $(DATADIR)/* $(DESTDIR)
-	@cp -r $(DATADIR)/.INSTALL $(DESTDIR)
-	@cp -r $(COMMONDIR)/* $(DESTDIR)
-	@cd $(DESTDIR); makepkg --printsrcinfo > .SRCINFO
+	@mkdir -p $(DESTDIR_SWISH)
+	@cp -r $(DATADIR_SWISH)/* $(DESTDIR_SWISH)
+	@cp -r $(DATADIR_SWISH)/.INSTALL $(DESTDIR_SWISH)
+	@cp -r $(COMMONDIR_SWISH)/* $(DESTDIR_SWISH)
+	@cd $(DESTDIR_SWISH); makepkg --printsrcinfo > .SRCINFO
+	@echo "Package created."
+
+rserve_sandbox:
+	@echo "Creating package..."
+	@mkdir -p $(DESTDIR_RSERVE_SANDBOX)
+	@cp -r $(DATADIR_RSERVE_SANDBOX)/* $(DESTDIR_RSERVE_SANDBOX)
+	@cp -r $(DATADIR_RSERVE_SANDBOX)/.INSTALL $(DESTDIR_RSERVE_SANDBOX)
+	@cp -r $(COMMONDIR_RSERVE_SANDBOX)/* $(DESTDIR_RSERVE_SANDBOX)
+	@cd $(DESTDIR_RSERVE_SANDBOX); makepkg --printsrcinfo > .SRCINFO
 	@echo "Package created."
 
 
-.PHONY: default all clean aur
+.PHONY: default all clean swish rserve_sandbox

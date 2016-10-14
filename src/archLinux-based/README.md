@@ -12,6 +12,8 @@ It is as simple as:
 $ yaourt -Sa swish-cplint --noconfirm
 ```
 
+This will install all the dependencies automatically.
+
 ### Without using an AUR helper
 
 - Install `swi-prolog-devel`:
@@ -22,7 +24,14 @@ $ cd swi-prolog-devel
 $ makepkg -sri --noconfirm
 ```
 
-- Install the package:
+- Install rserve_sandbox-docker:
+```
+$ wget "https://aur.archlinux.org/cgit/aur.git/snapshot/rserve_sandbox-docker.tar.gz"
+$ tar -zxvf rserve_sandbox-docker.tar.gz
+$ cd rserve_sandbox-docker
+$ makepkg -sri --noconfirm
+
+- Install swish-cplint:
 ```
 $ wget "https://aur.archlinux.org/cgit/aur.git/snapshot/swish-cplint.tar.gz"
 $ tar -zxvf swish-cplint.tar.gz
@@ -41,9 +50,12 @@ $ makepkg -sri --noconfirm
 $ make
 ```
 
-- Use the PKGBUILD:
+- Use the PKGBUILDs:
 ```
-$ cd aur
+$ cd rserve_sandbox.aur
+$ makepkg -sri
+
+$ cd swish.aur
 $ makepkg -sri
 ```
 
@@ -54,3 +66,11 @@ Run and enable the daemon with systemd:
 # systemctl start swish-cplint
 # systemctl enable swish-cplint
 ``` 
+
+## Links
+
+### AUR
+
+[swi-prolog-devel](https://aur.archlinux.org/packages/swi-prolog-devel)
+[swish-cplint](https://aur.archlinux.org/packages/swish-cplint/)
+[rserve-sandbox-docker](https://aur.archlinux.org/packages/rserve-sandbox-docker/)
