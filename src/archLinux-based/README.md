@@ -23,7 +23,7 @@ $ cd swi-prolog-devel
 $ makepkg -sri --noconfirm
 ```
 
-- Install rserve_sandbox-docker:
+- Install `rserve_sandbox-docker`:
 ```
 $ wget "https://aur.archlinux.org/cgit/aur.git/snapshot/rserve_sandbox-docker.tar.gz"
 $ tar -zxvf rserve_sandbox-docker.tar.gz
@@ -31,7 +31,7 @@ $ cd rserve_sandbox-docker
 $ makepkg -sri --noconfirm
 ````
 
-- Install swish-cplint:
+- Install `swish-cplint`:
 ```
 $ wget "https://aur.archlinux.org/cgit/aur.git/snapshot/swish-cplint.tar.gz"
 $ tar -zxvf swish-cplint.tar.gz
