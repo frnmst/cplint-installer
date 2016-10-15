@@ -6,6 +6,9 @@ post_install() {
     getent passwd swish &>/dev/null || useradd -m -d /home/swish \
 -r -g swish swish >/dev/null
 
+    # Add swish user to rserve group.
+    gpasswd -a swish rserve
+
     # Copy install script.
     install -D -m744 ${startdir}/install_web_iface_deps.pl /home/swish/install_web_iface_deps.pl
     chown swish:swish /home/swish/install_web_iface_deps.pl

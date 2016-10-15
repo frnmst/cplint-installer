@@ -3,20 +3,10 @@
 A bash script and packages that are able to build and install
 Cplint on SWISH.
 
-## Guidelines to build an installer
+## Guide
 
-```
-$ cd src
-$ less README.md
-```
-
-## Install instructions
-
-```
-$ cd src/<your distro>-based
-$ less README.md
-```
-Follow the distribution specific instructions in the readme.
+    $ cd src
+    $ less README.md
 
 ## Tests
 

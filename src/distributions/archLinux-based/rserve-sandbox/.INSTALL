@@ -1,0 +1,22 @@
+startdir=
+
+post_install() {
+    # Add user and group.
+    getent group rsd &>/dev/null || groupadd -r rsd >/dev/null
+    getent passwd rsd &>/dev/null || useradd -s -r -g rsd rsd >/dev/null
+
+    echo ""
+    echo ""
+    echo "You can start and enable \
+rserve-sandbox-docker.service to run the server."
+    echo ""
+    echo ""
+}
+
+pre_remove() {
+    echo ""
+    echo ""
+    echo "UNIMPLEMENTED"
+    echo ""
+    echo ""
+}

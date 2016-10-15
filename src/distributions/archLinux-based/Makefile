@@ -24,11 +24,11 @@
 
 DESTDIR_SWISH=swish.aur
 DATADIR_SWISH=swish
-COMMONDIR_SWISH=../swish-common
+COMMONDIR_SWISH=../../common/swish
 
 DESTDIR_RSERVE_SANDBOX=rserve-sandbox.aur
 DATADIR_RSERVE_SANDBOX=rserve-sandbox
-COMMONDIR_RSERVE_SANDBOX=../rserve-sandbox-common
+COMMONDIR_RSERVE_SANDBOX=../../common/rserve-sandbox
 
 default: swish rserve_sandbox
 
@@ -43,6 +43,7 @@ swish:
 	@mkdir -p $(DESTDIR_SWISH)
 	@cp -r $(DATADIR_SWISH)/* $(DESTDIR_SWISH)
 	@cp -r $(DATADIR_SWISH)/.INSTALL $(DESTDIR_SWISH)
+	@cp -r $(COMMONDIR_SWISH)/../shared_functions.sh $(DESTDIR_SWISH)
 	@cp -r $(COMMONDIR_SWISH)/* $(DESTDIR_SWISH)
 	@cd $(DESTDIR_SWISH); makepkg --printsrcinfo > .SRCINFO
 	@echo "Package created."
@@ -52,6 +53,7 @@ rserve_sandbox:
 	@mkdir -p $(DESTDIR_RSERVE_SANDBOX)
 	@cp -r $(DATADIR_RSERVE_SANDBOX)/* $(DESTDIR_RSERVE_SANDBOX)
 	@cp -r $(DATADIR_RSERVE_SANDBOX)/.INSTALL $(DESTDIR_RSERVE_SANDBOX)
+	@cp -r $(COMMONDIR_RSERVE_SANDBOX)/../shared_functions.sh $(DESTDIR_RSERVE_SANDBOX)
 	@cp -r $(COMMONDIR_RSERVE_SANDBOX)/* $(DESTDIR_RSERVE_SANDBOX)
 	@cd $(DESTDIR_RSERVE_SANDBOX); makepkg --printsrcinfo > .SRCINFO
 	@echo "Package created."

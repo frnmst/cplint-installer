@@ -30,6 +30,8 @@ deps_installer="/home/swish/install_web_iface_deps.pl"
 user="swish"
 group="swish"
 
+. shared_functions.sh
+
 help()
 {
     cat<<-EOF
@@ -53,18 +55,6 @@ and at: <https://github.com/friguzzi/cplint>
 EOF
 }
 
-kill()
-{
-    # kill action only if process exists.
-    if [ -f "$pid_file" ]; then
-        pid=$(cat "$pid_file")
-        ps -q $pid > /dev/null
-        if [ $? -eq 0 ]; then
-            kill -s SIGTERM $pid
-        fi
-    fi
-}
-
 initialize()
 {
     if [ -f "$installed_file" ]; then
@@ -81,7 +71,7 @@ initialize()
     fi
 }
 
-start()
+startd()
 {
     {
         ( initialize && exec swipl --quiet -f /usr/share/swish-cplint/run.pl ) &
@@ -96,24 +86,6 @@ start()
         exit 1
     fi
 
-}
-
-main()
-{
-    if [ "$(id -un)" == "$user" ] && [ "$(id -gn)" == "$group" ]; then
-        :
-    else
-        printf "User and group must be swish\n"
-        exit 1
-    fi
-
-    getopts ":is" opt "$@"
-    case "$opt" in
-        h) help ;;
-        k) kill ;;
-        s) start ;;
-        ?) help ;;
-    esac
 }
 
 main "$@"

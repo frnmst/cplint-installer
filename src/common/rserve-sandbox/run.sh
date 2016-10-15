@@ -22,6 +22,14 @@
 #
 #
 
+pkg_dir="/opt/rserve-sandbox-docker"
+pid_file="/run/rserve-sandbox-docker.pid"
+user="rsd"
+group="rsd"
+
+# Source the shared funcions script.
+. shared_functions.sh
+
 help()
 {
     cat<<-EOF
@@ -41,26 +49,17 @@ Full documentation at: <https://github.com/frnmst/rserve-sandbox>
 EOF
 }
 
-kill()
+initialize()
 {
-    :
+    printf "This might take a while\n"
+    make image
 }
-
 
 start()
 {
-    :
-}
-
-main()
-{
-    getopts ":is" opt "$@"
-    case "$opt" in
-        h) help ;;
-        k) kill ;;
-        s) start ;;
-        ?) help ;;
-    esac
+    pushd "$pkg_dir"
+    make run
+    popd
 }
 
 main "$@"
