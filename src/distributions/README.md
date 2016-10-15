@@ -34,8 +34,8 @@
 - Post install actions:
   - Make the docker image
 
-        TO BE DEFINED
-        $ make image
+            TO BE DEFINED
+            $ make image
 
 - For sake of simplicity and consistency of what is already available, a Docker 
   image is used. This will install some R dependencies as well as a 
