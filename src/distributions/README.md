@@ -7,6 +7,40 @@
 
 ## Pakages
 
+
+
+### Rserve sandbox
+
+- Package name
+
+        rserve-sandbox-docker
+
+- Package data
+
+        /opt/rserve-sandbox-docker
+
+- Package dependencies
+  - R
+  - Docker
+
+- Pre install actions:
+
+    TO BE DEFINED
+
+- Install actions:
+
+    TO BE DEFINED
+
+- Post install actions:
+  - Make the docker image
+
+        TO BE DEFINED
+        $ make image
+
+- For sake of simplicity and consistency of what is already available, a Docker 
+  image is used. This will install some R dependencies as well as a 
+  fully fledged environment.
+
 ### SWISH (with the Cplint suite)
 
 - Package name
@@ -19,6 +53,7 @@
 
 - Package dependencies
     - SWI Prolog (developement version)
+    - Rserve sandbox
     - Bower (make dependency)
 
 - Pre install actions:
@@ -41,33 +76,14 @@
             # getent passwd swish &>/dev/null || useradd -m -d /home/swish \
             -r -g swish swish >/dev/null
 
+    - Add `swish` user to the previously created `rserve` group.
+
+            # gpasswd -a swish rserve
+
     - Copy the SWI Prolog dependencies script
 
             # install -D -m744 swish-common/install_web_iface_deps.pl \
             /home/swish/install_web_iface_deps.pl
             # chown swish:swish /home/swish/install_web_iface_deps.pl
 
-### Rserve sandbox
-
-- Package name
-
-        rserve-sandbox-docker
-
-- Package data
-
-        /opt/rserve-sandbox-docker
-
-- Package dependencies
-  - R
-  - Docker
-
-- Pre install actions:
-
-- Install actions:
-
-- Post install actions:
-
-- For sake of simplicity and consistency of what is already available, a Docker 
-  image is used. This will install some R dependencies as well as a 
-  fully fledged environment.
 
