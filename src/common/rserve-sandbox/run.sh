@@ -26,15 +26,19 @@ pkg_dir="/opt/rserve-sandbox-docker"
 pid_file="/run/rserve-sandbox-docker.pid"
 user="rsd"
 group="rsd"
+docker_image_name="rserve"
 
 # Source the shared funcions script.
-. shared_functions.sh
+. ./shared_functions.sh
 
 help()
 {
     cat<<-EOF
 rsd [OPTION]
 Docker spec for running Rserve in a sandbox
+
+The first time rserve-sandbox-docker is executed,
+a docker image will be downloaded. This operation might take a while.
 
 Only a single option is permitted.
     -h      print this help
@@ -51,15 +55,28 @@ EOF
 
 initialize()
 {
-    printf "This might take a while\n"
-    make image
+    # Check if rserve image does not exist.
+    if [ -z "$(docker images -q "$docker_image_name")" ]; then
+        printf "This might take a while\n"
+        make image
+    fi
 }
 
-start()
+startd()
 {
-    pushd "$pkg_dir"
-    make run
-    popd
+    local pid=""
+
+    {
+        (
+            pushd "$pkg_dir"
+            # make instal ~= make run.
+            initialize && make install
+            popd
+        ) &
+        pid="$!"
+    } 1>/dev/null 2>/dev/null
+
+    write_pid_file "$pid"
 }
 
 main "$@"

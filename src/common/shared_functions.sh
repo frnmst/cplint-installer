@@ -24,7 +24,7 @@
 
 check_running_user_and_group()
 {
-    if [ "$(id -un)" == "$user" ] && [ "$(id -gn)" == "$group" ];$
+    if [ "$(id -un)" == "$user" ] && [ "$(id -gn)" == "$group" ]; then
         :
     else
         printf "User must be "$user"\n"
@@ -42,6 +42,19 @@ killd()
         if [ $? -eq 0 ]; then
             kill -s SIGTERM $pid
         fi
+    fi
+}
+
+write_pid_file()
+{
+    local pid="$1"
+
+    if [ -n "$pid" ]; then
+        printf "Server running with pid $pid\n"
+        printf "$pid\n" > "$pid_file"
+    else
+        printf "Server error\n"
+        return 1
     fi
 }
 

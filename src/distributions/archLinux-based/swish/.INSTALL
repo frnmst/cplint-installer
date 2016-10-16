@@ -1,15 +1,16 @@
 startdir=
 
 post_install() {
-    # Add user and group.
+    # Add swish user and group.
     getent group swish &>/dev/null || groupadd -r swish >/dev/null
     getent passwd swish &>/dev/null || useradd -m -d /home/swish \
 -r -g swish swish >/dev/null
 
-    # Add swish user to rserve group.
+    # Add swish user to the rserve group. If this is not done, access to the 
+    # socket would be forbidden.
     gpasswd -a swish rserve
 
-    # Copy install script.
+    # Copy the install script.
     install -D -m744 ${startdir}/install_web_iface_deps.pl /home/swish/install_web_iface_deps.pl
     chown swish:swish /home/swish/install_web_iface_deps.pl
 

@@ -23,22 +23,39 @@
   - R
   - Docker
 
-- Pre install actions:
+#### Install actions
 
-    TO BE DEFINED
+- Pre:
 
-- Install actions:
+        TO BE DEFINED
 
-    TO BE DEFINED
+- During:
 
-- Post install actions:
-  - Make the docker image
+        TO BE DEFINED
 
-            TO BE DEFINED
-            $ make image
+- Post:
+  - Add `rsd` user and group.
 
-- For sake of simplicity and consistency of what is already available, a Docker 
-  image is used. This will install some R dependencies as well as a 
+        # getent group rsd &>/dev/null || groupadd -r rsd >/dev/null
+        # getent passwd rsd &>/dev/null || useradd -s -r -g \
+        rsd rsd >/dev/null
+
+  - Add the new user to the `docker` group
+
+        # gpasswd -a rsd docker
+
+
+#### Remove actions
+
+- Pre:
+
+- During:
+
+- Post:
+
+
+- Note: for sake of simplicity and consistency of what is already available, a 
+  Docker image is used. This will install some R dependencies as well as a 
   fully fledged environment.
 
 ### SWISH (with the Cplint suite)
@@ -56,7 +73,9 @@
     - Rserve sandbox
     - Bower (make dependency)
 
-- Pre install actions:
+#### Install actions
+
+- Pre:
   - Compile the server
 
             $ bower --allow-root install
@@ -64,12 +83,12 @@
 
   - Copy `run.pl` and `run.sh` in SWISH's root directory
 
-- Install actions:
+- During:
   - Make a symlink in order to be alble to call `swish-cplint` from `/usr/bin`
 
             $ ln -s /usr/share/swish-cplint/run.sh /usr/bin/swish-cplint
 
-- Post install actions:
+- Post:
     - Add `swish` user and group
 
             # getent group swish &>/dev/null || groupadd -r swish >/dev/null    
@@ -86,4 +105,10 @@
             /home/swish/install_web_iface_deps.pl
             # chown swish:swish /home/swish/install_web_iface_deps.pl
 
+#### Remove actions
 
+- Pre:
+
+- During:
+
+- Post:

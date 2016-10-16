@@ -5,6 +5,11 @@ post_install() {
     getent group rsd &>/dev/null || groupadd -r rsd >/dev/null
     getent passwd rsd &>/dev/null || useradd -s -r -g rsd rsd >/dev/null
 
+    # This is explained in the Arch Wiki. It seems that anyone belonging to the 
+    # docker group has root capablities, so creating a separate user to run 
+    # Docker is necessary in my opinion.
+    gpasswd -a rsd docker
+
     echo ""
     echo ""
     echo "You can start and enable \

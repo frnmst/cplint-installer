@@ -1,5 +1,5 @@
 #
-# swish-cplint.service
+# rserve-sandbox-docker.service
 #
 # Copyright (C) 2016 frnmst (Franco Masotti) <franco.masotti@student.unife.it>
 #
@@ -20,25 +20,25 @@
 #
 #
 
-# To be placed in /usr/lib/systemd/system/swish-cplint.service
+# To be placed in /usr/lib/systemd/system/rserve-sandbox-docker.service
 
 [Unit]
-Description=Cplint on SWISH
-Documentation=http://github.com/friguzzi/cplint https://github.com/friguzzi/swish
-Requires=rserve-sandbox-docker.service
+Description=Docker spec for running Rserve in a sandbox
+Documentation=https://github.com/JanWielemaker/rserve-sandbox https://github.com/JanWielemaker/rserve_client
+Reuires=docker.service
 
 [Service]
 # Run ExecStartPre with root permissions.
 PermissionsStartOnly=true
-ExecStartPre=/usr/bin/systemd-tmpfiles --create swish-cplint.conf
-ExecStart=/usr/bin/swish-cplint -s
-ExecStop=/usr/bin/swish-cplint -k
+ExecStartPre=/usr/bin/systemd-tmpfiles --create rserve-sandbox-docker.conf
+ExecStart=/usr/bin/rserve-sandbox-docker -s
+ExecStop=/usr/bin/rserve-sandbox-docker -k
 Type=forking
-PIDFile=/run/swish-cplint.pid
-User=swish
-Group=swish
+PIDFile=/run/rserve-sandbox-docker.pid
+User=rsd
+Group=rsd
 
 [Install]
-Also=rserve-sandbox-docker.service
+Also=docker.service
 WantedBy=default.target
 

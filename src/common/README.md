@@ -1,5 +1,7 @@
 # Directory structure
 
-    shared_functions.sh
+- This file contains all common functions for `run.sh` files, and it is sourced 
+  by them:
 
-Contains all common functions for `run.sh` files.
+        shared_functions.sh
+

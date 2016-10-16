@@ -30,7 +30,7 @@ deps_installer="/home/swish/install_web_iface_deps.pl"
 user="swish"
 group="swish"
 
-. shared_functions.sh
+. ./shared_functions.sh
 
 help()
 {
@@ -73,19 +73,14 @@ initialize()
 
 startd()
 {
+    local pid=""
+
     {
         ( initialize && exec swipl --quiet -f /usr/share/swish-cplint/run.pl ) &
         pid="$!"
     } 1>/dev/null 2>/dev/null
 
-    if [ -n "$pid" ]; then
-        printf "Server running with pid $pid\n"
-        printf "$pid\n" > "$pid_file"
-    else
-        printf "Server error\n"
-        exit 1
-    fi
-
+    write_pid_file "$pid"
 }
 
 main "$@"

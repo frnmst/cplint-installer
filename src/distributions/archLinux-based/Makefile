@@ -30,7 +30,7 @@ DESTDIR_RSERVE_SANDBOX=rserve-sandbox.aur
 DATADIR_RSERVE_SANDBOX=rserve-sandbox
 COMMONDIR_RSERVE_SANDBOX=../../common/rserve-sandbox
 
-default: swish rserve_sandbox
+default: swish rserve-sandbox
 
 clean:
 	@echo "Removing $(DESTDIR_SWISH) $(DESTDIR_RSERVE_SANDBOX)..."
@@ -48,7 +48,7 @@ swish:
 	@cd $(DESTDIR_SWISH); makepkg --printsrcinfo > .SRCINFO
 	@echo "Package created."
 
-rserve_sandbox:
+rserve-sandbox:
 	@echo "Creating package..."
 	@mkdir -p $(DESTDIR_RSERVE_SANDBOX)
 	@cp -r $(DATADIR_RSERVE_SANDBOX)/* $(DESTDIR_RSERVE_SANDBOX)
@@ -59,4 +59,4 @@ rserve_sandbox:
 	@echo "Package created."
 
 
-.PHONY: default all clean swish rserve_sandbox
+.PHONY: default all clean swish rserve-sandbox
