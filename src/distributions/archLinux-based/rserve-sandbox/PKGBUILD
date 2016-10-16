@@ -14,7 +14,7 @@ makedepends=('git'
 conflicts=('')
 provides=('')
 install=.INSTALL
-source=('git://github.com/frnmst/rserve-sandbox#branch=master')
+source=('git://github.com/frnmst/rserve-sandbox#branch=distro-package')
 md5sums=('SKIP')
 
 prepare() {

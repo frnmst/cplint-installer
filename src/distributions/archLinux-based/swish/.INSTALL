@@ -8,7 +8,7 @@ post_install() {
 
     # Add swish user to the rserve group. If this is not done, access to the 
     # socket would be forbidden.
-    gpasswd -a swish rserve
+    gpasswd -a swish rserve >/dev/null
 
     # Copy the install script.
     install -D -m744 ${startdir}/install_web_iface_deps.pl /home/swish/install_web_iface_deps.pl
@@ -25,6 +25,8 @@ swish-cplint.service to run the server."
 # Trivial remove.
 pre_remove() {
     echo ""
+    echo ""
+    echo "UNIMPLEMENTED"
     echo ""
     rm -rf /home/swish/lib
     echo ""
