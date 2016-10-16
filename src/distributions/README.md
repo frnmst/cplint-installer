@@ -27,22 +27,18 @@
 
 - Pre:
 
-        TO BE DEFINED
-
 - During:
-
-        TO BE DEFINED
 
 - Post:
   - Add `rsd` user and group.
 
-        # getent group rsd &>/dev/null || groupadd -r rsd >/dev/null
-        # getent passwd rsd &>/dev/null || useradd -s -r -g \
-        rsd rsd >/dev/null
+            # getent group rsd &>/dev/null || groupadd -r rsd >/dev/null
+            # getent passwd rsd &>/dev/null || useradd -s -r -g \
+            rsd rsd >/dev/null
 
   - Add the new user to the `docker` group
 
-        # gpasswd -a rsd docker
+            # gpasswd -a rsd docker
 
 
 #### Remove actions
@@ -53,6 +49,7 @@
 
 - Post:
 
+#### Other
 
 - Note: for sake of simplicity and consistency of what is already available, a 
   Docker image is used. This will install some R dependencies as well as a 
