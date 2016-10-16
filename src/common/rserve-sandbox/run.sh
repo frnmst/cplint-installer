@@ -29,7 +29,7 @@ group="rsd"
 docker_image_name="rserve"
 
 # Source the shared funcions script.
-. ./shared_functions.sh
+. "$pkg_dir"/shared_functions.sh
 
 help()
 {

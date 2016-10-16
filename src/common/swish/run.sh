@@ -24,13 +24,14 @@
 
 # This is the file called from the /usr/bin/swish-cplint symlink
 
+pkg_dir="/usr/share/swish-cplint"
 pid_file="/run/swish-cplint.pid"
 installed_file="/home/swish/installed"
 deps_installer="/home/swish/install_web_iface_deps.pl"
 user="swish"
 group="swish"
 
-. ./shared_functions.sh
+. "$pkg_dir"/shared_functions.sh
 
 help()
 {
@@ -76,7 +77,7 @@ startd()
     local pid=""
 
     {
-        ( initialize && exec swipl --quiet -f /usr/share/swish-cplint/run.pl ) &
+        ( initialize && exec swipl --quiet -f "$pkg_dir"/run.pl ) &
         pid="$!"
     } 1>/dev/null 2>/dev/null
 

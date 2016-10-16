@@ -7,8 +7,7 @@ pkgdesc="Docker spec for running Rserve in a sandbox"
 arch=('x86_64')
 url="https://github.com/frnmst/rserve-sandbox"
 license=('BSD')
-depends=('base-devel'
-         'r'
+depends=('r'
          'docker')
 makedepends=('git'
              'sed')
@@ -23,12 +22,6 @@ prepare() {
     sed \
     -e "s@startdir=.*@startdir="${startdir}"@" \
     -i ${startdir}/.INSTALL
-}
-
-build() {
-    cd ${srcdir}/rserve-sandbox
-
-    :
 }
 
 pkgver () {
@@ -48,6 +41,7 @@ package() {
     install -D -m644 rserve-sandbox/Rserv.conf ${pkgdir}/opt/${pkgname}/Rserv.conf
     install -D -m644 rserve-sandbox/Rserv.sh ${pkgdir}/opt/${pkgname}/Rserv.sh
     install -D -m644 rserve-sandbox/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    install -D -m644 ${startdir}/run.sh ${pkgdir}/opt/${pkgname}/run.sh
     install -D -m644 ${startdir}/shared_functions.sh "${pkgdir}/opt/${pkgname}/shared_functions.sh"
     install -D -m644 ${startdir}/${pkgname}.service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
     install -D -m644 ${startdir}/${pkgname}.conf "${pkgdir}/usr/lib/tmpfiles.d/${pkgname}.conf"
