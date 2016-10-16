@@ -23,11 +23,11 @@ $ cd swi-prolog-devel
 $ makepkg -sri --noconfirm
 ```
 
-- Install `rserve_sandbox-docker`:
+- Install `rserve-sandbox-docker`:
 ```
-$ wget "https://aur.archlinux.org/cgit/aur.git/snapshot/rserve_sandbox-docker.tar.gz"
-$ tar -zxvf rserve_sandbox-docker.tar.gz
-$ cd rserve_sandbox-docker
+$ wget "https://aur.archlinux.org/cgit/aur.git/snapshot/rserve-sandbox-docker.tar.gz"
+$ tar -zxvf rserve-sandbox-docker.tar.gz
+$ cd rserve-sandbox-docker
 $ makepkg -sri --noconfirm
 ````
 
@@ -51,7 +51,7 @@ $ makepkg -sri --noconfirm
 
 - Use the PKGBUILDs:
 
-        $ cd rserve_sandbox.aur
+        $ cd rserve-sandbox.aur
         $ makepkg -sri
 
         $ cd swish.aur
