@@ -60,7 +60,7 @@ write_pid_file()
 
 option_parser()
 {
-    getopts ":is" opt "$@"
+    getopts ":hks" opt "$@"
     case "$opt" in
         h) help ;;
         k) killd ;;
