@@ -24,7 +24,7 @@
 
 check_running_user_and_group()
 {
-    if [ "$(id -un)" == "$user" ] && [ "$(id -gn)" == "$group" ]; then
+    if [ "$(id -un)" = "$user" ] && [ "$(id -gn)" = "$group" ]; then
         :
     else
         printf "User must be "$user"\n"
