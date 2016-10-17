@@ -32,6 +32,13 @@
 
 
 - Post:
+  - Add `rserve` user and group.
+
+            # getent group rserve &>/dev/null || groupadd -r rserve >/dev/null
+            # getent passwd rserve &>/dev/null || useradd -m -d /home/rserve
+            -s /bin/false -r -g rserve rserve >/dev/null
+            # chmod 750 /home/rserve
+
   - Add `rsd` user and group.
 
             # getent group rsd &>/dev/null || groupadd -r rsd >/dev/null
@@ -40,7 +47,7 @@
 
   - Add the new user to the `docker` group
 
-            # gpasswd -a rsd docker
+            # gpasswd -a rsd docker >/dev/null
 
 
 #### Remove actions
