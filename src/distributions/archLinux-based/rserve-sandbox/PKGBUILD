@@ -42,7 +42,6 @@ package() {
     install -D -m644 rserve-sandbox/Rserv.sh ${pkgdir}/opt/${pkgname}/Rserv.sh
     install -D -m644 rserve-sandbox/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     install -D -m755 ${startdir}/run.sh ${pkgdir}/opt/${pkgname}/run.sh
-    install -D -m644 ${startdir}/shared_functions.sh "${pkgdir}/opt/${pkgname}/shared_functions.sh"
     install -D -m644 ${startdir}/${pkgname}.service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
     install -D -m644 ${startdir}/${pkgname}.conf "${pkgdir}/usr/lib/tmpfiles.d/${pkgname}.conf"
     ln -s /opt/${pkgname}/run.sh ${pkgdir}/usr/bin/${pkgname}

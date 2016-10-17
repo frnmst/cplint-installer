@@ -31,8 +31,6 @@ deps_installer="/home/swish/install_web_iface_deps.pl"
 user="swish"
 group="swish"
 
-. "$pkg_dir"/shared_functions.sh
-
 help()
 {
     cat<<-EOF
@@ -84,4 +82,3 @@ startd()
     write_pid_file "$pid"
 }
 
-main "$@"

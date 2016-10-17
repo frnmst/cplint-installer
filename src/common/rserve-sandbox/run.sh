@@ -28,9 +28,6 @@ user="rsd"
 group="rsd"
 docker_image_name="rserve"
 
-# Source the shared funcions script.
-. "$pkg_dir"/shared_functions.sh
-
 help()
 {
     cat<<-EOF
@@ -79,4 +76,3 @@ startd()
     write_pid_file "$pid"
 }
 
-main "$@"

@@ -73,3 +73,5 @@ main()
 {
     check_running_user_and_group && option_parser "$@"
 }
+
+main "$@"
