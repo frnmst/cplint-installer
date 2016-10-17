@@ -39,11 +39,12 @@
             -s /bin/false -r -g rserve rserve >/dev/null
             # chmod 750 /home/rserve
 
+
   - Add `rsd` user and group.
 
             # getent group rsd &>/dev/null || groupadd -r rsd >/dev/null
-            # getent passwd rsd &>/dev/null || useradd -s -r -g \
-            rsd rsd >/dev/null
+            # getent passwd rsd &>/dev/null || useradd -m -d /home/rsd \
+            -s /bin/false -r -g rsd rsd >/dev/null
 
   - Add the new user to the `docker` group
 
@@ -103,7 +104,7 @@
 
     - Add `swish` user to the previously created `rserve` group.
 
-            # gpasswd -a swish rserve
+            # gpasswd -a swish rserve >/dev/null
 
     - Copy the SWI Prolog dependencies script
 
