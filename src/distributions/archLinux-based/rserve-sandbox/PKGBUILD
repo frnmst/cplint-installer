@@ -11,18 +11,9 @@ depends=('r'
          'docker')
 makedepends=('git'
              'sed')
-conflicts=('')
-provides=('')
 install=.INSTALL
 source=('git://github.com/frnmst/rserve-sandbox#branch=distro-package')
 md5sums=('SKIP')
-
-prepare() {
-    # Edit the .INSTALL script.
-    sed \
-    -e "s@startdir=.*@startdir="${startdir}"@" \
-    -i ${startdir}/.INSTALL
-}
 
 pkgver () {
     cd ${srcdir}/rserve-sandbox

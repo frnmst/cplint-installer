@@ -26,6 +26,7 @@
 Description=Docker spec for running Rserve in a sandbox
 Documentation=https://github.com/JanWielemaker/rserve-sandbox https://github.com/JanWielemaker/rserve_client
 Requires=docker.service
+After=docker.service
 
 [Service]
 # Run ExecStartPre with root permissions.

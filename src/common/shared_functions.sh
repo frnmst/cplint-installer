@@ -33,18 +33,6 @@ check_running_user_and_group()
     fi
 }
 
-killd()
-{
-    # kill action only if process exists.
-    if [ -f "$pid_file" ]; then
-        pid=$(cat "$pid_file")
-        ps -q $pid > /dev/null
-        if [ $? -eq 0 ]; then
-            kill -s SIGTERM $pid
-        fi
-    fi
-}
-
 write_pid_file()
 {
     local pid="$1"
@@ -55,6 +43,18 @@ write_pid_file()
     else
         printf "Server error\n"
         return 1
+    fi
+}
+
+killd()
+{
+    # kill action only if process exists.
+    if [ -f "$pid_file" ]; then
+        pid=$(cat "$pid_file")
+        ps -q $pid > /dev/null
+        if [ $? -eq 0 ]; then
+            kill -s SIGTERM $pid
+        fi
     fi
 }
 

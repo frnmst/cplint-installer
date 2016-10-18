@@ -35,20 +35,23 @@
   - Add `rserve` user and group.
 
             # getent group rserve &>/dev/null || groupadd -r rserve >/dev/null
-            # getent passwd rserve &>/dev/null || useradd -m -d /home/rserve
+            # getent passwd rserve &>/dev/null || useradd -m -d /home/rserve \
             -s /bin/false -r -g rserve rserve >/dev/null
             # chmod 750 /home/rserve
-
 
   - Add `rsd` user and group.
 
             # getent group rsd &>/dev/null || groupadd -r rsd >/dev/null
-            # getent passwd rsd &>/dev/null || useradd -m -d /home/rsd \
+            # getent passwd rsd &>/dev/null || useradd \
             -s /bin/false -r -g rsd rsd >/dev/null
 
   - Add the new user to the `docker` group
 
             # gpasswd -a rsd docker >/dev/null
+
+  - Change ownership of the package data directory
+
+            # chown -R rsd:rsd /opt/rserve-sandbox-docker
 
 
 #### Remove actions

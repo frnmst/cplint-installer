@@ -50,6 +50,22 @@ Full documentation at: <https://github.com/frnmst/rserve-sandbox>
 EOF
 }
 
+# Kill ideas (deprecated).
+    # This addresses only docker containers available to rsd:rsd.
+    # Simple solution.
+
+
+    # More complex solution requires deleting all containers (running and 
+    # stopped) matching rserve-sandbox-docker
+    # If this is not done, the hard disk might get full quickly.
+    # Something like the following might be useful.
+    #
+    # containers="$(docker ps -a -f status=exited \
+#--format \"{{.ID}}\\t{{.Image}}\" | grep rserve-sandbox-docker)"
+    # echo "$containers" | awk '{print $1} | xargs docker rm
+
+    # Or simply add rm option to the makefile
+
 initialize()
 {
     # Check if rserve image does not exist.
@@ -65,10 +81,8 @@ startd()
 
     {
         (
-            pushd "$pkg_dir"
-            # make instal ~= make run.
-            initialize && make install
-            popd
+            cd "$pkg_dir"
+            initialize && make run
         ) &
         pid="$!"
     } 1>/dev/null 2>/dev/null
