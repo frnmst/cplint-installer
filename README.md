@@ -3,17 +3,16 @@
 A bash script and packages that are able to build and install
 Cplint on SWISH.
 
-## Guide
+## Instructions
 
-    $ cd src
-    $ less README.md
+Read the [Wiki](https://github.com/frnmst/cplint-installer/wiki)
 
 ## Tests
 
-Currently I am testing with Antergos (sic) on qemu-system-x86_64
+Currently I am testing with Antergos (sic) on `qemu-system-x86_64`
 to avoid dirtying the system. I was able to manually install all the stuff on 
-Parabola GNU/Linux-libre, with and without the script. I guess the PKGBUILD 
-works just fine anyway.
+Parabola GNU/Linux-libre, with and without the script. I guess the PKGBUILDs
+would work just fine.
 
 This means that only Arch Linux based distros are scurrently supported.
 
