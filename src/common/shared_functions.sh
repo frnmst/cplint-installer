@@ -53,7 +53,7 @@ killd()
         pid=$(cat "$pid_file")
         ps -q $pid > /dev/null
         if [ $? -eq 0 ]; then
-            kill -s SIGTERM $pid
+            kill -s TERM $pid
         fi
     fi
 }
