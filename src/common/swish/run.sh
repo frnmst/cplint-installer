@@ -25,7 +25,7 @@
 # This is the file called from the /usr/bin/swish-cplint symlink
 
 pkg_dir="/usr/share/swish-cplint"
-pid_file="/run/swish-cplint.pid"
+pid_file="/run/swish-cplint/swish-cplint.pid"
 installed_file="/home/swish/installed"
 deps_installer="/home/swish/install_web_iface_deps.pl"
 user="swish"
@@ -66,6 +66,18 @@ initialize()
         else
             printf "Install web dependencies error\n"
             exit 1
+        fi
+    fi
+}
+
+killd()
+{
+    # kill action only if process exists.
+    if [ -f "$pid_file" ]; then
+        pid=$(cat "$pid_file")
+        ps -q $pid > /dev/null
+        if [ $? -eq 0 ]; then
+            kill -s TERM $pid
         fi
     fi
 }

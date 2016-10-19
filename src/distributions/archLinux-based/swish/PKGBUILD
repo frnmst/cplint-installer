@@ -48,6 +48,5 @@ package() {
     cp -r swish/* ${pkgdir}/usr/share/${pkgname}
     install -D -m644 swish/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     install -D -m644 ${startdir}/${pkgname}.service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
-    install -D -m644 ${startdir}/${pkgname}.conf "${pkgdir}/usr/lib/tmpfiles.d/${pkgname}.conf"
     ln -s /usr/share/${pkgname}/run.sh ${pkgdir}/usr/bin/${pkgname}
 }
