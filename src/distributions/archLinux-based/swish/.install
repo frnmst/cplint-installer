@@ -16,21 +16,13 @@ post_install() {
 
     chown -R swish:swish /usr/share/swish-cplint
 
-    echo ""
-    echo ""
-    echo "You can start and enable \
-swish-cplint.service to run the server."
-    echo ""
-    echo ""
+    printf "\n\nYou can start and enable \
+swish-cplint.service to run the server.\n\n"
 }
 
 # Trivial remove.
 pre_remove() {
-    echo ""
-    echo ""
-    echo "UNIMPLEMENTED"
-    echo ""
-    rm -rf /home/swish/lib
-    echo ""
-    echo ""
+    # Remove /home/swish
+    # Remove swish usr and grp
+    # 
 }

@@ -27,6 +27,9 @@ rserve-sandbox-docker.service to run the server."
 }
 
 pre_remove() {
+    # Remove /home/rserve
+    # Remove rserve usr and grp
+    # Remove rsd usr and grp
     echo ""
     echo ""
     echo "UNIMPLEMENTED"

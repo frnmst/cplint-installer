@@ -13,12 +13,12 @@ makedepends=('git'
              'bower'
              'sed')
 conflicts=('swish')
-install=.INSTALL
+install=.install
 source=('git://github.com/friguzzi/swish#branch=master')
 md5sums=('SKIP')
 
 prepare() {
-    # Edit the .INSTALL script.
+    # Edit the .install script.
     sed \
     -e "s@startdir=.*@startdir="${startdir}"@" \
     -i ${startdir}/.INSTALL
@@ -43,10 +43,10 @@ pkgver () {
 
 package() {
     cd ${srcdir}
-    install -d ${pkgdir}/usr/share/${pkgname}
-    install -d ${pkgdir}/usr/bin
-    cp -r swish/* ${pkgdir}/usr/share/${pkgname}
-    install -D -m644 swish/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-    install -D -m644 ${startdir}/${pkgname}.service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
-    ln -s /usr/share/${pkgname}/run.sh ${pkgdir}/usr/bin/${pkgname}
+    install -d "${pkgdir}"/usr/share/"${pkgname}"
+    install -d "${pkgdir}"/usr/bin
+    cp -r swish/* "${pkgdir}"/usr/share/"${pkgname}"
+    install -D -m644 swish/LICENSE "${pkgdir}"/usr/share/licenses/"${pkgname}"/LICENSE
+    install -D -m644 ${startdir}/"${pkgname}".service ${pkgdir}/usr/lib/systemd/system/"${pkgname}".service
+    ln -s /usr/share/"${pkgname}"/run.sh "${pkgdir}"/usr/bin/"${pkgname}"
 }
