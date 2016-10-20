@@ -29,8 +29,8 @@ build() {
     bower --allow-root install
     make src
     # Patch
-    cp ${startdir}/run.pl .
-    cp ${startdir}/run.sh .
+    cp ${srcdir}/../run.pl .
+    cp ${srcdir}/../run.sh .
 }
 
 pkgver () {
@@ -47,6 +47,6 @@ package() {
     install -d "${pkgdir}"/usr/bin
     cp -r swish/* "${pkgdir}"/usr/share/"${pkgname}"
     install -D -m644 swish/LICENSE "${pkgdir}"/usr/share/licenses/"${pkgname}"/LICENSE
-    install -D -m644 ${startdir}/"${pkgname}".service ${pkgdir}/usr/lib/systemd/system/"${pkgname}".service
+    install -D -m644 ../"${pkgname}".service ${pkgdir}/usr/lib/systemd/system/"${pkgname}".service
     ln -s /usr/share/"${pkgname}"/run.sh "${pkgdir}"/usr/bin/"${pkgname}"
 }
