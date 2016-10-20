@@ -14,6 +14,8 @@ post_install() {
     install -D -m744 ${startdir}/install_web_iface_deps.pl /home/swish/install_web_iface_deps.pl
     chown swish:swish /home/swish/install_web_iface_deps.pl
 
+    chown -R swish:swish /usr/share/swish-cplint
+
     echo ""
     echo ""
     echo "You can start and enable \

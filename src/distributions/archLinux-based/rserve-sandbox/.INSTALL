@@ -16,7 +16,7 @@ post_install() {
     # Docker is necessary in my opinion.
     gpasswd -a rsd docker >/dev/null
 
-    chown -R rsd:rsd /opt/rserve-sandbox-docker
+    chown -R rsd:rsd /usr/share/rserve-sandbox-docker
 
     echo ""
     echo ""
