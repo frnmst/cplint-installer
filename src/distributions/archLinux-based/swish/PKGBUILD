@@ -14,7 +14,7 @@ makedepends=('git'
              'sed')
 conflicts=('swish')
 install=.install
-source=('git://github.com/friguzzi/swish#branch=master')
+source=('git+https://github.com/friguzzi/swish#branch=master')
 md5sums=('SKIP')
 
 prepare() {
