@@ -32,6 +32,8 @@ COMMONDIR_RSERVE_SANDBOX=../../common/rserve-sandbox
 
 default: swish rserve-sandbox
 
+all: swish rserve-sandbox
+
 clean:
 	@echo "Removing $(DESTDIR_SWISH) $(DESTDIR_RSERVE_SANDBOX)..."
 	@rm -rf $(DESTDIR_SWISH) $(DESTDIR_RSERVE_SANDBOX)
@@ -41,8 +43,7 @@ clean:
 swish:
 	@echo "Creating package..."
 	@mkdir -p $(DESTDIR_SWISH)
-	@cp -r $(DATADIR_SWISH)/* $(DESTDIR_SWISH)
-	@cp -r $(DATADIR_SWISH)/.install $(DESTDIR_SWISH)
+	@cp -r $(DATADIR_SWISH)/{*,.install} $(DESTDIR_SWISH)
 	@cp -r $(COMMONDIR_SWISH)/* $(DESTDIR_SWISH)
 	@cat $(COMMONDIR_SWISH)/../shared_functions.sh >> $(DESTDIR_SWISH)/run.sh
 	@cd $(DESTDIR_SWISH); makepkg --printsrcinfo > .SRCINFO
@@ -51,8 +52,7 @@ swish:
 rserve-sandbox:
 	@echo "Creating package..."
 	@mkdir -p $(DESTDIR_RSERVE_SANDBOX)
-	@cp -r $(DATADIR_RSERVE_SANDBOX)/* $(DESTDIR_RSERVE_SANDBOX)
-	@cp -r $(DATADIR_RSERVE_SANDBOX)/.install $(DESTDIR_RSERVE_SANDBOX)
+	@cp -r $(DATADIR_RSERVE_SANDBOX)/{*,.install} $(DESTDIR_RSERVE_SANDBOX)
 	@cp -r $(COMMONDIR_RSERVE_SANDBOX)/* $(DESTDIR_RSERVE_SANDBOX)
 	@cat $(COMMONDIR_RSERVE_SANDBOX)/../shared_functions.sh >> $(DESTDIR_RSERVE_SANDBOX)/run.sh
 	@cd $(DESTDIR_RSERVE_SANDBOX); makepkg --printsrcinfo > .SRCINFO
