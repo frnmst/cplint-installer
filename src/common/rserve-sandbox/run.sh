@@ -23,7 +23,7 @@
 #
 
 pkg_dir="/usr/share/rserve-sandbox-docker"
-pid_file="/run/rserve-sandbox-docker.pid"
+pid_file="/run/rserve-sandbox-docker/rserve-sandbox-docker.pid"
 user="rsd"
 group="rsd"
 docker_image_name="rserve"
