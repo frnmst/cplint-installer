@@ -33,6 +33,6 @@ package() {
     install -D -m644 rserve-sandbox/Rserv.sh "${pkgdir}"/usr/share/${pkgname}/Rserv.sh
     install -D -m644 rserve-sandbox/LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
     install -D -m755 ../run.sh "${pkgdir}"/usr/share/${pkgname}/run.sh
-    install -D -m644 ${startdir}/${pkgname}.service "${pkgdir}"/usr/lib/systemd/system/"${pkgname}".service
+    install -D -m644 ../${pkgname}.service "${pkgdir}"/usr/lib/systemd/system/"${pkgname}".service
     ln -s /usr/share/"${pkgname}"/run.sh "${pkgdir}"/usr/bin/"${pkgname}"
 }

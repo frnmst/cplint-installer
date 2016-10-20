@@ -17,20 +17,13 @@ install=.install
 source=('git+https://github.com/friguzzi/swish#branch=master')
 md5sums=('SKIP')
 
-prepare() {
-    # Edit the .install script.
-    sed \
-    -e "s@startdir=.*@startdir="${startdir}"@" \
-    -i ${startdir}/.INSTALL
-}
-
 build() {
     cd ${srcdir}/swish
     bower --allow-root install
     make src
     # Patch
-    cp ${srcdir}/../run.pl .
-    cp ${srcdir}/../run.sh .
+    cp ../../run.pl .
+    cp ../../run.sh .
 }
 
 pkgver () {

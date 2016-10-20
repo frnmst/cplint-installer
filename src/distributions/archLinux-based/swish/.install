@@ -1,5 +1,3 @@
-startdir=
-
 post_install() {
     # Add swish user and group.
     getent group swish &>/dev/null || groupadd -r swish >/dev/null
@@ -11,7 +9,7 @@ post_install() {
     gpasswd -a swish rserve >/dev/null
 
     # Copy the install script.
-    install -D -m744 ${startdir}/install_web_iface_deps.pl /home/swish/install_web_iface_deps.pl
+    install -D -m744 install_web_iface_deps.pl /home/swish/install_web_iface_deps.pl
     chown swish:swish /home/swish/install_web_iface_deps.pl
 
     chown -R swish:swish /usr/share/swish-cplint
@@ -23,5 +21,5 @@ swish-cplint.service to run the server.\n\n"
 pre_remove() {
     # Remove /home/swish
     # Remove swish usr and grp
-    # 
+    :
 }
