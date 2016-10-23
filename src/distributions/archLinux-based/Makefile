@@ -5,7 +5,7 @@
 #
 # Copyright (C) 2016 frnmst (Franco Masotti) <franco.masotti@student.unife.it>
 #
-# This file is part of cplint-installer.
+# This file is part of swish-installer.
 #
 # cplint-installer is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,17 +26,21 @@ DESTDIR_SWISH=swish.aur
 DATADIR_SWISH=swish
 COMMONDIR_SWISH=../../common/swish
 
+DESTDIR_SWISH_CPLINT=swish-cplint.aur
+DATADIR_SWISH_CPLINT=swish-cplint
+COMMONDIR_SWISH_CPLINT=../../common/swish-cplint
+
 DESTDIR_RSERVE_SANDBOX=rserve-sandbox.aur
 DATADIR_RSERVE_SANDBOX=rserve-sandbox
 COMMONDIR_RSERVE_SANDBOX=../../common/rserve-sandbox
 
-default: swish rserve-sandbox
+default: swish swish-cplint rserve-sandbox
 
-all: swish rserve-sandbox
+all: default
 
 clean:
-	@echo "Removing $(DESTDIR_SWISH) $(DESTDIR_RSERVE_SANDBOX)..."
-	@rm -rf $(DESTDIR_SWISH) $(DESTDIR_RSERVE_SANDBOX)
+	@echo "Removing $(DESTDIR_SWISH) $(DESTDIR_SWISH_CPLINT) $(DESTDIR_RSERVE_SANDBOX)..."
+	@rm -rf $(DESTDIR_SWISH) $(DESTDIR_SWISH_CPLINT) $(DESTDIR_RSERVE_SANDBOX)
 	@echo "Object files removed."
 
 # Make the AUR packages.
@@ -49,6 +53,15 @@ swish:
 	@cd $(DESTDIR_SWISH); makepkg --printsrcinfo > .SRCINFO
 	@echo "Package created."
 
+swish-cplint:
+	@echo "Creating package..."
+	@mkdir -p $(DESTDIR_SWISH_CPLINT)
+	@cp -r $(DATADIR_SWISH_CPLINT)/{*,.install} $(DESTDIR_SWISH_CPLINT)
+	@cp -r $(COMMONDIR_SWISH_CPLINT)/* $(DESTDIR_SWISH_CPLINT)
+	@cat $(COMMONDIR_SWISH_CPLINT)/../shared_functions.sh >> $(DESTDIR_SWISH_CPLINT)/run.sh
+	@cd $(DESTDIR_SWISH_CPLINT); makepkg --printsrcinfo > .SRCINFO
+	@echo "Package created."
+
 rserve-sandbox:
 	@echo "Creating package..."
 	@mkdir -p $(DESTDIR_RSERVE_SANDBOX)
@@ -59,4 +72,4 @@ rserve-sandbox:
 	@echo "Package created."
 
 
-.PHONY: default all clean swish rserve-sandbox
+.PHONY: default all clean swish swish-cplint rserve-sandbox

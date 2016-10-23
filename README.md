@@ -1,11 +1,11 @@
-# cplint-installer
+# swish-installer
 
 A bash script and packages that are able to build and install
-Cplint on SWISH.
+SWISH, Cplint on SWISH and an R environment.
 
 ## Instructions
 
-Read the [Wiki](https://github.com/frnmst/cplint-installer/wiki)
+Read the [Wiki](https://github.com/frnmst/swish-installer/wiki)
 
 ## Tests
 

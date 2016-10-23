@@ -4,22 +4,9 @@ post_install() {
     getent passwd swish &>/dev/null || useradd -m -d /home/swish \
 -r -g swish swish >/dev/null
 
-    # Add swish user to the rserve group. If this is not done, access to the 
-    # socket would be forbidden.
-    gpasswd -a swish rserve >/dev/null
-
-    # Copy the install script.
-    install -D -m744 install_web_iface_deps.pl /home/swish/install_web_iface_deps.pl
-    chown swish:swish /home/swish/install_web_iface_deps.pl
-
-    chown -R swish:swish /usr/share/swish-cplint
+    chown -R swish:swish /usr/share/swish
 
     printf "\n\nYou can start and enable \
-swish-cplint.service to run the server.\n\n"
+swish.service to run the server.\n\n"
 }
 
-pre_remove() {
-    # Remove /home/swish
-    # Remove swish usr and grp
-    :
-}
