@@ -1,5 +1,6 @@
 post_install() {
-    # Add swish user and group.
+    # Add swish user and group with a home directory (which will contain all 
+    # the packs).
     getent group swish &>/dev/null || groupadd -r swish >/dev/null
     getent passwd swish &>/dev/null || useradd -m -d /home/swish \
 -r -g swish swish >/dev/null
@@ -8,18 +9,13 @@ post_install() {
     # socket will be forbidden.
     gpasswd -a swish rserve >/dev/null
 
-    # Copy the install script.
-    install -D -m744 install_web_iface_deps.pl /home/swish/install_web_iface_deps.pl
-    chown swish:swish /home/swish/install_web_iface_deps.pl
-
     chown -R swish:swish /usr/share/swish-cplint
 
     printf "\n\nYou can start and enable \
 swish-cplint.service to run the server.\n\n"
 }
 
-pre_remove() {
-    # Remove /home/swish
-    # Remove swish usr and grp
-    :
+post_remove() {
+    printf "\n\nYou can remove /home/swish.\n"
+    printf "You can also remove swish user and group.\n\n"
 }

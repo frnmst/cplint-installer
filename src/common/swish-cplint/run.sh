@@ -26,8 +26,8 @@
 
 pkg_dir="/usr/share/swish-cplint"
 pid_file="/run/swish-cplint/swish-cplint.pid"
-installed_file="/home/swish/installed"
-deps_installer="/home/swish/install_web_iface_deps.pl"
+installed_file=""$pkg_dir"/installed"
+deps_installer=""$pkg_dir"/install_web_iface_deps.pl"
 user="swish"
 group="swish"
 
@@ -62,7 +62,8 @@ initialize()
         printf "This may take a while.\n"
         $deps_installer
         if [ $? -eq 0 ]; then
-            echo "true" > "$installed_file"
+            echo "# Don't touch this file" > "$installed_file"
+            echo "true" >> "$installed_file"
         else
             printf "Install web dependencies error\n"
             exit 1
