@@ -10,17 +10,17 @@ Due to the complex nature of the components, all the documentation is found on a
 
 ## Tests
 
-Currently I am testing with Antergos (sic) on `qemu-system-x86_64`
-to avoid dirtying the system. I was able to manually install all the stuff on 
-Parabola GNU/Linux-libre, with and without the script. I guess the PKGBUILDs
-would work just fine.
+- GNU/Linux-libre distribution Parabola (on qemu x86_64).
+- GNU/Linux distribution Antergos (on qemu x86_64).
+- GNU/Linux distribution Arch (on Virtualbox using OS Boxes).
 
-This means that only Arch Linux based distros are currently supported.
+This means that only GNU/Linux Arch-based distros are currently supported.
 
 ## Warning
 
 I'm not 100% sure that all the software present in
-every component is free (libre) software.
+every component is free (libre) software. Since lots of external
+components are used, it's difficult to check them one by one.
 
 ## License
 
