@@ -5,20 +5,20 @@
 #
 # Copyright (C) 2016 frnmst (Franco Masotti) <franco.masotti@student.unife.it>
 #
-# This file is part of cplint-installer.
+# This file is part of swish-installer.
 #
-# cplint-installer is free software: you can redistribute it and/or modify
+# swish-installer is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# cplint-installer is distributed in the hope that it will be useful,
+# swish-installer is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with cplint-installer.  If not, see <http://www.gnu.org/licenses/>.
+# along with swish-installer.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
 
@@ -49,22 +49,6 @@ Exit status:
 Full documentation at: <https://github.com/frnmst/rserve-sandbox>
 EOF
 }
-
-# Kill ideas (deprecated).
-    # This addresses only docker containers available to rsd:rsd.
-    # Simple solution.
-
-
-    # More complex solution requires deleting all containers (running and 
-    # stopped) matching rserve-sandbox-docker
-    # If this is not done, the hard disk might get full quickly.
-    # Something like the following might be useful.
-    #
-    # containers="$(docker ps -a -f status=exited \
-#--format \"{{.ID}}\\t{{.Image}}\" | grep rserve-sandbox-docker)"
-    # echo "$containers" | awk '{print $1} | xargs docker rm
-
-    # Or simply add rm option to the makefile
 
 initialize()
 {
