@@ -10,11 +10,16 @@ Due to the complex nature of the components, all the documentation is found on a
 
 ## Tests
 
-- GNU/Linux-libre distribution Parabola (on qemu x86_64).
-- GNU/Linux distribution Antergos (on qemu x86_64).
-- GNU/Linux distribution Arch (on Virtualbox using OS Boxes).
+Only GNU/Linux Arch-based distros are currently supported.
 
-This means that only GNU/Linux Arch-based distros are currently supported.
+### [qvm](https://github.com/frnmst/qvm)
+
+- GNU/Linux-libre distribution Parabola.
+- GNU/Linux distribution Antergos.
+
+### VirtualBox and OS Boxes
+
+- GNU/Linux distribution Arch.
 
 ## Warning
 
