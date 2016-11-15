@@ -46,18 +46,6 @@ write_pid_file()
     fi
 }
 
-killd()
-{
-    # kill action only if process exists.
-    if [ -f "$pid_file" ]; then
-        pid=$(cat "$pid_file")
-        ps -q $pid > /dev/null
-        if [ $? -eq 0 ]; then
-            kill -s TERM $pid
-        fi
-    fi
-}
-
 option_parser()
 {
     getopts ":hks" opt "$@"
