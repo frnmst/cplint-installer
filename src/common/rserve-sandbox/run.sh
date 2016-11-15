@@ -34,13 +34,11 @@ help()
 rsd [OPTION]
 Docker spec for running Rserve in a sandbox
 
-The first time rserve-sandbox-docker is executed,
-a docker image will be downloaded. This operation might take a while.
-
 Only a single option is permitted.
     -h      print this help
-    -k      kill rsd
-    -s      start rsd
+    -i      install dependencies
+    -k      kill rserve-sandbox-docker
+    -s      start rserve-sandbox-docker
 
 Exit status:
  0  if OK,
@@ -50,12 +48,26 @@ Full documentation at: <https://github.com/frnmst/rserve-sandbox>
 EOF
 }
 
-initialize()
+init()
 {
     # Check if rserve image does not exist.
     if [ -z "$(docker images -q "$docker_image_name")" ]; then
-        printf "This might take a while\n"
+        printf "%s\n" "This might take a while"
+        pushd "$pkg_dir"
         make image
+    else
+        1>&2 printf "%s\n" "Docker image already installed"
+        exit 1
+    fi
+}
+
+installed()
+{
+    if [ -z "$(docker images -q "$docker_image_name")" ]; then
+        1>&2 printf "%s\n" "You need to run \
+'sudo -u rsd rserve-sandbox-docker -i' \
+first"
+        exit 1
     fi
 }
 
@@ -76,13 +88,15 @@ startd()
 {
     local pid=""
 
+    # The following means installed && { ... }
+    installed
     {
         (
             cd "$pkg_dir"
-            initialize && make run
+            make run
         ) &
         pid="$!"
-    } 1>/dev/null 2>/dev/null
+    }
 
     write_pid_file "$pid"
 }

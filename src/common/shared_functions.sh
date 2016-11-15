@@ -48,12 +48,13 @@ write_pid_file()
 
 option_parser()
 {
-    getopts ":hks" opt "$@"
+    getopts ":hiks" opt "$@"
     case "$opt" in
-        h) help ;;
-        k) killd ;;
-        s) startd ;;
-        ?) help; return 1 ;;
+        h ) help            ;;
+        i ) init            ;;
+        k ) killd           ;;
+        s ) startd          ;;
+        ? ) help; return 1  ;;
     esac
 }
 

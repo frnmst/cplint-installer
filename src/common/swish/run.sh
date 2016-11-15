@@ -70,7 +70,7 @@ startd()
             exec swipl --quiet -f "$pkg_dir"/run.pl
         ) &
         pid="$!"
-    } 1>/dev/null 2>/dev/null
+    }
 
     write_pid_file "$pid"
 }
