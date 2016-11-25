@@ -2,7 +2,9 @@
 @settitle SWISH Installer Manual
 @include my-bib-macros.texi
 @mybibuselist{References}
+@paragraphindent none
 
+@c DOCUMENT LICENSE FOLLOWS.
 @copying
 Copyright @copyright{} 2016 Franco Masotti @email{franco.masotti@@student.unife.it}
 
@@ -23,16 +25,20 @@ notice and this notice are preserved.
 
 @ifnottex
 @node Top
-@top libncc
+@top SWISH Installer
 
 This manual is for SWISH Installer.
-@end ifnottex
 
 @menu
 * Description::     A brief description of what this is all about.
 * Installation::    Installation procedures on various systems.
+* Pre-run:: Pre run
+* Running:: Running
 * Development::    A thorough description on how to develop over this installer.
+* Thanks:: Thanks
+* References:: References
 @end menu
+@end ifnottex
 
 @node Description
 @chapter About
@@ -55,17 +61,17 @@ must be explained.
 
 @code{$} means that the command must be executed by the current user.
 
-@subsection{Directory listings}
+@subsection Directory listings
 When you see something like the following, it represents a directory listing of
-the first named directory:
+the first named (head) directory@footnote{These are generated from 
+@command{$ tree --charset=ascii -d <dirname>}}:
 
 @example
-    common
-    ├── rserve-sandbox
-    ├── swish
-    └── swish-cplint
+common/
+|-- rserve-sandbox
+|-- swish
+`-- swish-cplint
 @end example
-
 
 @node Installation
 @chapter Installation
@@ -98,6 +104,8 @@ you will be asked to remove @code{your-freedom}.
 
 @subsection Without using an AUR helper
 @subsubsection Cplint on SWISH
+
+Execute the following commands sequentially.
 
 @itemize @bullet
 @item
@@ -162,11 +170,8 @@ $ makepkg -sri --noconfirm
 @subsection Daemons Management
 Arch Linux and derivative distros use 
 Systemd@footnote{@mybibcite{systemd}} as the 
-init system.
-
-@xref{Running}
-and
-@xref{Pre-run}
+init system. First see @ref{Pre-run} and then
+see @ref{Running}.
 
 @section Debian
 TODO
@@ -177,8 +182,7 @@ TODO
 @subsection Docker
 Before doing anything else you must start
 Docker@footnote{@mybibcite{Docker}} manually.
-
-@xref{Running}
+See @ref{Running}.
 
 @subsection Rserve sandbox
 To download the Docker image file as well as all dependencies
@@ -201,26 +205,26 @@ The vanilla version of swish doesn't need a pre-run.
 @chapter Running
 @section Systemd
 @subsection Cplint on SWISH
-@subsubsection{Start Docker}
+@subsubsection Start Docker
 Docker is a dependency which must be started manually.
 @verbatim
 # systemctl start docker
 @end verbatim
 
-@subsubsection{Start}
+@subsubsection Start
 The following command will run @code{swish-cplint} as well as
 @code{rserve-sandbox-docker} as its dependency:
 @verbatim
 # systemctl start swish-cplint
 @end verbatim
 
-@subsubsection{Enable}
+@subsubsection Enable
 To start @code{swish-cplint} and @code{rserve-sandbox-docker} at boot:
 @verbatim
 # systemctl enable swish-cplint
 @end verbatim
 
-@subsubsection{Stop}
+@subsubsection Stop
 You can stop both services@footnote{stopping @code{swish-cplint}
 does not imply that @code{rserve-sandbox-docker} will be stopped}
 with:
@@ -229,7 +233,7 @@ with:
 # systemctl stop rserve-sandbox-docker
 @end verbatim
 
-@subsubsection{Status}
+@subsubsection Status
 To check the status:
 @verbatim
 # systemctl status swish-cplint
@@ -239,35 +243,516 @@ To check the status:
 @subsection SWISH
 Running and managing SWISH alone is simpler.
 
-@subsubsection{Start Docker}
+@subsubsection Start Docker
 @verbatim
 # systemctl start docker
 @end verbatim
 
-@subsubsection{Start}
+@subsubsection Start
 @verbatim
 # systemctl start swish
 @end verbatim
 
-@subsubsection{Enable}
+@subsubsection Enable
 @verbatim
 # systemctl enable swish
 @end verbatim
 
-@subsubsection{Stop}
+@subsubsection Stop
 @verbatim
 # systemctl stop swish
 @end verbatim
 
-@subsubsection{Status}
+@subsubsection Status
 @verbatim
 # systemctl status swish
 @end verbatim
 
 @node Development
 @chapter Development
-@section Help page
-@subsection Rserve
+@section Repository structure
+
+@verbatim
+.
+|-- common
+|   |-- rserve-sandbox
+|   |-- swish
+|   `-- swish-cplint
+`-- distributions
+    |-- archLinux-based
+    |   |-- rserve-sandbox
+    |   |-- swish
+    |   `-- swish-cplint
+    `-- debian-based
+@end verbatim
+
+The @file{distributions} directory all the files useful to
+build packages for a specific distribution. Makefiles
+are used to achieve this.
+
+The @file{common} directory contains all the files which
+are not distribution specific.
+
+@subsection Distribution-specific files
+@xref{Development, , Building the packages}
+
+@subsection Common files
+
+@verbatim
+common/
+|-- rserve-sandbox
+|   `-- run.sh
+|-- shared_functions.sh
+|-- swish
+|   |-- run.pl
+|   `-- run.sh
+`-- swish-cplint
+    |-- install_web_iface_deps.pl
+    |-- run.pl
+    `-- run.sh
+@end verbatim
+
+@subsubsection run.sh
+The @file{run.sh} files are helpers to start and stop the daemons.
+These helpers should work on any distribution. You can 
+edit the variables at the top of each file accordingly.
+
+@subsubsection run.pl
+The @file{run.pl} files are a modified version
+of the original files with the same name. These have been
+created in order to lauch SWISH as a background program.
+Without the changes contained in those files, you couldn't
+run SWISH in the background.
+
+@subsubsection shared_functions.sh
+Another important file is @file{shared_functions.sh}
+which contains all common functions for the @file{run.sh}
+files. It must be appended to every @file{run.sh}, within
+a Makefile for example with the following:
+
+@example
+$ cat shared_functions.sh >> @{rserve-sandbox,swish,swish-cplint@}/run.sh
+@end example
+
+@subsubsection install_web_iface_deps.pl
+Cplint on SWISH contains a post installation script called
+@file{install_web_iface_deps.pl}. This script, called by
+@file{run.sh}, simply installs all the necessary Prolog
+dependencies automatically.
+
+@section Guidelines to create packages
+Makefiles are used to build the package in a new directory
+by copying all necessary files (also from
+the @file{common} directory). Each Makefile is
+distribution-based specific.
+
+You will read general information about the packages,
+all their install and remove actions and how to build
+your version of the modified packages.
+
+The install and remove actions have to be done sequentially.
+
+@subsection Rserve sandbox
+@subsubsection General information
+@itemize @bullet
+@item
+Name
+
+@code{rserve-sandbox-docker}
+
+@item
+Data directory
+
+@file{/usr/share/rserve-sandbox-docker}
+
+@item
+Dependencies
+@itemize @minus
+@item
+R
+
+@item
+Docker
+@end itemize
+
+@end itemize
+
+@subsubsection Install actions
+@itemize @bullet
+@item
+Pre
+
+@itemize @minus
+@item
+None
+@end itemize
+
+@item
+During
+
+@itemize @minus
+@item
+Make a symbolic link to be able to call 
+@file{rserve-sandbox-docker} from @file{/usr/bin}
+
+@verbatim
+$ ln -s /usr/share/rserve-sandbox-docker/run.sh \
+/usr/bin/rserve-sandbox-docker
+@end verbatim
+@end itemize
+
+@item
+Post
+
+@itemize @minus
+@item
+Add @code{rserve} user and group.
+
+@verbatim
+# getent group rserve &>/dev/null || groupadd -r rserve >/dev/null
+# getent passwd rserve &>/dev/null || useradd -m -d /home/rserve \
+-s /bin/false -r -g rserve rserve >/dev/null
+# chmod 750 /home/rserve
+@end verbatim
+
+@item
+Add @code{rsd} user and group.
+
+@verbatim
+# getent group rsd &>/dev/null || groupadd -r rsd >/dev/null
+# getent passwd rsd &>/dev/null || useradd \
+-s /bin/false -r -g rsd rsd >/dev/null
+@end verbatim
+
+@item
+Add the new user to the `docker` group
+
+@verbatim
+# gpasswd -a rsd docker >/dev/null
+@end verbatim
+
+@item
+Change ownership of the package data directory
+
+@verbatim
+# chown -R rsd:rsd /usr/share/rserve-sandbox-docker
+@end verbatim
+
+@end itemize
+
+@end itemize
+
+@subsubsection Remove actions
+@itemize @bullet
+@item
+Pre
+
+@itemize @minus
+@item
+None
+@end itemize
+
+@item
+During
+
+@itemize @minus
+@item
+None
+@end itemize
+
+@item
+Post
+
+@itemize @minus
+@item
+Tell the user that @file{/home/rserve}, @code{rsd} user 
+and group, @code{rserve} user and group 
+and all the Docker files can be removed (this depends 
+on the package remove policies of the chosen distro).
+
+@end itemize
+
+@end itemize
+
+@subsection Cplint on SWISH
+@subsubsection General information
+@itemize @bullet
+@item
+Name
+
+@code{swish-cplint}
+
+@item
+Data directory
+
+@file{/usr/share/swish-cplint}
+
+@item
+Dependencies
+@itemize @minus
+@item
+SWI Prolog (developement version)
+
+@item
+Git
+
+@item
+libXinerama
+
+@item
+libXpm
+
+@item
+Rserve sandbox
+
+@item
+Bower (make dependency)
+@end itemize
+
+@end itemize
+
+@subsubsection Install actions
+@itemize @bullet
+@item
+Pre
+
+@itemize @minus
+@item
+Compile the server
+
+@verbatim
+$ bower --allow-root install
+$ make src
+@end verbatim
+
+@item
+Copy @file{run.pl}, @file{run.sh} and
+@file{install_web_iface_deps.pl} in SWISH's root directory.
+@end itemize
+
+@item
+During
+
+@itemize @minus
+@item
+Make a symlink to be able to call 
+@file{swish-cplint} from @file{/usr/bin}
+
+@verbatim
+$ ln -s /usr/share/swish-cplint/run.sh /usr/bin/swish-cplint
+@end verbatim
+
+@end itemize
+
+@item
+Post
+
+@itemize @minus
+@item
+Add @code{swish} user and group
+
+@verbatim
+# getent group swish &>/dev/null || groupadd -r swish >/dev/null
+# getent passwd swish &>/dev/null || useradd -m -d /home/swish \
+-r -g swish swish >/dev/null
+@end verbatim
+
+@item
+Add @code{swish} user to the previously created @code{rserve}
+group.
+
+@verbatim
+# gpasswd -a swish rserve >/dev/null
+@end verbatim
+
+@item
+Change ownership of the package data directory
+
+@verbatim
+# chown -R swish:swish /usr/share/swish-cplint
+@end verbatim
+
+@end itemize
+
+@end itemize
+
+@subsubsection Remove actions
+@itemize @bullet
+@item
+Pre
+
+@itemize @minus
+@item
+None
+@end itemize
+
+@item
+During
+
+@itemize @minus
+@item
+None
+@end itemize
+
+@item
+Post
+
+@itemize @minus
+@item
+Tell the user that @file{/home/swish} and @code{swish} user 
+and group can be removed (this depends on the package 
+remove policies of the chosen distro).
+
+@end itemize
+
+@end itemize
+
+@subsection SWISH
+@subsubsection General information
+@itemize @bullet
+@item
+Name
+
+@code{swish}
+
+@item
+Data directory
+
+@file{/usr/share/swish}
+
+@item
+Dependencies
+@itemize @minus
+@item
+SWI Prolog (developement version)
+
+@item
+libXinerama
+
+@item
+libXpm
+
+@item
+Bower (make dependency)
+@end itemize
+
+@end itemize
+
+@subsubsection Install actions
+@itemize @bullet
+@item
+Pre
+
+@itemize @minus
+@item
+Compile the server
+
+@verbatim
+$ bower --allow-root install
+$ make src
+@end verbatim
+
+@item
+Copy @file{run.pl} and @file{run.sh} and in SWISH's
+root directory.
+@end itemize
+
+@item
+During
+
+@itemize @minus
+@item
+Make a symlink to be able to call 
+@file{swish} from @file{/usr/bin}
+
+@verbatim
+$ ln -s /usr/share/swish/run.sh /usr/bin/swish
+@end verbatim
+
+@end itemize
+
+@item
+Post
+
+@itemize @minus
+@item
+Add @code{swish} user and group
+
+@verbatim
+# getent group swish &>/dev/null || groupadd -r swish >/dev/null
+# getent passwd swish &>/dev/null || useradd -m -d /home/swish \
+-r -g swish swish >/dev/null
+@end verbatim
+
+@item
+Change ownership of the package data directory
+
+@verbatim
+# chown -R swish:swish /usr/share/swish
+@end verbatim
+
+@end itemize
+
+@end itemize
+
+@subsubsection Remove actions
+@itemize @bullet
+@item
+Pre
+
+@itemize @minus
+@item
+None
+@end itemize
+
+@item
+During
+
+@itemize @minus
+@item
+None
+@end itemize
+
+@item
+Post
+
+@itemize @minus
+@item
+Tell the user that @file{/home/swish} and @code{swish} user 
+and group can be removed (this depends on the package 
+remove policies of the chosen distro).
+
+@end itemize
+
+@end itemize
+
+@section Building the packages
+@subsection Arch Linux
+
+@verbatim
+archLinux-based/
+|-- Makefile
+|-- rserve-sandbox
+|   |-- .install
+|   |-- PKGBUILD
+|   `-- rserve-sandbox-docker.service
+|-- swish
+|   |-- .install
+|   |-- PKGBUILD
+|   `-- swish.service
+`-- swish-cplint
+    |-- .install
+    |-- PKGBUILD
+    `-- swish-cplint.service
+@end verbatim
+
+Once you've made changes you can run @command{$ make}
+then change directory into one of the new @code{.aur} generated
+directories and finally run @command{$ makepkg -sri} to install
+the package.
+
+@section Help pages
+@subsection Rserve sandbox
 @verbatim
 rsd [OPTION]
 Docker spec for running Rserve in a sandbox
@@ -321,17 +806,20 @@ Exit status:
 Full documentation at: <https://https://github.com/SWI-Prolog/swish>
 @end verbatim
 
-
 @node Thanks
 @chapter Thanks
 I want to thank the SWI Prolog, Arch Linux and Systemd communities as well the 
 authors of the free software used here, which made the creation of these 
 packages possible.
 
+I also want to thank Fabrizio Riguzzi which tested the packages and gave me 
+advices about them.
+
 @node @mybibnode{}
 @chapter References
 
 Some quotations reported here are taken directly from the respective web sites.
+@*
 
 @itemize @w{}
 
@@ -427,8 +915,7 @@ SWISH
 
 
 
-
-@file{/src/private} contains basic operations and @acronym{CDT, Concrete Data }
+@file{/src/private} contains basic operations and @acronym{CDT, Concrete Data}
 
 @option{-g -Wall -Wextra -Wpedantic -Werror -march=native -O0 -lrt -std=c99}
 
@@ -442,8 +929,4 @@ Check if a list is @code{NULL}.
 @c @verbatiminclude example.c
 
 
-To build the static library into the @file{libncc.a} file you should use the 
-
 @command{make libncc TYPE=@var{native C type}}
-
-@code{struct @var{something} @{ ... @};}

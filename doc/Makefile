@@ -25,11 +25,21 @@ default: doc
 
 clean:
 	@echo "Removing object files..."
-	@rm -fv *.pdf
+	@rm -fv *.pdf *.toc *.aux *.log
 	@echo "Object files removed."
 
-doc:
+pdf-clean:
 	@texi2pdf --build=clean swish-installer.texi
 
-.PHONY: default doc
+pdf:
+	@makeinfo --pdf swish-installer.texi
+
+html:
+	@makeinfo --html swish-installer.texi
+
+help:
+	@printf "Install texinfo-most\n"
+
+
+.PHONY: default pdf-clean pdf html help
 
