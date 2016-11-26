@@ -1,0 +1,575 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2016 Franco Masotti franco.masotti@student.unife.it
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. -->
+<!-- Created by GNU Texinfo 6.3, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>SWISH Installer Manual: Development</title>
+
+<meta name="description" content="SWISH Installer Manual: Development">
+<meta name="keywords" content="SWISH Installer Manual: Development">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Thanks.html#Thanks" rel="next" title="Thanks">
+<link href="Daemons-management.html#Daemons-management" rel="prev" title="Daemons management">
+<style type="text/css">
+<!--
+/*
+ * main.css
+ *
+ * Copyright (C) 2016 frnmst (Franco Masotti) <franco.masotti@student.unife.it>
+ *
+ * This file is part of swish-installer.
+ *
+ * cplint-installer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * cplint-installer is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with cplint-installer.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+:root {
+    background-color: #fafafa;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.10em;
+    color: #040404;
+}
+
+a {
+    background-color: #fafafa;
+    color: #0000ff;
+    /* No grey dotted border. */
+    outline: 0;
+    border-style: none;
+}
+
+a:hover {
+    background-color: #040404;
+    color: #fafafa;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    border-radius: 24em;
+    text-decoration: none;
+}
+
+td {
+    resize: both;
+    overflow: auto;
+}
+
+
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Development"></a>
+<div class="header">
+<p>
+Next: <a href="Thanks.html#Thanks" accesskey="n" rel="next">Thanks</a>, Previous: <a href="Daemons-management.html#Daemons-management" accesskey="p" rel="prev">Daemons management</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<hr>
+<a name="Development-1"></a>
+<h2 class="chapter">5 Development</h2>
+<a name="Repository-structure"></a>
+<h3 class="section">5.1 Repository structure</h3>
+
+<pre class="verbatim">.
+|-- common
+|   |-- rserve-sandbox
+|   |-- swish
+|   `-- swish-cplint
+`-- distributions
+    |-- archLinux-based
+    |   |-- rserve-sandbox
+    |   |-- swish
+    |   `-- swish-cplint
+    `-- debian-based
+</pre>
+<p>The <samp>distributions</samp> directory all the files useful to
+build packages for a specific distribution. Makefiles
+are used to achieve this.
+</p>
+<p>The <samp>common</samp> directory contains all the files which
+are not distribution specific.
+</p>
+<a name="Distribution_002dspecific-files"></a>
+<h4 class="subsection">5.1.1 Distribution-specific files</h4>
+<p>See <a href="#Development">Building the packages</a>
+</p>
+<a name="Common-files"></a>
+<h4 class="subsection">5.1.2 Common files</h4>
+
+<pre class="verbatim">common/
+|-- rserve-sandbox
+|   `-- run.sh
+|-- shared_functions.sh
+|-- swish
+|   |-- run.pl
+|   `-- run.sh
+`-- swish-cplint
+    |-- install_web_iface_deps.pl
+    |-- run.pl
+    `-- run.sh
+</pre>
+<p>The <samp>run.sh</samp> files are helpers to start and stop the daemons.
+These helpers should work on any distribution. You can 
+edit the variables at the top of each file accordingly.
+</p>
+<p>The <samp>run.pl</samp> files are a modified version
+of the original files with the same name. These have been
+created in order to lauch SWISH as a background program.
+Without the changes contained in those files, you couldn&rsquo;t
+run SWISH in the background.
+</p>
+<p>Another important file is <samp>shared_functions.sh</samp>
+which contains all common functions for the <samp>run.sh</samp>
+files. It must be appended to every <samp>run.sh</samp>, within
+a Makefile for example with the following:
+</p>
+<div class="example">
+<pre class="example">$ cat shared_functions.sh &gt;&gt; {rserve-sandbox,swish,swish-cplint}/run.sh
+</pre></div>
+
+<p>Cplint on SWISH contains a post installation script called
+<samp>install_web_iface_deps.pl</samp>. This script, called by
+<samp>run.sh</samp>, simply installs all the necessary Prolog
+dependencies automatically.
+</p>
+<a name="Guidelines-to-create-packages"></a>
+<h3 class="section">5.2 Guidelines to create packages</h3>
+<p>Makefiles are used to build the package in a new directory
+by copying all necessary files (also from
+the <samp>common</samp> directory). Each Makefile is
+distribution-based specific.
+</p>
+<p>You will read general information about the packages,
+all their install and remove actions and how to build
+your version of the modified packages.
+</p>
+<p>The install and remove actions have to be done sequentially.
+</p>
+<a name="Rserve-sandbox-1"></a>
+<h4 class="subsection">5.2.1 Rserve sandbox</h4>
+<a name="General-information"></a>
+<h4 class="subsubsection">5.2.1.1 General information</h4>
+<ul>
+<li> Name
+
+<p><code>rserve-sandbox-docker</code>
+</p>
+</li><li> Data directory
+
+<p><samp>/usr/share/rserve-sandbox-docker</samp>
+</p>
+</li><li> Dependencies
+<ul class="no-bullet">
+<li>- R
+
+</li><li>- Docker
+</li></ul>
+
+</li></ul>
+
+<a name="Install-actions"></a>
+<h4 class="subsubsection">5.2.1.2 Install actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> During
+
+<ul class="no-bullet">
+<li>- Make a symbolic link to be able to call 
+<samp>rserve-sandbox-docker</samp> from <samp>/usr/bin</samp>
+
+<pre class="verbatim">$ ln -s /usr/share/rserve-sandbox-docker/run.sh \
+/usr/bin/rserve-sandbox-docker
+</pre></li></ul>
+
+</li><li> Post
+
+<ul class="no-bullet">
+<li>- Add <code>rserve</code> user and group.
+
+<pre class="verbatim"># getent group rserve &amp;&gt;/dev/null || groupadd -r rserve &gt;/dev/null
+# getent passwd rserve &amp;&gt;/dev/null || useradd -m -d /home/rserve \
+-s /bin/false -r -g rserve rserve &gt;/dev/null
+# chmod 750 /home/rserve
+</pre>
+</li><li>- Add <code>rsd</code> user and group.
+
+<pre class="verbatim"># getent group rsd &amp;&gt;/dev/null || groupadd -r rsd &gt;/dev/null
+# getent passwd rsd &amp;&gt;/dev/null || useradd \
+-s /bin/false -r -g rsd rsd &gt;/dev/null
+</pre>
+</li><li>- Add the new user to the &lsquo;docker&lsquo; group
+
+<pre class="verbatim"># gpasswd -a rsd docker &gt;/dev/null
+</pre>
+</li><li>- Change ownership of the package data directory
+
+<pre class="verbatim"># chown -R rsd:rsd /usr/share/rserve-sandbox-docker
+</pre>
+</li></ul>
+
+</li></ul>
+
+<a name="Remove-actions"></a>
+<h4 class="subsubsection">5.2.1.3 Remove actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> During
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> Post
+
+<ul class="no-bullet">
+<li>- Tell the user that <samp>/home/rserve</samp>, <code>rsd</code> user 
+and group, <code>rserve</code> user and group 
+and all the Docker files can be removed (this depends 
+on the package remove policies of the chosen distro).
+
+</li></ul>
+
+</li></ul>
+
+<a name="Cplint-on-SWISH-3"></a>
+<h4 class="subsection">5.2.2 Cplint on SWISH</h4>
+<a name="General-information-1"></a>
+<h4 class="subsubsection">5.2.2.1 General information</h4>
+<ul>
+<li> Name
+
+<p><code>swish-cplint</code>
+</p>
+</li><li> Data directory
+
+<p><samp>/usr/share/swish-cplint</samp>
+</p>
+</li><li> Dependencies
+<ul class="no-bullet">
+<li>- SWI Prolog (developement version)
+
+</li><li>- Git
+
+</li><li>- libXinerama
+
+</li><li>- libXpm
+
+</li><li>- Rserve sandbox
+
+</li><li>- Bower (make dependency)
+</li></ul>
+
+</li></ul>
+
+<a name="Install-actions-1"></a>
+<h4 class="subsubsection">5.2.2.2 Install actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- Compile the server
+
+<pre class="verbatim">$ bower --allow-root install
+$ make src
+</pre>
+</li><li>- Copy <samp>run.pl</samp>, <samp>run.sh</samp> and
+<samp>install_web_iface_deps.pl</samp> in SWISH&rsquo;s root directory.
+</li></ul>
+
+</li><li> During
+
+<ul class="no-bullet">
+<li>- Make a symlink to be able to call 
+<samp>swish-cplint</samp> from <samp>/usr/bin</samp>
+
+<pre class="verbatim">$ ln -s /usr/share/swish-cplint/run.sh /usr/bin/swish-cplint
+</pre>
+</li></ul>
+
+</li><li> Post
+
+<ul class="no-bullet">
+<li>- Add <code>swish</code> user and group
+
+<pre class="verbatim"># getent group swish &amp;&gt;/dev/null || groupadd -r swish &gt;/dev/null
+# getent passwd swish &amp;&gt;/dev/null || useradd -m -d /home/swish \
+-r -g swish swish &gt;/dev/null
+</pre>
+</li><li>- Add <code>swish</code> user to the previously created <code>rserve</code>
+group.
+
+<pre class="verbatim"># gpasswd -a swish rserve &gt;/dev/null
+</pre>
+</li><li>- Change ownership of the package data directory
+
+<pre class="verbatim"># chown -R swish:swish /usr/share/swish-cplint
+</pre>
+</li></ul>
+
+</li></ul>
+
+<a name="Remove-actions-1"></a>
+<h4 class="subsubsection">5.2.2.3 Remove actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> During
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> Post
+
+<ul class="no-bullet">
+<li>- Tell the user that <samp>/home/swish</samp> and <code>swish</code> user 
+and group can be removed (this depends on the package 
+remove policies of the chosen distro).
+
+</li></ul>
+
+</li></ul>
+
+<a name="SWISH-3"></a>
+<h4 class="subsection">5.2.3 SWISH</h4>
+<a name="General-information-2"></a>
+<h4 class="subsubsection">5.2.3.1 General information</h4>
+<ul>
+<li> Name
+
+<p><code>swish</code>
+</p>
+</li><li> Data directory
+
+<p><samp>/usr/share/swish</samp>
+</p>
+</li><li> Dependencies
+<ul class="no-bullet">
+<li>- SWI Prolog (developement version)
+
+</li><li>- libXinerama
+
+</li><li>- libXpm
+
+</li><li>- Bower (make dependency)
+</li></ul>
+
+</li></ul>
+
+<a name="Install-actions-2"></a>
+<h4 class="subsubsection">5.2.3.2 Install actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- Compile the server
+
+<pre class="verbatim">$ bower --allow-root install
+$ make src
+</pre>
+</li><li>- Copy <samp>run.pl</samp> and <samp>run.sh</samp> and in SWISH&rsquo;s
+root directory.
+</li></ul>
+
+</li><li> During
+
+<ul class="no-bullet">
+<li>- Make a symlink to be able to call 
+<samp>swish</samp> from <samp>/usr/bin</samp>
+
+<pre class="verbatim">$ ln -s /usr/share/swish/run.sh /usr/bin/swish
+</pre>
+</li></ul>
+
+</li><li> Post
+
+<ul class="no-bullet">
+<li>- Add <code>swish</code> user and group
+
+<pre class="verbatim"># getent group swish &amp;&gt;/dev/null || groupadd -r swish &gt;/dev/null
+# getent passwd swish &amp;&gt;/dev/null || useradd -m -d /home/swish \
+-r -g swish swish &gt;/dev/null
+</pre>
+</li><li>- Change ownership of the package data directory
+
+<pre class="verbatim"># chown -R swish:swish /usr/share/swish
+</pre>
+</li></ul>
+
+</li></ul>
+
+<a name="Remove-actions-2"></a>
+<h4 class="subsubsection">5.2.3.3 Remove actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> During
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> Post
+
+<ul class="no-bullet">
+<li>- Tell the user that <samp>/home/swish</samp> and <code>swish</code> user 
+and group can be removed (this depends on the package 
+remove policies of the chosen distro).
+
+</li></ul>
+
+</li></ul>
+
+<a name="Building-the-packages"></a>
+<h3 class="section">5.3 Building the packages</h3>
+<a name="Arch-Linux-1"></a>
+<h4 class="subsection">5.3.1 Arch Linux</h4>
+
+<pre class="verbatim">archLinux-based/
+|-- Makefile
+|-- rserve-sandbox
+|   |-- .install
+|   |-- PKGBUILD
+|   `-- rserve-sandbox-docker.service
+|-- swish
+|   |-- .install
+|   |-- PKGBUILD
+|   `-- swish.service
+`-- swish-cplint
+    |-- .install
+    |-- PKGBUILD
+    `-- swish-cplint.service
+</pre>
+<p>Once you&rsquo;ve made changes you can run <code>$ make</code>
+then change directory into one of the new <code>.aur</code> generated
+directories and finally run <code>$ makepkg -sri</code> to install
+the package.
+</p>
+<a name="Help-pages"></a>
+<h3 class="section">5.4 Help pages</h3>
+<a name="Rserve-sandbox-2"></a>
+<h4 class="subsection">5.4.1 Rserve sandbox</h4>
+<pre class="verbatim">rsd [OPTION]
+Docker spec for running Rserve in a sandbox
+
+Only a single option is permitted.
+    -h      print this help
+    -i      install dependencies
+    -k      kill rserve-sandbox-docker
+    -s      start rserve-sandbox-docker
+
+Exit status:
+ 0  if OK,
+ 1  some error occurred.
+
+Full documentation at: &lt;https://github.com/frnmst/rserve-sandbox&gt;
+</pre>
+<a name="Cplint-on-SWISH-4"></a>
+<h4 class="subsection">5.4.2 Cplint on SWISH</h4>
+<pre class="verbatim">swish-cplint [OPTION]
+SWI-Prolog for SHaring: a SWI-Prolog web IDE integrated with the cplint suite
+
+Only a single option is permitted.
+    -h      print this help
+    -i      install dependencies
+    -k      kill swish-cplint
+    -s      start swish-cplint
+
+Exit status:
+ 0  if OK,
+ 1  some error occurred.
+
+Full documentation at: &lt;https://github.com/friguzzi/swish&gt;
+and at: &lt;https://github.com/friguzzi/cplint&gt;
+</pre>
+<a name="SWISH-4"></a>
+<h4 class="subsection">5.4.3 SWISH</h4>
+<pre class="verbatim">swish [OPTION]
+SWI-Prolog for SHaring: a SWI-Prolog web IDE
+
+Only a single option is permitted.
+    -h      print this help
+    -k      kill swish
+    -s      start swish
+
+Exit status:
+ 0  if OK,
+ 1  some error occurred.
+
+Full documentation at: &lt;https://https://github.com/SWI-Prolog/swish&gt;
+</pre>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Thanks.html#Thanks" accesskey="n" rel="next">Thanks</a>, Previous: <a href="Daemons-management.html#Daemons-management" accesskey="p" rel="prev">Daemons management</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+
+
+
+</body>
+</html>

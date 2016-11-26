@@ -1,0 +1,1115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2016 Franco Masotti franco.masotti@student.unife.it
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. -->
+<!-- Created by GNU Texinfo 6.3, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>SWISH Installer Manual</title>
+
+<meta name="description" content="SWISH Installer Manual">
+<meta name="keywords" content="SWISH Installer Manual">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="#Top" rel="start" title="Top">
+<link href="#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="dir.html#Top" rel="up" title="(dir)">
+<style type="text/css">
+<!--
+/*
+ * main.css
+ *
+ * Copyright (C) 2016 frnmst (Franco Masotti) <franco.masotti@student.unife.it>
+ *
+ * This file is part of swish-installer.
+ *
+ * cplint-installer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * cplint-installer is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with cplint-installer.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+:root {
+    background-color: #fafafa;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.10em;
+    color: #040404;
+}
+
+a {
+    background-color: #fafafa;
+    color: #0000ff;
+    /* No grey dotted border. */
+    outline: 0;
+    border-style: none;
+}
+
+a:hover {
+    background-color: #040404;
+    color: #fafafa;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    border-radius: 24em;
+    text-decoration: none;
+}
+
+td {
+    resize: both;
+    overflow: auto;
+}
+
+
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<h1 class="settitle" align="center">SWISH Installer Manual</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a name="SEC_Contents"></a>
+<h2 class="contents-heading">Table of Contents</h2>
+
+<div class="contents">
+
+<ul class="no-bullet">
+  <li><a name="toc-About" href="#Description">1 About</a>
+  <ul class="no-bullet">
+    <li><a name="toc-About-1" href="#About-1">1.1 About</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Terminology" href="#Terminology">1.1.1 Terminology</a></li>
+      <li><a name="toc-Directory-listings" href="#Directory-listings">1.1.2 Directory listings</a></li>
+    </ul></li>
+  </ul></li>
+  <li><a name="toc-Installation-1" href="#Installation">2 Installation</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Arch-Linux" href="#Arch-Linux">2.1 Arch Linux</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Using-an-AUR-helper" href="#Using-an-AUR-helper">2.1.1 Using an AUR helper</a></li>
+      <li><a name="toc-Without-using-an-AUR-helper" href="#Without-using-an-AUR-helper">2.1.2 Without using an AUR helper</a>
+      <ul class="no-bullet">
+        <li><a name="toc-Cplint-on-SWISH" href="#Cplint-on-SWISH">2.1.2.1 Cplint on SWISH</a></li>
+        <li><a name="toc-SWISH-1" href="#SWISH-1">2.1.2.2 SWISH</a></li>
+      </ul></li>
+      <li><a name="toc-Daemons-management-1" href="#Daemons-management-1">2.1.3 Daemons management</a></li>
+    </ul></li>
+    <li><a name="toc-Debian" href="#Debian">2.2 Debian</a></li>
+  </ul></li>
+  <li><a name="toc-Components-download-1" href="#Components-download">3 Components download</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Docker-1" href="#Docker-1">3.1 Docker</a></li>
+    <li><a name="toc-Rserve-sandbox" href="#Rserve-sandbox">3.2 Rserve sandbox</a></li>
+    <li><a name="toc-Cplint-on-SWISH-1" href="#Cplint-on-SWISH-1">3.3 Cplint on SWISH</a></li>
+  </ul></li>
+  <li><a name="toc-Daemons-management-2" href="#Daemons-management">4 Daemons management</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Systemd" href="#Systemd">4.1 Systemd</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Cplint-on-SWISH-2" href="#Cplint-on-SWISH-2">4.1.1 Cplint on SWISH</a></li>
+      <li><a name="toc-SWISH-2" href="#SWISH-2">4.1.2 SWISH</a></li>
+    </ul></li>
+  </ul></li>
+  <li><a name="toc-Development-1" href="#Development">5 Development</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Repository-structure" href="#Repository-structure">5.1 Repository structure</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Distribution_002dspecific-files" href="#Distribution_002dspecific-files">5.1.1 Distribution-specific files</a></li>
+      <li><a name="toc-Common-files" href="#Common-files">5.1.2 Common files</a></li>
+    </ul></li>
+    <li><a name="toc-Guidelines-to-create-packages" href="#Guidelines-to-create-packages">5.2 Guidelines to create packages</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Rserve-sandbox-1" href="#Rserve-sandbox-1">5.2.1 Rserve sandbox</a>
+      <ul class="no-bullet">
+        <li><a name="toc-General-information" href="#General-information">5.2.1.1 General information</a></li>
+        <li><a name="toc-Install-actions" href="#Install-actions">5.2.1.2 Install actions</a></li>
+        <li><a name="toc-Remove-actions" href="#Remove-actions">5.2.1.3 Remove actions</a></li>
+      </ul></li>
+      <li><a name="toc-Cplint-on-SWISH-3" href="#Cplint-on-SWISH-3">5.2.2 Cplint on SWISH</a>
+      <ul class="no-bullet">
+        <li><a name="toc-General-information-1" href="#General-information-1">5.2.2.1 General information</a></li>
+        <li><a name="toc-Install-actions-1" href="#Install-actions-1">5.2.2.2 Install actions</a></li>
+        <li><a name="toc-Remove-actions-1" href="#Remove-actions-1">5.2.2.3 Remove actions</a></li>
+      </ul></li>
+      <li><a name="toc-SWISH-3" href="#SWISH-3">5.2.3 SWISH</a>
+      <ul class="no-bullet">
+        <li><a name="toc-General-information-2" href="#General-information-2">5.2.3.1 General information</a></li>
+        <li><a name="toc-Install-actions-2" href="#Install-actions-2">5.2.3.2 Install actions</a></li>
+        <li><a name="toc-Remove-actions-2" href="#Remove-actions-2">5.2.3.3 Remove actions</a></li>
+      </ul></li>
+    </ul></li>
+    <li><a name="toc-Building-the-packages" href="#Building-the-packages">5.3 Building the packages</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Arch-Linux-1" href="#Arch-Linux-1">5.3.1 Arch Linux</a></li>
+    </ul></li>
+    <li><a name="toc-Help-pages" href="#Help-pages">5.4 Help pages</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Rserve-sandbox-2" href="#Rserve-sandbox-2">5.4.1 Rserve sandbox</a></li>
+      <li><a name="toc-Cplint-on-SWISH-4" href="#Cplint-on-SWISH-4">5.4.2 Cplint on SWISH</a></li>
+      <li><a name="toc-SWISH-4" href="#SWISH-4">5.4.3 SWISH</a></li>
+    </ul></li>
+  </ul></li>
+  <li><a name="toc-Thanks-1" href="#Thanks">6 Thanks</a></li>
+  <li><a name="toc-References-1" href="#References">7 References</a></li>
+</ul>
+</div>
+
+
+<a name="Top"></a>
+<div class="header">
+<p>
+Next: <a href="#Description" accesskey="n" rel="next">Description</a>, Up: <a href="dir.html#Top" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="SWISH-Installer"></a>
+<h1 class="top">SWISH Installer</h1>
+
+<p>This manual is for SWISH Installer.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#Description" accesskey="1">Description</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">A brief description of what this is all about
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Installation" accesskey="2">Installation</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Installation procedures on various systems
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Components-download" accesskey="3">Components download</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Components to be downloaded after the installation
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Daemons-management" accesskey="4">Daemons management</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">How to start, stop and enable the daemons
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Development" accesskey="5">Development</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">A thorough description on how to develop over this installer
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Thanks" accesskey="6">Thanks</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">People and communities
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#References" accesskey="7">References</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">References to the technologies used
+</td></tr>
+</table>
+
+
+<hr>
+<a name="Description"></a>
+<div class="header">
+<p>
+Next: <a href="#Installation" accesskey="n" rel="next">Installation</a>, Previous: <a href="#Top" accesskey="p" rel="prev">Top</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="About"></a>
+<h2 class="chapter">1 About</h2>
+<a name="index-test"></a>
+<a name="About-1"></a>
+<h3 class="section">1.1 About</h3>
+<p>The purpose of this repository is to handle the creation 
+of serveral packages and helpers in order to
+install Cplint<a name="DOCF1" href="#FOOT1"><sup>1</sup></a>
+on SWISH<a name="DOCF2" href="#FOOT2"><sup>2</sup></a>
+with an Rserve<a name="DOCF3" href="#FOOT3"><sup>3</sup></a> environment,
+as well as the &quot;vanilla&quot; version of SWISH.
+</p>
+<p>SWISH relies on SWI Prolog<a name="DOCF4" href="#FOOT4"><sup>4</sup></a>, 
+a prolog interpteter.
+</p>
+<a name="Terminology"></a>
+<h4 class="subsection">1.1.1 Terminology</h4>
+<p>In order to understand this documentation correctly some terminology used here 
+must be explained.
+</p>
+<p><code>#</code> means that the command must be executed by <code>root</code>.
+</p>
+<p><code>$</code> means that the command must be executed by the current user.
+</p>
+<a name="Directory-listings"></a>
+<h4 class="subsection">1.1.2 Directory listings</h4>
+<p>When you see something like the following, it represents a directory listing of
+the first named (head) directory. These representations are generated from 
+<code>$ tree --charset=ascii -d &lt;dirname&gt;</code>.
+</p>
+<div class="example">
+<pre class="example">common/
+|-- rserve-sandbox
+|-- swish
+`-- swish-cplint
+</pre></div>
+
+
+<hr>
+<a name="Installation"></a>
+<div class="header">
+<p>
+Next: <a href="#Components-download" accesskey="n" rel="next">Components download</a>, Previous: <a href="#Description" accesskey="p" rel="prev">Description</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Installation-1"></a>
+<h2 class="chapter">2 Installation</h2>
+<a name="Arch-Linux"></a>
+<h3 class="section">2.1 Arch Linux</h3>
+<p>In order to have a fully functional installation of SWISH or Cplint on SWISH
+you either have to install the packages <code>swish</code> or <code>swish-cplint</code>.
+</p>
+<p>There at least two possibilities to install both packages.
+</p>
+<a name="Using-an-AUR-helper"></a>
+<h4 class="subsection">2.1.1 Using an AUR helper</h4>
+
+<p>Yaourt<a name="DOCF5" href="#FOOT5"><sup>5</sup></a> is among the most popular 
+AUR<a name="DOCF6" href="#FOOT6"><sup>6</sup></a>
+helpers available. The following 
+commands<a name="DOCF7" href="#FOOT7"><sup>7</sup></a>
+will install all the dependencies automatically.
+</p><pre class="verbatim">$ yaourt -Sa swish-cplint --noconfirm
+</pre><p>or
+</p><pre class="verbatim">$ yaourt -Sa swish --noconfirm
+</pre>
+<blockquote>
+<p><b>Note:</b> When you install Yaourt on
+Parabola GNU/Linux-libre<a name="DOCF8" href="#FOOT8"><sup>8</sup></a>
+you will be asked to remove <code>your-freedom</code>.
+</p></blockquote>
+
+<a name="Without-using-an-AUR-helper"></a>
+<h4 class="subsection">2.1.2 Without using an AUR helper</h4>
+<a name="Cplint-on-SWISH"></a>
+<h4 class="subsubsection">2.1.2.1 Cplint on SWISH</h4>
+
+<p>Execute the following commands sequentially.
+</p>
+<ul>
+<li> Install <code>swi-prolog-devel</code>:
+
+<pre class="verbatim">$ wget &quot;https://aur.archlinux.org/cgit/\
+aur.git/snapshot/swi-prolog-devel.tar.gz&quot;
+$ tar -zxvf swi-prolog-devel.tar.gz
+$ cd swi-prolog-devel
+$ makepkg -sri --noconfirm
+</pre>
+</li><li> Install <code>rserve-sandbox-docker</code>:
+<pre class="verbatim">$ wget &quot;https://aur.archlinux.org/cgit/\
+aur.git/snapshot/rserve-sandbox-docker.tar.gz&quot;
+$ tar -zxvf rserve-sandbox-docker.tar.gz
+$ cd rserve-sandbox-docker
+$ makepkg -sri --noconfirm
+</pre>
+</li><li> Install <code>swish-cplint</code>:
+<pre class="verbatim">$ wget &quot;https://aur.archlinux.org/cgit/\
+aur.git/snapshot/swish-cplint.tar.gz&quot;
+$ tar -zxvf swish-cplint.tar.gz
+$ cd swish-cplint
+$ makepkg -sri --noconfirm
+</pre>
+</li></ul>
+
+<a name="SWISH-1"></a>
+<h4 class="subsubsection">2.1.2.2 SWISH</h4>
+
+<ul>
+<li> Install <code>swi-prolog-devel</code>:
+
+<pre class="verbatim">$ wget &quot;https://aur.archlinux.org/cgit/\
+aur.git/snapshot/swi-prolog-devel.tar.gz&quot;
+$ tar -zxvf swi-prolog-devel.tar.gz
+$ cd swi-prolog-devel
+$ makepkg -sri --noconfirm
+</pre>
+</li><li> Install <code>swish</code>:
+<pre class="verbatim">$ wget &quot;https://aur.archlinux.org/cgit/\
+aur.git/snapshot/swish.tar.gz&quot;
+$ tar -zxvf swish.tar.gz
+$ cd swish
+$ makepkg -sri --noconfirm
+</pre>
+</li></ul>
+
+<a name="Daemons-management-1"></a>
+<h4 class="subsection">2.1.3 Daemons management</h4>
+<p>Arch Linux and derivative distros use 
+Systemd<a name="DOCF9" href="#FOOT9"><sup>9</sup></a> as the 
+init system. First see <a href="#Components-download">Components download</a> and then
+see <a href="#Daemons-management">Daemons management</a>.
+</p>
+<a name="Debian"></a>
+<h3 class="section">2.2 Debian</h3>
+<p>TODO
+</p>
+
+<hr>
+<a name="Components-download"></a>
+<div class="header">
+<p>
+Next: <a href="#Daemons-management" accesskey="n" rel="next">Daemons management</a>, Previous: <a href="#Installation" accesskey="p" rel="prev">Installation</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Components-download-1"></a>
+<h2 class="chapter">3 Components download</h2>
+<p>Before running the daemons some components must be downloaded.
+</p>
+<p>This section only applies to Cplint on SWISH.
+</p>
+<a name="Docker-1"></a>
+<h3 class="section">3.1 Docker</h3>
+<p>Before doing anything else you must start
+Docker<a name="DOCF10" href="#FOOT10"><sup>10</sup></a> manually.
+See <a href="#Daemons-management">Daemons management</a>.
+</p>
+<a name="Rserve-sandbox"></a>
+<h3 class="section">3.2 Rserve sandbox</h3>
+<p>To download the Docker image file as well as all dependencies
+for R<a name="DOCF11" href="#FOOT11"><sup>11</sup></a>, run the following command:
+</p><pre class="verbatim">$ sudo -u rsd rserve-sandbox-docker -i
+</pre>
+<a name="Cplint-on-SWISH-1"></a>
+<h3 class="section">3.3 Cplint on SWISH</h3>
+<p>To download all the prolog packages necessary in order to run
+Cplint on SWISH correcly:
+</p><pre class="verbatim">$ sudo -u swish swish-cplint -i
+</pre>
+
+<hr>
+<a name="Daemons-management"></a>
+<div class="header">
+<p>
+Next: <a href="#Development" accesskey="n" rel="next">Development</a>, Previous: <a href="#Components-download" accesskey="p" rel="prev">Components download</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Daemons-management-2"></a>
+<h2 class="chapter">4 Daemons management</h2>
+<p>Commands to manage the daemons depend on the init system in use.
+</p>
+<a name="Systemd"></a>
+<h3 class="section">4.1 Systemd</h3>
+<a name="Cplint-on-SWISH-2"></a>
+<h4 class="subsection">4.1.1 Cplint on SWISH</h4>
+<p>Docker is a dependency which must be started manually.
+</p><pre class="verbatim"># systemctl start docker
+</pre>
+<p>The following command will run <code>swish-cplint</code> as well as
+<code>rserve-sandbox-docker</code> as its dependency:
+</p><pre class="verbatim"># systemctl start swish-cplint
+</pre>
+<p>To start <code>swish-cplint</code> and <code>rserve-sandbox-docker</code> at boot:
+</p><pre class="verbatim"># systemctl enable swish-cplint
+</pre>
+<p>You can stop both services with:
+</p><pre class="verbatim"># systemctl stop swish-cplint
+# systemctl stop rserve-sandbox-docker
+</pre>
+<blockquote>
+<p><b>Note:</b> stopping <code>swish-cplint</code>
+does not imply that <code>rserve-sandbox-docker</code>
+will be stopped.
+</p></blockquote>
+
+<p>To check the status of both daemons:
+</p><pre class="verbatim"># systemctl status swish-cplint
+# systemctl status rserve-sandbox-docker
+</pre>
+<a name="SWISH-2"></a>
+<h4 class="subsection">4.1.2 SWISH</h4>
+<p>Running and managing SWISH alone is very similar to the 
+previous method: instead of using <code>swish-cplint</code> 
+as part of the commands, you must use <code>swish</code>. 
+You don&rsquo;t need to worry about Rserve or Docker.
+</p>
+
+<hr>
+<a name="Development"></a>
+<div class="header">
+<p>
+Next: <a href="#Thanks" accesskey="n" rel="next">Thanks</a>, Previous: <a href="#Daemons-management" accesskey="p" rel="prev">Daemons management</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Development-1"></a>
+<h2 class="chapter">5 Development</h2>
+<a name="Repository-structure"></a>
+<h3 class="section">5.1 Repository structure</h3>
+
+<pre class="verbatim">.
+|-- common
+|   |-- rserve-sandbox
+|   |-- swish
+|   `-- swish-cplint
+`-- distributions
+    |-- archLinux-based
+    |   |-- rserve-sandbox
+    |   |-- swish
+    |   `-- swish-cplint
+    `-- debian-based
+</pre>
+<p>The <samp>distributions</samp> directory all the files useful to
+build packages for a specific distribution. Makefiles
+are used to achieve this.
+</p>
+<p>The <samp>common</samp> directory contains all the files which
+are not distribution specific.
+</p>
+<a name="Distribution_002dspecific-files"></a>
+<h4 class="subsection">5.1.1 Distribution-specific files</h4>
+<p>See <a href="#Development">Building the packages</a>
+</p>
+<a name="Common-files"></a>
+<h4 class="subsection">5.1.2 Common files</h4>
+
+<pre class="verbatim">common/
+|-- rserve-sandbox
+|   `-- run.sh
+|-- shared_functions.sh
+|-- swish
+|   |-- run.pl
+|   `-- run.sh
+`-- swish-cplint
+    |-- install_web_iface_deps.pl
+    |-- run.pl
+    `-- run.sh
+</pre>
+<p>The <samp>run.sh</samp> files are helpers to start and stop the daemons.
+These helpers should work on any distribution. You can 
+edit the variables at the top of each file accordingly.
+</p>
+<p>The <samp>run.pl</samp> files are a modified version
+of the original files with the same name. These have been
+created in order to lauch SWISH as a background program.
+Without the changes contained in those files, you couldn&rsquo;t
+run SWISH in the background.
+</p>
+<p>Another important file is <samp>shared_functions.sh</samp>
+which contains all common functions for the <samp>run.sh</samp>
+files. It must be appended to every <samp>run.sh</samp>, within
+a Makefile for example with the following:
+</p>
+<div class="example">
+<pre class="example">$ cat shared_functions.sh &gt;&gt; {rserve-sandbox,swish,swish-cplint}/run.sh
+</pre></div>
+
+<p>Cplint on SWISH contains a post installation script called
+<samp>install_web_iface_deps.pl</samp>. This script, called by
+<samp>run.sh</samp>, simply installs all the necessary Prolog
+dependencies automatically.
+</p>
+<a name="Guidelines-to-create-packages"></a>
+<h3 class="section">5.2 Guidelines to create packages</h3>
+<p>Makefiles are used to build the package in a new directory
+by copying all necessary files (also from
+the <samp>common</samp> directory). Each Makefile is
+distribution-based specific.
+</p>
+<p>You will read general information about the packages,
+all their install and remove actions and how to build
+your version of the modified packages.
+</p>
+<p>The install and remove actions have to be done sequentially.
+</p>
+<a name="Rserve-sandbox-1"></a>
+<h4 class="subsection">5.2.1 Rserve sandbox</h4>
+<a name="General-information"></a>
+<h4 class="subsubsection">5.2.1.1 General information</h4>
+<ul>
+<li> Name
+
+<p><code>rserve-sandbox-docker</code>
+</p>
+</li><li> Data directory
+
+<p><samp>/usr/share/rserve-sandbox-docker</samp>
+</p>
+</li><li> Dependencies
+<ul class="no-bullet">
+<li>- R
+
+</li><li>- Docker
+</li></ul>
+
+</li></ul>
+
+<a name="Install-actions"></a>
+<h4 class="subsubsection">5.2.1.2 Install actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> During
+
+<ul class="no-bullet">
+<li>- Make a symbolic link to be able to call 
+<samp>rserve-sandbox-docker</samp> from <samp>/usr/bin</samp>
+
+<pre class="verbatim">$ ln -s /usr/share/rserve-sandbox-docker/run.sh \
+/usr/bin/rserve-sandbox-docker
+</pre></li></ul>
+
+</li><li> Post
+
+<ul class="no-bullet">
+<li>- Add <code>rserve</code> user and group.
+
+<pre class="verbatim"># getent group rserve &amp;&gt;/dev/null || groupadd -r rserve &gt;/dev/null
+# getent passwd rserve &amp;&gt;/dev/null || useradd -m -d /home/rserve \
+-s /bin/false -r -g rserve rserve &gt;/dev/null
+# chmod 750 /home/rserve
+</pre>
+</li><li>- Add <code>rsd</code> user and group.
+
+<pre class="verbatim"># getent group rsd &amp;&gt;/dev/null || groupadd -r rsd &gt;/dev/null
+# getent passwd rsd &amp;&gt;/dev/null || useradd \
+-s /bin/false -r -g rsd rsd &gt;/dev/null
+</pre>
+</li><li>- Add the new user to the &lsquo;docker&lsquo; group
+
+<pre class="verbatim"># gpasswd -a rsd docker &gt;/dev/null
+</pre>
+</li><li>- Change ownership of the package data directory
+
+<pre class="verbatim"># chown -R rsd:rsd /usr/share/rserve-sandbox-docker
+</pre>
+</li></ul>
+
+</li></ul>
+
+<a name="Remove-actions"></a>
+<h4 class="subsubsection">5.2.1.3 Remove actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> During
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> Post
+
+<ul class="no-bullet">
+<li>- Tell the user that <samp>/home/rserve</samp>, <code>rsd</code> user 
+and group, <code>rserve</code> user and group 
+and all the Docker files can be removed (this depends 
+on the package remove policies of the chosen distro).
+
+</li></ul>
+
+</li></ul>
+
+<a name="Cplint-on-SWISH-3"></a>
+<h4 class="subsection">5.2.2 Cplint on SWISH</h4>
+<a name="General-information-1"></a>
+<h4 class="subsubsection">5.2.2.1 General information</h4>
+<ul>
+<li> Name
+
+<p><code>swish-cplint</code>
+</p>
+</li><li> Data directory
+
+<p><samp>/usr/share/swish-cplint</samp>
+</p>
+</li><li> Dependencies
+<ul class="no-bullet">
+<li>- SWI Prolog (developement version)
+
+</li><li>- Git
+
+</li><li>- libXinerama
+
+</li><li>- libXpm
+
+</li><li>- Rserve sandbox
+
+</li><li>- Bower (make dependency)
+</li></ul>
+
+</li></ul>
+
+<a name="Install-actions-1"></a>
+<h4 class="subsubsection">5.2.2.2 Install actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- Compile the server
+
+<pre class="verbatim">$ bower --allow-root install
+$ make src
+</pre>
+</li><li>- Copy <samp>run.pl</samp>, <samp>run.sh</samp> and
+<samp>install_web_iface_deps.pl</samp> in SWISH&rsquo;s root directory.
+</li></ul>
+
+</li><li> During
+
+<ul class="no-bullet">
+<li>- Make a symlink to be able to call 
+<samp>swish-cplint</samp> from <samp>/usr/bin</samp>
+
+<pre class="verbatim">$ ln -s /usr/share/swish-cplint/run.sh /usr/bin/swish-cplint
+</pre>
+</li></ul>
+
+</li><li> Post
+
+<ul class="no-bullet">
+<li>- Add <code>swish</code> user and group
+
+<pre class="verbatim"># getent group swish &amp;&gt;/dev/null || groupadd -r swish &gt;/dev/null
+# getent passwd swish &amp;&gt;/dev/null || useradd -m -d /home/swish \
+-r -g swish swish &gt;/dev/null
+</pre>
+</li><li>- Add <code>swish</code> user to the previously created <code>rserve</code>
+group.
+
+<pre class="verbatim"># gpasswd -a swish rserve &gt;/dev/null
+</pre>
+</li><li>- Change ownership of the package data directory
+
+<pre class="verbatim"># chown -R swish:swish /usr/share/swish-cplint
+</pre>
+</li></ul>
+
+</li></ul>
+
+<a name="Remove-actions-1"></a>
+<h4 class="subsubsection">5.2.2.3 Remove actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> During
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> Post
+
+<ul class="no-bullet">
+<li>- Tell the user that <samp>/home/swish</samp> and <code>swish</code> user 
+and group can be removed (this depends on the package 
+remove policies of the chosen distro).
+
+</li></ul>
+
+</li></ul>
+
+<a name="SWISH-3"></a>
+<h4 class="subsection">5.2.3 SWISH</h4>
+<a name="General-information-2"></a>
+<h4 class="subsubsection">5.2.3.1 General information</h4>
+<ul>
+<li> Name
+
+<p><code>swish</code>
+</p>
+</li><li> Data directory
+
+<p><samp>/usr/share/swish</samp>
+</p>
+</li><li> Dependencies
+<ul class="no-bullet">
+<li>- SWI Prolog (developement version)
+
+</li><li>- libXinerama
+
+</li><li>- libXpm
+
+</li><li>- Bower (make dependency)
+</li></ul>
+
+</li></ul>
+
+<a name="Install-actions-2"></a>
+<h4 class="subsubsection">5.2.3.2 Install actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- Compile the server
+
+<pre class="verbatim">$ bower --allow-root install
+$ make src
+</pre>
+</li><li>- Copy <samp>run.pl</samp> and <samp>run.sh</samp> and in SWISH&rsquo;s
+root directory.
+</li></ul>
+
+</li><li> During
+
+<ul class="no-bullet">
+<li>- Make a symlink to be able to call 
+<samp>swish</samp> from <samp>/usr/bin</samp>
+
+<pre class="verbatim">$ ln -s /usr/share/swish/run.sh /usr/bin/swish
+</pre>
+</li></ul>
+
+</li><li> Post
+
+<ul class="no-bullet">
+<li>- Add <code>swish</code> user and group
+
+<pre class="verbatim"># getent group swish &amp;&gt;/dev/null || groupadd -r swish &gt;/dev/null
+# getent passwd swish &amp;&gt;/dev/null || useradd -m -d /home/swish \
+-r -g swish swish &gt;/dev/null
+</pre>
+</li><li>- Change ownership of the package data directory
+
+<pre class="verbatim"># chown -R swish:swish /usr/share/swish
+</pre>
+</li></ul>
+
+</li></ul>
+
+<a name="Remove-actions-2"></a>
+<h4 class="subsubsection">5.2.3.3 Remove actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> During
+
+<ul class="no-bullet">
+<li>- None
+</li></ul>
+
+</li><li> Post
+
+<ul class="no-bullet">
+<li>- Tell the user that <samp>/home/swish</samp> and <code>swish</code> user 
+and group can be removed (this depends on the package 
+remove policies of the chosen distro).
+
+</li></ul>
+
+</li></ul>
+
+<a name="Building-the-packages"></a>
+<h3 class="section">5.3 Building the packages</h3>
+<a name="Arch-Linux-1"></a>
+<h4 class="subsection">5.3.1 Arch Linux</h4>
+
+<pre class="verbatim">archLinux-based/
+|-- Makefile
+|-- rserve-sandbox
+|   |-- .install
+|   |-- PKGBUILD
+|   `-- rserve-sandbox-docker.service
+|-- swish
+|   |-- .install
+|   |-- PKGBUILD
+|   `-- swish.service
+`-- swish-cplint
+    |-- .install
+    |-- PKGBUILD
+    `-- swish-cplint.service
+</pre>
+<p>Once you&rsquo;ve made changes you can run <code>$ make</code>
+then change directory into one of the new <code>.aur</code> generated
+directories and finally run <code>$ makepkg -sri</code> to install
+the package.
+</p>
+<a name="Help-pages"></a>
+<h3 class="section">5.4 Help pages</h3>
+<a name="Rserve-sandbox-2"></a>
+<h4 class="subsection">5.4.1 Rserve sandbox</h4>
+<pre class="verbatim">rsd [OPTION]
+Docker spec for running Rserve in a sandbox
+
+Only a single option is permitted.
+    -h      print this help
+    -i      install dependencies
+    -k      kill rserve-sandbox-docker
+    -s      start rserve-sandbox-docker
+
+Exit status:
+ 0  if OK,
+ 1  some error occurred.
+
+Full documentation at: &lt;https://github.com/frnmst/rserve-sandbox&gt;
+</pre>
+<a name="Cplint-on-SWISH-4"></a>
+<h4 class="subsection">5.4.2 Cplint on SWISH</h4>
+<pre class="verbatim">swish-cplint [OPTION]
+SWI-Prolog for SHaring: a SWI-Prolog web IDE integrated with the cplint suite
+
+Only a single option is permitted.
+    -h      print this help
+    -i      install dependencies
+    -k      kill swish-cplint
+    -s      start swish-cplint
+
+Exit status:
+ 0  if OK,
+ 1  some error occurred.
+
+Full documentation at: &lt;https://github.com/friguzzi/swish&gt;
+and at: &lt;https://github.com/friguzzi/cplint&gt;
+</pre>
+<a name="SWISH-4"></a>
+<h4 class="subsection">5.4.3 SWISH</h4>
+<pre class="verbatim">swish [OPTION]
+SWI-Prolog for SHaring: a SWI-Prolog web IDE
+
+Only a single option is permitted.
+    -h      print this help
+    -k      kill swish
+    -s      start swish
+
+Exit status:
+ 0  if OK,
+ 1  some error occurred.
+
+Full documentation at: &lt;https://https://github.com/SWI-Prolog/swish&gt;
+</pre>
+
+<hr>
+<a name="Thanks"></a>
+<div class="header">
+<p>
+Next: <a href="#References" accesskey="n" rel="next">References</a>, Previous: <a href="#Development" accesskey="p" rel="prev">Development</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Thanks-1"></a>
+<h2 class="chapter">6 Thanks</h2>
+<p>I want to thank the SWI Prolog, Arch Linux and Systemd communities as well the 
+authors of the free software used here, which made the creation of these 
+packages possible.
+</p>
+<p>I also want to thank Fabrizio Riguzzi which tested the packages and gave me 
+advices about them.
+</p>
+
+<hr>
+<a name="References"></a>
+<div class="header">
+<p>
+Previous: <a href="#Thanks" accesskey="p" rel="prev">Thanks</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="References-1"></a>
+<h2 class="chapter">7 References</h2>
+
+<p>Some quotations reported here are taken directly from the respective web sites.
+<br>
+</p>
+<ul>
+<li> <a name="Cplint"></a><strong>[Cplint]</strong>
+ &quot;A suite of programs for reasoning with probabilistic 
+logic programs&quot;. See <a href="https://github.com/friguzzi/cplint">https://github.com/friguzzi/cplint</a>
+<br>
+
+</li><li> <a name="SWISH"></a><strong>[SWISH]</strong>
+ A web browser interface for SWI Prolog to share code. See 
+<a href="https://github.com/SWI-Prolog/swish">https://github.com/SWI-Prolog/swish</a>
+for the original version and
+<a href="https://github.com/friguzzi/swish">https://github.com/friguzzi/swish</a>
+for the version made by <a href="https://github.com/friguzzi">Fabrizio Riguzzi</a> 
+that uses Cplint.
+<br>
+
+</li><li> <a name="Rserve"></a><strong>[Rserve]</strong>
+ A docker image that enables to use the R and Rserve 
+environment in a secure way. See 
+<a href="https://github.com/JanWielemaker/rserve-sandbox">https://github.com/JanWielemaker/rserve-sandbox</a> for the original version 
+made by <a href="https://github.com/JanWielemaker">Jan Wielemaker</a> and
+<a href="https://github.com/frnmst/rserve-sandbox/tree/distro-package">https://github.com/frnmst/rserve-sandbox/tree/distro-package</a>
+version by <a href="https://github.com/frnmst">Franco Masotti</a>
+which is used here. A client to access Rserve from Prolog is also necessary.
+See <a href="https://github.com/JanWielemaker/rserve_client">https://github.com/JanWielemaker/rserve_client</a>
+<br>
+
+</li><li> <a name="R"></a><strong>[R]</strong>
+ &quot;R is an integrated suite of software facilities for data 
+manipulation, calculation and graphical display&quot;. See 
+<a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html">https://cran.r-project.org/doc/manuals/r-release/R-intro.html</a>
+
+</li><li> <a name="Swipl"></a><strong>[Swipl]</strong>
+ &quot;SWI-Prolog offers a comprehensive free Prolog environment. 
+Since its start in 1987, SWI-Prolog development has been driven by the needs 
+of real world applications. SWI-Prolog is widely used in research and 
+education as well as commercial applications&quot;. See 
+<a href="http://www.swi-prolog.org/">http://www.swi-prolog.org/</a>
+and <a href="https://github.com/SWI-Prolog/swipl-devel">https://github.com/SWI-Prolog/swipl-devel</a>
+which is the developement version used here.
+<br>
+
+</li><li> <a name="Yaourt"></a><strong>[Yaourt]</strong>
+ &quot;A pacman wrapper with extended features 
+and AUR support&quot;. To install Yaourt follow the instructions
+reported on <a href="https://archlinux.fr/yaourt-en">https://archlinux.fr/yaourt-en</a>.
+<br>
+
+</li><li> <a name="AUR"></a><strong>[AUR]</strong>
+ &quot;The Arch User Repository (AUR) is a community-driven 
+repository for Arch users. It contains package descriptions (PKGBUILDs) that 
+allow you to compile a package from source with makepkg and then install it 
+via pacman. The AUR was created to organize and share new packages from the 
+community and to help expedite popular packages&rsquo; inclusion into the community 
+repository&quot;. See <a href="https://aur.archlinux.org/">https://aur.archlinux.org/</a> for the AUR homepage and 
+<a href="https://wiki.archlinux.org/index.php/Arch_User_Repository">https://wiki.archlinux.org/index.php/Arch_User_Repository</a> for a complete 
+explanation.
+<br>
+
+</li><li> <a name="Parabola"></a><strong>[Parabola]</strong>
+ &quot;A fully free, simple, and lightweight
+operating system&quot;. See <a href="https://parabola.nu">https://parabola.nu</a>.
+<br>
+
+</li><li> <a name="systemd"></a><strong>[systemd]</strong>
+ &quot;systemd is a suite of basic building blocks for a Linux 
+system. It provides a system and service manager that runs as PID 1 and starts 
+the rest of the system&quot;.
+See <a href="https://www.freedesktop.org/wiki/Software/systemd/">https://www.freedesktop.org/wiki/Software/systemd/</a>.
+<br>
+
+</li><li> <a name="Docker"></a><strong>[Docker]</strong>
+ &quot;Docker containers wrap a piece of software in a complete 
+filesystem that contains everything needed to run: code, runtime, system 
+tools, system libraries â anything that can be installed on a server. This 
+guarantees that the software will always run the same, regardless of its 
+environment&quot;. See <a href="https://www.docker.com/">https://www.docker.com/</a>.
+<br>
+
+</li><li> <a name="Packages-on-the-AUR"></a><strong>[Packages on the AUR]</strong>
+ Here follows a list to the AUR packages:
+<ul class="no-bullet">
+<li>- SWI Prolog (developement version)
+<a href="https://aur.archlinux.org/packages/swi-prolog-devel">https://aur.archlinux.org/packages/swi-prolog-devel</a>
+
+</li><li>- Rserve sandbox
+<a href="https://aur.archlinux.org/packages/rserve-sandbox-docker/">https://aur.archlinux.org/packages/rserve-sandbox-docker/</a>
+
+</li><li>- Cplint on SWISH
+<a href="https://aur.archlinux.org/packages/swish-cplint/">https://aur.archlinux.org/packages/swish-cplint/</a>
+
+</li><li>- SWISH
+<a href="https://aur.archlinux.org/packages/swish/">https://aur.archlinux.org/packages/swish/</a>
+
+</li></ul>
+<br>
+
+
+</li></ul>
+
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h3><a name="FOOT1" href="#DOCF1">(1)</a></h3>
+<p>See item <strong>[Cplint]</strong> in <a href="#References">Cplint</a>.
+</p>
+<h3><a name="FOOT2" href="#DOCF2">(2)</a></h3>
+<p>See item <strong>[SWISH]</strong> in <a href="#References">SWISH</a>.
+</p>
+<h3><a name="FOOT3" href="#DOCF3">(3)</a></h3>
+<p>See item <strong>[Rserve]</strong> in <a href="#References">Rserve</a>.
+</p>
+<h3><a name="FOOT4" href="#DOCF4">(4)</a></h3>
+<p>See item <strong>[Swipl]</strong> in <a href="#References">Swipl</a>.
+</p>
+<h3><a name="FOOT5" href="#DOCF5">(5)</a></h3>
+<p>See item <strong>[Yaourt]</strong> in <a href="#References">Yaourt</a>.
+</p>
+<h3><a name="FOOT6" href="#DOCF6">(6)</a></h3>
+<p>See item <strong>[AUR]</strong> in <a href="#References">AUR</a>.
+</p>
+<h3><a name="FOOT7" href="#DOCF7">(7)</a></h3>
+<p>See item <strong>[Packages on the AUR]</strong> in <a href="#References">Packages on the AUR</a>.
+</p>
+<h3><a name="FOOT8" href="#DOCF8">(8)</a></h3>
+<p>See item <strong>[Parabola]</strong> in <a href="#References">Parabola</a>.
+</p>
+<h3><a name="FOOT9" href="#DOCF9">(9)</a></h3>
+<p>See item <strong>[systemd]</strong> in <a href="#References">systemd</a>.
+</p>
+<h3><a name="FOOT10" href="#DOCF10">(10)</a></h3>
+<p>See item <strong>[Docker]</strong> in <a href="#References">Docker</a>.
+</p>
+<h3><a name="FOOT11" href="#DOCF11">(11)</a></h3>
+<p>See item <strong>[R]</strong> in <a href="#References">R</a>.
+</p>
+</div>
+<hr>
+
+
+
+</body>
+</html>

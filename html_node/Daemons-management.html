@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2016 Franco Masotti franco.masotti@student.unife.it
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. -->
+<!-- Created by GNU Texinfo 6.3, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>SWISH Installer Manual: Daemons management</title>
+
+<meta name="description" content="SWISH Installer Manual: Daemons management">
+<meta name="keywords" content="SWISH Installer Manual: Daemons management">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Development.html#Development" rel="next" title="Development">
+<link href="Components-download.html#Components-download" rel="prev" title="Components download">
+<style type="text/css">
+<!--
+/*
+ * main.css
+ *
+ * Copyright (C) 2016 frnmst (Franco Masotti) <franco.masotti@student.unife.it>
+ *
+ * This file is part of swish-installer.
+ *
+ * cplint-installer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * cplint-installer is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with cplint-installer.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+:root {
+    background-color: #fafafa;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.10em;
+    color: #040404;
+}
+
+a {
+    background-color: #fafafa;
+    color: #0000ff;
+    /* No grey dotted border. */
+    outline: 0;
+    border-style: none;
+}
+
+a:hover {
+    background-color: #040404;
+    color: #fafafa;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    border-radius: 24em;
+    text-decoration: none;
+}
+
+td {
+    resize: both;
+    overflow: auto;
+}
+
+
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Daemons-management"></a>
+<div class="header">
+<p>
+Next: <a href="Development.html#Development" accesskey="n" rel="next">Development</a>, Previous: <a href="Components-download.html#Components-download" accesskey="p" rel="prev">Components download</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<hr>
+<a name="Daemons-management-2"></a>
+<h2 class="chapter">4 Daemons management</h2>
+<p>Commands to manage the daemons depend on the init system in use.
+</p>
+<a name="Systemd"></a>
+<h3 class="section">4.1 Systemd</h3>
+<a name="Cplint-on-SWISH-2"></a>
+<h4 class="subsection">4.1.1 Cplint on SWISH</h4>
+<p>Docker is a dependency which must be started manually.
+</p><pre class="verbatim"># systemctl start docker
+</pre>
+<p>The following command will run <code>swish-cplint</code> as well as
+<code>rserve-sandbox-docker</code> as its dependency:
+</p><pre class="verbatim"># systemctl start swish-cplint
+</pre>
+<p>To start <code>swish-cplint</code> and <code>rserve-sandbox-docker</code> at boot:
+</p><pre class="verbatim"># systemctl enable swish-cplint
+</pre>
+<p>You can stop both services with:
+</p><pre class="verbatim"># systemctl stop swish-cplint
+# systemctl stop rserve-sandbox-docker
+</pre>
+<blockquote>
+<p><b>Note:</b> stopping <code>swish-cplint</code>
+does not imply that <code>rserve-sandbox-docker</code>
+will be stopped.
+</p></blockquote>
+
+<p>To check the status of both daemons:
+</p><pre class="verbatim"># systemctl status swish-cplint
+# systemctl status rserve-sandbox-docker
+</pre>
+<a name="SWISH-2"></a>
+<h4 class="subsection">4.1.2 SWISH</h4>
+<p>Running and managing SWISH alone is very similar to the 
+previous method: instead of using <code>swish-cplint</code> 
+as part of the commands, you must use <code>swish</code>. 
+You don&rsquo;t need to worry about Rserve or Docker.
+</p>
+
+
+
+
+</body>
+</html>
