@@ -21,25 +21,21 @@
 # along with cplint-installer.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-default: doc
+default: gendocs
 
 clean:
 	@echo "Removing object files..."
-	@rm -fv *.pdf *.toc *.aux *.log
+	@rm -rfv *.pdf *.toc *.aux *.log *.cp *.cps *.info manual
 	@echo "Object files removed."
 
 pdf-clean:
 	@texi2pdf --build=clean swish-installer.texi
 
-pdf:
-	@makeinfo --pdf swish-installer.texi
-
-html:
-	@makeinfo --html swish-installer.texi
-
 help:
-	@printf "Install texinfo-most\n"
+	@printf "Install texinfo-most and texi2html\n"
 
+gendocs:
+	@./gendocs.sh --html --css-include=main.css -s swish-installer.texi --email franco.masotti@student.unife.it
 
-.PHONY: default pdf-clean pdf html help
+.PHONY: default pdf-clean help gendocs
 

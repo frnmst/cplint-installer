@@ -5,5 +5,10 @@ src/distributions/archLinux-based/rserve-sandbox.aur
 *.aux
 *.log
 *.toc
+*.cp
+*.cps
+*.info
+
+**/manual
 
 

@@ -5,7 +5,7 @@ SWISH, Cplint on SWISH and an R environment.
 
 ## Instructions
 
-[Documentation](https://github.com/frnmst/swish-installer/blob/dev/doc/swish-installer.pdf)
+[Documentation](https://frnmst.github.io/swish-installer)
 
 ## Tests
 

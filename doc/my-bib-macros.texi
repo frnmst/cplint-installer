@@ -1,4 +1,3 @@
-\input texinfo   @c -*-texinfo-*-
 @c %% my-bib-macros.texi --- Texinfo macros providing a crude
 @c %% bibliography and citation capability.
 
@@ -207,7 +206,7 @@
 @end macro
 
 @macro mybibmakeref{node, ref}
-See item [\ref\] in @ref{\node\, \ref\}.
+See item @strong{[\ref\]} in @ref{\node\, \ref\}.
 @end macro
 
 @c %% @mybibcite{REF} : Creates a cross referenced citation REF.
@@ -220,11 +219,11 @@ See item [\ref\] in @ref{\node\, \ref\}.
 @end ifclear
 @ifset mybiblist
 @item
-@anchor{\ref\}[\ref\]
+@anchor{\ref\}@strong{[\ref\]}
 @end ifset
 @c %**else if
 @ifset mybibtable
-@item @anchor{\ref\}[\ref\]
+@item @anchor{\ref\}@strong{[\ref\]}
 @end ifset
 
 @end macro

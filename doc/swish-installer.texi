@@ -1,4 +1,5 @@
 \input texinfo
+
 @settitle SWISH Installer Manual
 @include my-bib-macros.texi
 @mybibuselist{References}
@@ -15,6 +16,7 @@ notice and this notice are preserved.
 
 @titlepage
 @title SWISH Installer Documentation
+@author Franco Masotti
 @page
 @vskip 0pt plus 1filll
 @insertcopying
@@ -30,24 +32,30 @@ notice and this notice are preserved.
 This manual is for SWISH Installer.
 
 @menu
-* Description::     A brief description of what this is all about.
-* Installation::    Installation procedures on various systems.
-* Pre-run:: Pre run
-* Running:: Running
-* Development::    A thorough description on how to develop over this installer.
-* Thanks:: Thanks
-* References:: References
+* Description::     A brief description of what this is all about
+* Installation::    Installation procedures on various systems
+* Components download:: Components to be downloaded after the installation
+* Daemons management:: How to start, stop and enable the daemons
+* Development::    A thorough description on how to develop over this installer
+* Thanks:: People and communities
+* @mybibnode{}:: References to the technologies used
 @end menu
 @end ifnottex
 
+@c ----
+@c ----
+@c ----
+@c ----
+
 @node Description
 @chapter About
+@cindex test
 @section About
-The purpose of this repository is to handle the installation
-and creation of serveral packages and helpers in order to
+The purpose of this repository is to handle the creation 
+of serveral packages and helpers in order to
 install Cplint@footnote{@mybibcite{Cplint}}
 on SWISH@footnote{@mybibcite{SWISH}}
-with an Rserve@footnote{@mybibcite{Rserve}} environment
+with an Rserve@footnote{@mybibcite{Rserve}} environment,
 as well as the "vanilla" version of SWISH.
 
 SWISH relies on SWI Prolog@footnote{@mybibcite{Swipl}}, 
@@ -63,8 +71,8 @@ must be explained.
 
 @subsection Directory listings
 When you see something like the following, it represents a directory listing of
-the first named (head) directory@footnote{These are generated from 
-@command{$ tree --charset=ascii -d <dirname>}}:
+the first named (head) directory. These representations are generated from 
+@command{$ tree --charset=ascii -d <dirname>}.
 
 @example
 common/
@@ -72,6 +80,11 @@ common/
 |-- swish
 `-- swish-cplint
 @end example
+
+@c ----
+@c ----
+@c ----
+@c ----
 
 @node Installation
 @chapter Installation
@@ -167,106 +180,100 @@ $ makepkg -sri --noconfirm
 
 @end itemize
 
-@subsection Daemons Management
+@subsection Daemons management
 Arch Linux and derivative distros use 
 Systemd@footnote{@mybibcite{systemd}} as the 
-init system. First see @ref{Pre-run} and then
-see @ref{Running}.
+init system. First see @ref{Components download} and then
+see @ref{Daemons management}.
 
 @section Debian
 TODO
 
-@node Pre-run
-@chapter Pre-run
-@section Cplint on SWISH
-@subsection Docker
+@c ----
+@c ----
+@c ----
+@c ----
+
+@node Components download
+@chapter Components download
+Before running the daemons some components must be downloaded.
+
+This section only applies to Cplint on SWISH.
+
+@section Docker
 Before doing anything else you must start
 Docker@footnote{@mybibcite{Docker}} manually.
-See @ref{Running}.
+See @ref{Daemons management}.
 
-@subsection Rserve sandbox
+@section Rserve sandbox
 To download the Docker image file as well as all dependencies
-for R, run the following command:
+for R@footnote{@mybibcite{R}}, run the following command:
 @verbatim
 $ sudo -u rsd rserve-sandbox-docker -i
 @end verbatim
 
-@subsection Cplint on SWISH
+@section Cplint on SWISH
 To download all the prolog packages necessary in order to run
 Cplint on SWISH correcly:
 @verbatim
 $ sudo -u swish swish-cplint -i
 @end verbatim
 
-@section SWISH
-The vanilla version of swish doesn't need a pre-run.
+@c ----
+@c ----
+@c ----
+@c ----
 
-@node Running
-@chapter Running
+@node Daemons management
+@chapter Daemons management
+Commands to manage the daemons depend on the init system in use.
+
 @section Systemd
 @subsection Cplint on SWISH
-@subsubsection Start Docker
 Docker is a dependency which must be started manually.
 @verbatim
 # systemctl start docker
 @end verbatim
 
-@subsubsection Start
 The following command will run @code{swish-cplint} as well as
 @code{rserve-sandbox-docker} as its dependency:
 @verbatim
 # systemctl start swish-cplint
 @end verbatim
 
-@subsubsection Enable
 To start @code{swish-cplint} and @code{rserve-sandbox-docker} at boot:
 @verbatim
 # systemctl enable swish-cplint
 @end verbatim
 
-@subsubsection Stop
-You can stop both services@footnote{stopping @code{swish-cplint}
-does not imply that @code{rserve-sandbox-docker} will be stopped}
-with:
+You can stop both services with:
 @verbatim
 # systemctl stop swish-cplint
 # systemctl stop rserve-sandbox-docker
 @end verbatim
 
-@subsubsection Status
-To check the status:
+@quotation Note
+stopping @code{swish-cplint}
+does not imply that @code{rserve-sandbox-docker}
+will be stopped.
+@end quotation
+
+To check the status of both daemons:
 @verbatim
 # systemctl status swish-cplint
 # systemctl status rserve-sandbox-docker
 @end verbatim
 
 @subsection SWISH
-Running and managing SWISH alone is simpler.
+Running and managing SWISH alone is very similar to the 
+previous method: instead of using @command{swish-cplint} 
+as part of the commands, you must use @command{swish}. 
+You don't need to worry about Rserve or Docker.
 
-@subsubsection Start Docker
-@verbatim
-# systemctl start docker
-@end verbatim
-
-@subsubsection Start
-@verbatim
-# systemctl start swish
-@end verbatim
-
-@subsubsection Enable
-@verbatim
-# systemctl enable swish
-@end verbatim
-
-@subsubsection Stop
-@verbatim
-# systemctl stop swish
-@end verbatim
-
-@subsubsection Status
-@verbatim
-# systemctl status swish
-@end verbatim
+@c ----
+@c ----
+@c ----
+@c ----
 
 @node Development
 @chapter Development
@@ -312,19 +319,16 @@ common/
     `-- run.sh
 @end verbatim
 
-@subsubsection run.sh
 The @file{run.sh} files are helpers to start and stop the daemons.
 These helpers should work on any distribution. You can 
 edit the variables at the top of each file accordingly.
 
-@subsubsection run.pl
 The @file{run.pl} files are a modified version
 of the original files with the same name. These have been
 created in order to lauch SWISH as a background program.
 Without the changes contained in those files, you couldn't
 run SWISH in the background.
 
-@subsubsection shared_functions.sh
 Another important file is @file{shared_functions.sh}
 which contains all common functions for the @file{run.sh}
 files. It must be appended to every @file{run.sh}, within
@@ -334,7 +338,6 @@ a Makefile for example with the following:
 $ cat shared_functions.sh >> @{rserve-sandbox,swish,swish-cplint@}/run.sh
 @end example
 
-@subsubsection install_web_iface_deps.pl
 Cplint on SWISH contains a post installation script called
 @file{install_web_iface_deps.pl}. This script, called by
 @file{run.sh}, simply installs all the necessary Prolog
@@ -806,6 +809,11 @@ Exit status:
 Full documentation at: <https://https://github.com/SWI-Prolog/swish>
 @end verbatim
 
+@c ----
+@c ----
+@c ----
+@c ----
+
 @node Thanks
 @chapter Thanks
 I want to thank the SWI Prolog, Arch Linux and Systemd communities as well the 
@@ -815,16 +823,21 @@ packages possible.
 I also want to thank Fabrizio Riguzzi which tested the packages and gave me 
 advices about them.
 
+@c ----
+@c ----
+@c ----
+@c ----
+
 @node @mybibnode{}
 @chapter References
 
 Some quotations reported here are taken directly from the respective web sites.
 @*
 
-@itemize @w{}
+@itemize @bullet
 
-@mybibitem{Cplint} A suite of programs for reasoning with probabilistic 
-logic programs. See @uref{https://github.com/friguzzi/cplint}
+@mybibitem{Cplint} "A suite of programs for reasoning with probabilistic 
+logic programs". See @uref{https://github.com/friguzzi/cplint}
 @*
 
 @mybibitem{SWISH} A web browser interface for SWI Prolog to share code. See 
@@ -845,49 +858,53 @@ which is used here. A client to access Rserve from Prolog is also necessary.
 See @uref{https://github.com/JanWielemaker/rserve_client}
 @*
 
-@mybibitem{Swipl} SWI-Prolog offers a comprehensive free Prolog environment. 
+@mybibitem{R} "R is an integrated suite of software facilities for data 
+manipulation, calculation and graphical display". See 
+@uref{https://cran.r-project.org/doc/manuals/r-release/R-intro.html}
+
+@mybibitem{Swipl} "SWI-Prolog offers a comprehensive free Prolog environment. 
 Since its start in 1987, SWI-Prolog development has been driven by the needs 
 of real world applications. SWI-Prolog is widely used in research and 
-education as well as commercial applications. See 
+education as well as commercial applications". See 
 @uref{http://www.swi-prolog.org/}
 and @uref{https://github.com/SWI-Prolog/swipl-devel}
 which is the developement version used here.
 @*
 
-@mybibitem{Yaourt} A pacman wrapper with extended features 
-and AUR support. To install Yaourt follow the instructions
+@mybibitem{Yaourt} "A pacman wrapper with extended features 
+and AUR support". To install Yaourt follow the instructions
 reported on @uref{https://archlinux.fr/yaourt-en}.
 @*
 
-@mybibitem{AUR} The Arch User Repository (AUR) is a community-driven 
+@mybibitem{AUR} "The Arch User Repository (AUR) is a community-driven 
 repository for Arch users. It contains package descriptions (PKGBUILDs) that 
 allow you to compile a package from source with makepkg and then install it 
 via pacman. The AUR was created to organize and share new packages from the 
 community and to help expedite popular packages' inclusion into the community 
-repository. See @uref{https://aur.archlinux.org/} for the AUR homepage and 
+repository". See @uref{https://aur.archlinux.org/} for the AUR homepage and 
 @uref{https://wiki.archlinux.org/index.php/Arch_User_Repository} for a complete 
 explanation.
 @*
 
-@mybibitem{Parabola} A fully free, simple, and lightweight
-operating system. See @uref{https://parabola.nu}.
+@mybibitem{Parabola} "A fully free, simple, and lightweight
+operating system". See @uref{https://parabola.nu}.
 @*
 
-@mybibitem{systemd} systemd is a suite of basic building blocks for a Linux 
+@mybibitem{systemd} "systemd is a suite of basic building blocks for a Linux 
 system. It provides a system and service manager that runs as PID 1 and starts 
-the rest of the system.
+the rest of the system".
 See @uref{https://www.freedesktop.org/wiki/Software/systemd/}.
 @*
 
-@mybibitem{Docker} Docker containers wrap a piece of software in a complete 
+@mybibitem{Docker} "Docker containers wrap a piece of software in a complete 
 filesystem that contains everything needed to run: code, runtime, system 
 tools, system libraries – anything that can be installed on a server. This 
 guarantees that the software will always run the same, regardless of its 
-environment. See @uref{https://www.docker.com/}.
+environment". See @uref{https://www.docker.com/}.
 @*
 
 @mybibitem{Packages on the AUR} Here follows a list to the AUR packages:
-@itemize @bullet
+@itemize @minus
 
 @item
 SWI Prolog (developement version)
@@ -913,20 +930,3 @@ SWISH
 
 @bye
 
-
-
-@file{/src/private} contains basic operations and @acronym{CDT, Concrete Data}
-
-@option{-g -Wall -Wextra -Wpedantic -Werror -march=native -O0 -lrt -std=c99}
-
-@deftp {typedef} _node list
-@end deftp
-
-@deftypefn{List} bool list_null @ (list @var{l})
-Check if a list is @code{NULL}.
-@end deftypefn
-
-@c @verbatiminclude example.c
-
-
-@command{make libncc TYPE=@var{native C type}}
