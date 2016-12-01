@@ -500,6 +500,9 @@ SWI Prolog (developement version)
 Git
 
 @item
+Graphviz
+
+@item
 libXinerama
 
 @item
