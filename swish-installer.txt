@@ -431,6 +431,8 @@ The install and remove actions have to be done sequentially.
 
         - Git
 
+        - Graphviz
+
         - libXinerama
 
         - libXpm
