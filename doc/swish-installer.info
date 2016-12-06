@@ -1,53 +1,32 @@
-SWISH Installer
-1 About
-  1.1 About
-    1.1.1 Terminology
-    1.1.2 Directory listings
-2 Installation
-  2.1 Arch Linux
-    2.1.1 Using an AUR helper
-    2.1.2 Without using an AUR helper
-      2.1.2.1 Cplint on SWISH
-      2.1.2.2 SWISH
-    2.1.3 Daemons management
-  2.2 Debian
-3 Components download
-  3.1 Docker
-  3.2 Rserve sandbox
-  3.3 Cplint on SWISH
-4 Daemons management
-  4.1 Systemd
-    4.1.1 Cplint on SWISH
-    4.1.2 SWISH
-5 Development
-  5.1 Repository structure
-    5.1.1 Distribution-specific files
-    5.1.2 Common files
-  5.2 Guidelines to create packages
-    5.2.1 Rserve sandbox
-      5.2.1.1 General information
-      5.2.1.2 Install actions
-      5.2.1.3 Remove actions
-    5.2.2 Cplint on SWISH
-      5.2.2.1 General information
-      5.2.2.2 Install actions
-      5.2.2.3 Remove actions
-    5.2.3 SWISH
-      5.2.3.1 General information
-      5.2.3.2 Install actions
-      5.2.3.3 Remove actions
-  5.3 Building the packages
-    5.3.1 Arch Linux
-  5.4 Help pages
-    5.4.1 Rserve sandbox
-    5.4.2 Cplint on SWISH
-    5.4.3 SWISH
-6 Thanks
-7 References
+This is swish-installer.info, produced by makeinfo version 6.3 from
+swish-installer.texi.
+
+Copyright (C) 2016 Franco Masotti <franco.masotti@student.unife.it>
+
+Copying and distribution of this file, with or without modification, are
+permitted in any medium without royalty provided the copyright notice
+and this notice are preserved.
+
+
+File: swish-installer.info,  Node: Top,  Next: Description,  Up: (dir)
+
 SWISH Installer
 ***************
 
 This manual is for SWISH Installer.
+
+* Menu:
+
+* Description::     A brief description of what this is all about
+* Installation::    Installation procedures on various systems
+* Components download:: Components to be downloaded after the installation
+* Daemons management:: How to start, stop and enable the daemons
+* Development::    A thorough description on how to develop over this installer
+* Thanks:: People and communities
+* References:: References to the technologies used
+
+
+File: swish-installer.info,  Node: Description,  Next: Installation,  Prev: Top,  Up: Top
 
 1 About
 *******
@@ -92,6 +71,9 @@ generated from '$ tree --charset=ascii -d <dirname>'.
    (3) See item *[Rserve]* in *note Rserve: References.
 
    (4) See item *[Swipl]* in *note Swipl: References.
+
+
+File: swish-installer.info,  Node: Installation,  Next: Components download,  Prev: Description,  Up: Top
 
 2 Installation
 **************
@@ -189,6 +171,9 @@ References.
 
    (5) See item *[systemd]* in *note systemd: References.
 
+
+File: swish-installer.info,  Node: Components download,  Next: Daemons management,  Prev: Installation,  Up: Top
+
 3 Components download
 *********************
 
@@ -221,6 +206,9 @@ $ sudo -u swish swish-cplint -i
    (1) See item *[Docker]* in *note Docker: References.
 
    (2) See item *[R]* in *note R: References.
+
+
+File: swish-installer.info,  Node: Daemons management,  Next: Development,  Prev: Components download,  Up: Top
 
 4 Daemons management
 ********************
@@ -260,6 +248,9 @@ To check the status of both daemons:
 Running and managing SWISH alone is very similar to the previous method:
 instead of using 'swish-cplint' as part of the commands, you must use
 'swish'.  You don't need to worry about Rserve or Docker.
+
+
+File: swish-installer.info,  Node: Development,  Next: Thanks,  Prev: Daemons management,  Up: Top
 
 5 Development
 *************
@@ -658,6 +649,9 @@ Full documentation at: <https://https://github.com/SWI-Prolog/swish>
 
    (5) See item *[Bower]* in *note Bower: References.
 
+
+File: swish-installer.info,  Node: Thanks,  Next: References,  Prev: Development,  Up: Top
+
 6 Thanks
 ********
 
@@ -667,6 +661,9 @@ of these packages possible.
 
 I also want to thank Fabrizio Riguzzi which tested the packages and gave
 me advices about them.
+
+
+File: swish-installer.info,  Node: References,  Prev: Thanks,  Up: Top
 
 7 References
 ************
@@ -762,3 +759,48 @@ sites.
 
    * *[Bower]* "A package manager for the web".  See <https://bower.io/>
 
+
+
+Tag Table:
+Node: Top335
+Node: Description923
+Ref: Description-Footnote-11931
+Ref: Description-Footnote-21988
+Ref: Description-Footnote-32043
+Ref: Description-Footnote-42100
+Node: Installation2155
+Ref: Installation-Footnote-14466
+Ref: Installation-Footnote-24523
+Ref: Installation-Footnote-34574
+Ref: Installation-Footnote-44657
+Ref: Installation-Footnote-54718
+Node: Components download4777
+Ref: Components download-Footnote-15544
+Ref: Components download-Footnote-25601
+Node: Daemons management5648
+Node: Development6792
+Ref: Development-Footnote-115337
+Ref: Development-Footnote-215388
+Ref: Development-Footnote-315449
+Ref: Development-Footnote-415516
+Ref: Development-Footnote-515573
+Node: Thanks15628
+Node: References16010
+Ref: Cplint16197
+Ref: SWISH16332
+Ref: Rserve16583
+Ref: R17044
+Ref: Swipl17243
+Ref: Yaourt17672
+Ref: AUR17847
+Ref: Parabola18424
+Ref: systemd18534
+Ref: Docker18788
+Ref: Packages on the AUR19158
+Ref: Git19584
+Ref: Graphviz19794
+Ref: libXinerama19902
+Ref: libXpm20047
+Ref: Bower20173
+
+End Tag Table

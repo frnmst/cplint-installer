@@ -1,0 +1,45 @@
+@numchapentry{About}{1}{Description}{1}
+@numsecentry{About}{1.1}{}{1}
+@numsubsecentry{Terminology}{1.1.1}{}{1}
+@numsubsecentry{Directory listings}{1.1.2}{}{1}
+@numchapentry{Installation}{2}{Installation}{2}
+@numsecentry{Arch Linux}{2.1}{}{2}
+@numsubsecentry{Using an AUR helper}{2.1.1}{}{2}
+@numsubsecentry{Without using an AUR helper}{2.1.2}{}{2}
+@numsubsubsecentry{Cplint on SWISH}{2.1.2.1}{}{2}
+@numsubsubsecentry{SWISH}{2.1.2.2}{}{3}
+@numsubsecentry{Daemons management}{2.1.3}{}{3}
+@numsecentry{Debian}{2.2}{}{3}
+@numchapentry{Components download}{3}{Components download}{4}
+@numsecentry{Docker}{3.1}{}{4}
+@numsecentry{Rserve sandbox}{3.2}{}{4}
+@numsecentry{Cplint on SWISH}{3.3}{}{4}
+@numchapentry{Daemons management}{4}{Daemons management}{5}
+@numsecentry{Systemd}{4.1}{}{5}
+@numsubsecentry{Cplint on SWISH}{4.1.1}{}{5}
+@numsubsecentry{SWISH}{4.1.2}{}{5}
+@numchapentry{Development}{5}{Development}{6}
+@numsecentry{Repository structure}{5.1}{}{6}
+@numsubsecentry{Distribution-specific files}{5.1.1}{}{6}
+@numsubsecentry{Common files}{5.1.2}{}{6}
+@numsecentry{Guidelines to create packages}{5.2}{}{7}
+@numsubsecentry{Rserve sandbox}{5.2.1}{}{7}
+@numsubsubsecentry{General information}{5.2.1.1}{}{7}
+@numsubsubsecentry{Install actions}{5.2.1.2}{}{7}
+@numsubsubsecentry{Remove actions}{5.2.1.3}{}{8}
+@numsubsecentry{Cplint on SWISH}{5.2.2}{}{8}
+@numsubsubsecentry{General information}{5.2.2.1}{}{8}
+@numsubsubsecentry{Install actions}{5.2.2.2}{}{8}
+@numsubsubsecentry{Remove actions}{5.2.2.3}{}{9}
+@numsubsecentry{SWISH}{5.2.3}{}{9}
+@numsubsubsecentry{General information}{5.2.3.1}{}{9}
+@numsubsubsecentry{Install actions}{5.2.3.2}{}{9}
+@numsubsubsecentry{Remove actions}{5.2.3.3}{}{10}
+@numsecentry{Building the packages}{5.3}{}{10}
+@numsubsecentry{Arch Linux}{5.3.1}{}{10}
+@numsecentry{Help pages}{5.4}{}{10}
+@numsubsecentry{Rserve sandbox}{5.4.1}{}{10}
+@numsubsecentry{Cplint on SWISH}{5.4.2}{}{11}
+@numsubsecentry{SWISH}{5.4.3}{}{11}
+@numchapentry{Thanks}{6}{Thanks}{12}
+@numchapentry{References}{7}{@mybibnode {}}{13}
