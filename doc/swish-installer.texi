@@ -497,22 +497,22 @@ Dependencies
 SWI Prolog (developement version)
 
 @item
-Git
+Git@footnote{@mybibcite{Git}}
 
 @item
-Graphviz
+Graphviz@footnote{@mybibcite{Graphviz}}
 
 @item
-libXinerama
+libXinerama@footnote{@mybibcite{libXinerama}}
 
 @item
-libXpm
+libXpm@footnote{@mybibcite{libXpm}}
 
 @item
 Rserve sandbox
 
 @item
-Bower (make dependency)
+Bower (make dependency)@footnote{@mybibcite{Bower}}
 @end itemize
 
 @end itemize
@@ -928,6 +928,24 @@ SWISH
 @end itemize
 @*
 
+@mybibitem{Git} "Git is a free and open source distributed version control 
+system designed to handle everything from small to very large projects with 
+speed and efficiency". See @uref{https://git-scm.com/}
+@*
+
+@mybibitem{Graphviz} "Graphviz is open source graph 
+visualization software". See @uref{http://graphviz.org/}
+@*
+
+@mybibitem{libXinerama} "libXinerama - API for Xinerama extension to X11 
+Protocol". See @uref{https://cgit.freedesktop.org/xorg/lib/libXinerama}
+@*
+
+@mybibitem{libXpm} "libXpm - X Pixmap (XPM) image file format library".
+See @uref{https://cgit.freedesktop.org/xorg/lib/libXpm}
+@*
+
+@mybibitem{Bower} "A package manager for the web". See @uref{https://bower.io/}
 
 @end itemize
 
