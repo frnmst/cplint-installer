@@ -36,6 +36,7 @@ This manual is for SWISH Installer.
 * Installation::    Installation procedures on various systems
 * Components download:: Components to be downloaded after the installation
 * Daemons management:: How to start, stop and enable the daemons
+* Accessing the server:: How to access and use the servers
 * Development::    A thorough description on how to develop over this installer
 * Thanks:: People and communities
 * @mybibnode{}:: References to the technologies used
@@ -269,6 +270,18 @@ Running and managing SWISH alone is very similar to the
 previous method: instead of using @command{swish-cplint} 
 as part of the commands, you must use @command{swish}. 
 You don't need to worry about Rserve or Docker.
+
+@c ----
+@c ----
+@c ----
+@c ----
+
+@node Accessing the server
+@chapter Accessing the server
+To access Cplint on SWISH or SWISH you need a
+JavaScript @footnote{@mybibcite{JavaScript}}
+enabled browser and you have to connect to port 3050.
+For example: @code{http://localhost:3050} or @code{http://127.0.0.1:3050}
 
 @c ----
 @c ----
@@ -809,8 +822,30 @@ Exit status:
  0  if OK,
  1  some error occurred.
 
-Full documentation at: <https://https://github.com/SWI-Prolog/swish>
+Full documentation at: <https://github.com/SWI-Prolog/swish>
 @end verbatim
+
+@section Compiling this documentation
+The source of this documentation is under the @file{doc}
+directory.
+
+To be able to compile it, you have to install several tex packages
+(for example: @code{texlive-most} and @code{texi2html} if you are using
+Arch Linux) that contain the following binaries:
+
+@verbatim
+makeinfo
+texi2dvi
+docbook2html
+docbook2pdf
+docbook2txt
+texi2html
+perl
+@end verbatim
+
+After running @command{make}, a directory named @file{manual}
+is created and you can access the files by opening
+@file{index.html} with a browser.
 
 @c ----
 @c ----
@@ -927,6 +962,10 @@ SWISH
 
 @end itemize
 @*
+
+@mybibitem{JavaScript} "JavaScript is a high-level, dynamic, untyped, and
+interpreted programming language".
+See @uref{https://en.wikipedia.org/wiki/JavaScript}
 
 @mybibitem{Git} "Git is a free and open source distributed version control 
 system designed to handle everything from small to very large projects with 
