@@ -36,6 +36,8 @@ help:
 
 gendocs:
 	@./gendocs.sh --html --css-include=main.css -s swish-installer.texi --email franco.masotti@student.unife.it
+	@printf "This manual is released under a permissive license. See the sources for more-information.\n\nhttps://frnmst.github.io/swish-installer\n" > manual/README.md
+	@printf "These pages are licensed under a permissive license." > manual/LICENSE
 
 .PHONY: default pdf-clean help gendocs
 
