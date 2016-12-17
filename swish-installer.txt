@@ -19,31 +19,33 @@ SWISH Installer
   4.1 Systemd
     4.1.1 Cplint on SWISH
     4.1.2 SWISH
-5 Development
-  5.1 Repository structure
-    5.1.1 Distribution-specific files
-    5.1.2 Common files
-  5.2 Guidelines to create packages
-    5.2.1 Rserve sandbox
-      5.2.1.1 General information
-      5.2.1.2 Install actions
-      5.2.1.3 Remove actions
-    5.2.2 Cplint on SWISH
-      5.2.2.1 General information
-      5.2.2.2 Install actions
-      5.2.2.3 Remove actions
-    5.2.3 SWISH
-      5.2.3.1 General information
-      5.2.3.2 Install actions
-      5.2.3.3 Remove actions
-  5.3 Building the packages
-    5.3.1 Arch Linux
-  5.4 Help pages
-    5.4.1 Rserve sandbox
-    5.4.2 Cplint on SWISH
-    5.4.3 SWISH
-6 Thanks
-7 References
+5 Accessing the server
+6 Development
+  6.1 Repository structure
+    6.1.1 Distribution-specific files
+    6.1.2 Common files
+  6.2 Guidelines to create packages
+    6.2.1 Rserve sandbox
+      6.2.1.1 General information
+      6.2.1.2 Install actions
+      6.2.1.3 Remove actions
+    6.2.2 Cplint on SWISH
+      6.2.2.1 General information
+      6.2.2.2 Install actions
+      6.2.2.3 Remove actions
+    6.2.3 SWISH
+      6.2.3.1 General information
+      6.2.3.2 Install actions
+      6.2.3.3 Remove actions
+  6.3 Building the packages
+    6.3.1 Arch Linux
+  6.4 Help pages
+    6.4.1 Rserve sandbox
+    6.4.2 Cplint on SWISH
+    6.4.3 SWISH
+  6.5 Compiling this documentation
+7 Thanks
+8 References
 SWISH Installer
 ***************
 
@@ -261,10 +263,21 @@ Running and managing SWISH alone is very similar to the previous method:
 instead of using 'swish-cplint' as part of the commands, you must use
 'swish'.  You don't need to worry about Rserve or Docker.
 
-5 Development
+5 Accessing the server
+**********************
+
+To access Cplint on SWISH or SWISH you need a JavaScript (1) enabled
+browser and you have to connect to port 3050.  For example:
+'http://localhost:3050' or 'http://127.0.0.1:3050'
+
+   ---------- Footnotes ----------
+
+   (1) See item *[JavaScript]* in *note JavaScript: References.
+
+6 Development
 *************
 
-5.1 Repository structure
+6.1 Repository structure
 ========================
 
 .
@@ -285,12 +298,12 @@ a specific distribution.  Makefiles are used to achieve this.
 The 'common' directory contains all the files which are not distribution
 specific.
 
-5.1.1 Distribution-specific files
+6.1.1 Distribution-specific files
 ---------------------------------
 
 *Note Building the packages: Development.
 
-5.1.2 Common files
+6.1.2 Common files
 ------------------
 
 common/
@@ -324,7 +337,7 @@ Cplint on SWISH contains a post installation script called
 'install_web_iface_deps.pl'.  This script, called by 'run.sh', simply
 installs all the necessary Prolog dependencies automatically.
 
-5.2 Guidelines to create packages
+6.2 Guidelines to create packages
 =================================
 
 Makefiles are used to build the package in a new directory by copying
@@ -337,10 +350,10 @@ packages.
 
 The install and remove actions have to be done sequentially.
 
-5.2.1 Rserve sandbox
+6.2.1 Rserve sandbox
 --------------------
 
-5.2.1.1 General information
+6.2.1.1 General information
 ...........................
 
    * Name
@@ -356,7 +369,7 @@ The install and remove actions have to be done sequentially.
 
         - Docker
 
-5.2.1.2 Install actions
+6.2.1.2 Install actions
 .......................
 
    * Pre
@@ -394,7 +407,7 @@ The install and remove actions have to be done sequentially.
 
           # chown -R rsd:rsd /usr/share/rserve-sandbox-docker
 
-5.2.1.3 Remove actions
+6.2.1.3 Remove actions
 ......................
 
    * Pre
@@ -412,10 +425,10 @@ The install and remove actions have to be done sequentially.
           removed (this depends on the package remove policies of the
           chosen distro).
 
-5.2.2 Cplint on SWISH
+6.2.2 Cplint on SWISH
 ---------------------
 
-5.2.2.1 General information
+6.2.2.1 General information
 ...........................
 
    * Name
@@ -441,7 +454,7 @@ The install and remove actions have to be done sequentially.
 
         - Bower (make dependency)(5)
 
-5.2.2.2 Install actions
+6.2.2.2 Install actions
 .......................
 
    * Pre
@@ -477,7 +490,7 @@ The install and remove actions have to be done sequentially.
 
           # chown -R swish:swish /usr/share/swish-cplint
 
-5.2.2.3 Remove actions
+6.2.2.3 Remove actions
 ......................
 
    * Pre
@@ -494,10 +507,10 @@ The install and remove actions have to be done sequentially.
           can be removed (this depends on the package remove policies of
           the chosen distro).
 
-5.2.3 SWISH
+6.2.3 SWISH
 -----------
 
-5.2.3.1 General information
+6.2.3.1 General information
 ...........................
 
    * Name
@@ -517,7 +530,7 @@ The install and remove actions have to be done sequentially.
 
         - Bower (make dependency)
 
-5.2.3.2 Install actions
+6.2.3.2 Install actions
 .......................
 
    * Pre
@@ -547,7 +560,7 @@ The install and remove actions have to be done sequentially.
 
           # chown -R swish:swish /usr/share/swish
 
-5.2.3.3 Remove actions
+6.2.3.3 Remove actions
 ......................
 
    * Pre
@@ -564,10 +577,10 @@ The install and remove actions have to be done sequentially.
           can be removed (this depends on the package remove policies of
           the chosen distro).
 
-5.3 Building the packages
+6.3 Building the packages
 =========================
 
-5.3.1 Arch Linux
+6.3.1 Arch Linux
 ----------------
 
 archLinux-based/
@@ -589,10 +602,10 @@ Once you've made changes you can run '$ make' then change directory into
 one of the new '.aur' generated directories and finally run '$ makepkg
 -sri' to install the package.
 
-5.4 Help pages
+6.4 Help pages
 ==============
 
-5.4.1 Rserve sandbox
+6.4.1 Rserve sandbox
 --------------------
 
 rsd [OPTION]
@@ -610,7 +623,7 @@ Exit status:
 
 Full documentation at: <https://github.com/frnmst/rserve-sandbox>
 
-5.4.2 Cplint on SWISH
+6.4.2 Cplint on SWISH
 ---------------------
 
 swish-cplint [OPTION]
@@ -629,7 +642,7 @@ Exit status:
 Full documentation at: <https://github.com/friguzzi/swish>
 and at: <https://github.com/friguzzi/cplint>
 
-5.4.3 SWISH
+6.4.3 SWISH
 -----------
 
 swish [OPTION]
@@ -644,7 +657,27 @@ Exit status:
  0  if OK,
  1  some error occurred.
 
-Full documentation at: <https://https://github.com/SWI-Prolog/swish>
+Full documentation at: <https://github.com/SWI-Prolog/swish>
+
+6.5 Compiling this documentation
+================================
+
+The source of this documentation is under the 'doc' directory.
+
+To be able to compile it, you have to install several tex packages (for
+example: 'texlive-most' and 'texi2html' if you are using Arch Linux)
+that contain the following binaries:
+
+makeinfo
+texi2dvi
+docbook2html
+docbook2pdf
+docbook2txt
+texi2html
+perl
+
+After running 'make', a directory named 'manual' is created and you can
+access the files by opening 'index.html' with a browser.
 
    ---------- Footnotes ----------
 
@@ -658,7 +691,7 @@ Full documentation at: <https://https://github.com/SWI-Prolog/swish>
 
    (5) See item *[Bower]* in *note Bower: References.
 
-6 Thanks
+7 Thanks
 ********
 
 I want to thank the SWI Prolog, Arch Linux and Systemd communities as
@@ -668,7 +701,7 @@ of these packages possible.
 I also want to thank Fabrizio Riguzzi which tested the packages and gave
 me advices about them.
 
-7 References
+8 References
 ************
 
 Some quotations reported here are taken directly from the respective web
@@ -745,6 +778,10 @@ sites.
 
         - SWISH <https://aur.archlinux.org/packages/swish/>
 
+
+   * *[JavaScript]* "JavaScript is a high-level, dynamic, untyped, and
+     interpreted programming language".  See
+     <https://en.wikipedia.org/wiki/JavaScript>
 
    * *[Git]* "Git is a free and open source distributed version control
      system designed to handle everything from small to very large
