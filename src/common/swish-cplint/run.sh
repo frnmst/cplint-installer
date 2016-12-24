@@ -88,6 +88,11 @@ killd()
     fi
 }
 
+remove()
+{
+    :
+}
+
 startd()
 {
     local pid=""

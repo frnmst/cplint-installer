@@ -773,14 +773,15 @@ the package.
 @section Help pages
 @subsection Rserve sandbox
 @verbatim
-rsd [OPTION]
+rserve-sandbox-docker [OPTION]
 Docker spec for running Rserve in a sandbox
 
 Only a single option is permitted.
     -h      print this help
-    -i      install dependencies
-    -k      kill rserve-sandbox-docker
-    -s      start rserve-sandbox-docker
+    -i      install image and dependencies
+    -k      kill the container
+    -r      remove the docker image
+    -s      start the container
 
 Exit status:
  0  if OK,

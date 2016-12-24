@@ -65,6 +65,11 @@ init()
     :
 }
 
+remove()
+{
+    :
+}
+
 startd()
 {
     local pid=""
