@@ -11,7 +11,7 @@ depends=('libxinerama'
          'libxpm'
          'git'
          'graphviz'
-         'swi-prolog-devel'
+         'swi-prolog-devel=7.3.32'
          'rserve-sandbox-docker')
 makedepends=('git'
              'bower'
