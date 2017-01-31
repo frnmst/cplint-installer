@@ -1,6 +1,7 @@
 src/distributions/archLinux-based/swish.aur
 src/distributions/archLinux-based/swish-cplint.aur
-src/distributions/archLinux-based/rserve-sandbox.aur
+src/distributions/archLinux-based/rserve-sandbox-docker.aur
+src/distributions/archLinux-based/rserve-sandbox-docker-bin.aur
 
 *.aux
 *.log

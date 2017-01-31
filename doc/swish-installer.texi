@@ -7,7 +7,7 @@
 
 @c DOCUMENT LICENSE FOLLOWS.
 @copying
-Copyright @copyright{} 2016 Franco Masotti @email{franco.masotti@@student.unife.it}
+Copyright @copyright{} 2016-2017 Franco Masotti @email{franco.masotti@@student.unife.it}
 
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
@@ -322,6 +322,8 @@ are not distribution specific.
 common/
 |-- rserve-sandbox
 |   `-- run.sh
+|-- rserve-sandbox-bin
+|   `-- run.sh
 |-- shared_functions.sh
 |-- swish
 |   |-- run.pl
@@ -348,7 +350,7 @@ files. It must be appended to every @file{run.sh}, within
 a Makefile for example with the following:
 
 @example
-$ cat shared_functions.sh >> @{rserve-sandbox,swish,swish-cplint@}/run.sh
+$ cat shared_functions.sh >> @{rserve-sandbox*,swish,swish-cplint@}/run.sh
 @end example
 
 Cplint on SWISH contains a post installation script called
@@ -366,7 +368,7 @@ You will read general information about the packages,
 all their install and remove actions and how to build
 your version of the modified packages.
 
-The install and remove actions have to be done sequentially.
+Installation and removal actions must be done sequentially.
 
 @subsection Rserve sandbox
 @subsubsection General information
@@ -441,7 +443,7 @@ Add @code{rsd} user and group.
 @end verbatim
 
 @item
-Add the new user to the `docker` group
+Add the new user to the @code{docker} group
 
 @verbatim
 # gpasswd -a rsd docker >/dev/null
@@ -455,6 +457,12 @@ Change ownership of the package data directory
 @end verbatim
 
 @end itemize
+
+@quotation Note
+the @code{rsd} user and group was created in order to avoid privilege 
+escalation, since any user which belongs to the @code{docker} group is
+equivalent to @code{root}@footnote{@mybibcite{Docker root privileges}}.
+@end quotation
 
 @end itemize
 
@@ -967,6 +975,11 @@ SWISH
 @mybibitem{JavaScript} "JavaScript is a high-level, dynamic, untyped, and
 interpreted programming language".
 See @uref{https://en.wikipedia.org/wiki/JavaScript}
+@*
+
+@mybibitem{Docker root privileges} See
+@uref{https://docs.docker.com/engine/security/security/#/docker-daemon-attack-surface}
+@*
 
 @mybibitem{Git} "Git is a free and open source distributed version control 
 system designed to handle everything from small to very large projects with 

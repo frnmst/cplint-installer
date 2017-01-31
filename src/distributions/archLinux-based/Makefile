@@ -3,7 +3,7 @@
 #
 # Makefile
 #
-# Copyright (C) 2016 frnmst (Franco Masotti) <franco.masotti@student.unife.it>
+# Copyright (C) 2016-2017 frnmst (Franco Masotti) <franco.masotti@student.unife.it>
 #
 # This file is part of swish-installer.
 #
@@ -30,17 +30,21 @@ DESTDIR_SWISH_CPLINT=swish-cplint.aur
 DATADIR_SWISH_CPLINT=swish-cplint
 COMMONDIR_SWISH_CPLINT=../../common/swish-cplint
 
-DESTDIR_RSERVE_SANDBOX=rserve-sandbox.aur
-DATADIR_RSERVE_SANDBOX=rserve-sandbox
-COMMONDIR_RSERVE_SANDBOX=../../common/rserve-sandbox
+DESTDIR_RSERVE_SANDBOX_DOCKER=rserve-sandbox-docker.aur
+DATADIR_RSERVE_SANDBOX_DOCKER=rserve-sandbox-docker
+COMMONDIR_RSERVE_SANDBOX_DOCKER=../../common/rserve-sandbox-docker
 
-default: swish swish-cplint rserve-sandbox
+DESTDIR_RSERVE_SANDBOX_DOCKER_BIN=rserve-sandbox-docker-bin.aur
+DATADIR_RSERVE_SANDBOX_DOCKER_BIN=rserve-sandbox-docker-bin
+COMMONDIR_RSERVE_SANDBOX_DOCKER_BIN=../../common/rserve-sandbox-docker-bin
+
+default: swish swish-cplint rserve-sandbox-docker rserve-sandbox-docker-bin
 
 all: default
 
 clean:
-	@echo "Removing $(DESTDIR_SWISH) $(DESTDIR_SWISH_CPLINT) $(DESTDIR_RSERVE_SANDBOX)..."
-	@rm -rf $(DESTDIR_SWISH) $(DESTDIR_SWISH_CPLINT) $(DESTDIR_RSERVE_SANDBOX)
+	@echo "Removing $(DESTDIR_SWISH) $(DESTDIR_SWISH_CPLINT) $(DESTDIR_RSERVE_SANDBOX_DOCKER) $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)..."
+	@rm -rf $(DESTDIR_SWISH) $(DESTDIR_SWISH_CPLINT) $(DESTDIR_RSERVE_SANDBOX_DOCKER) $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)
 	@echo "Object files removed."
 
 # Make the AUR packages.
@@ -62,14 +66,34 @@ swish-cplint:
 	@cd $(DESTDIR_SWISH_CPLINT); makepkg --printsrcinfo > .SRCINFO
 	@echo "Package created."
 
-rserve-sandbox:
+rserve-sandbox-docker:
 	@echo "Creating package..."
-	@mkdir -p $(DESTDIR_RSERVE_SANDBOX)
-	@cp -r $(DATADIR_RSERVE_SANDBOX)/{*,.install} $(DESTDIR_RSERVE_SANDBOX)
-	@cp -r $(COMMONDIR_RSERVE_SANDBOX)/* $(DESTDIR_RSERVE_SANDBOX)
-	@cat $(COMMONDIR_RSERVE_SANDBOX)/../shared_functions.sh >> $(DESTDIR_RSERVE_SANDBOX)/run.sh
-	@cd $(DESTDIR_RSERVE_SANDBOX); makepkg --printsrcinfo > .SRCINFO
+	@mkdir -p $(DESTDIR_RSERVE_SANDBOX_DOCKER)
+	@cp -r $(DATADIR_RSERVE_SANDBOX_DOCKER)/{*,.install} $(DESTDIR_RSERVE_SANDBOX_DOCKER)
+	@cp -r $(COMMONDIR_RSERVE_SANDBOX_DOCKER)/* $(DESTDIR_RSERVE_SANDBOX_DOCKER)
+	@cat $(COMMONDIR_RSERVE_SANDBOX_DOCKER)/../shared_functions.sh >> $(DESTDIR_RSERVE_SANDBOX_DOCKER)/run.sh
+	@cd $(DESTDIR_RSERVE_SANDBOX_DOCKER); makepkg --printsrcinfo > .SRCINFO
+	@echo "Package created."
+
+# Change small details of the run.sh file:
+#
+# make image -> make load
+# help "install image ..." -> "load image"
+# help link line
+#
+# as well as the link line in the systemd service.
+rserve-sandbox-docker-bin:
+	@echo "Creating package..."
+	@mkdir -p $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)
+	@cp -Lr $(DATADIR_RSERVE_SANDBOX_DOCKER_BIN)/{*,.install} $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)
+	@sed -i "s@https://github.com/frnmst/rserve-sandbox@https://gitlab.com/frnmst/rserve-sandbox-bin@g" $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)/rserve-sandbox-docker.service
+	@cp -Lr $(COMMONDIR_RSERVE_SANDBOX_DOCKER_BIN)/* $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)
+	@sed -i "s/make image/make load/g" $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)/run.sh
+	@sed -i "s/install image and dependencies/load image/g" $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)/run.sh
+	@sed -i "s@https://github.com/frnmst/rserve-sandbox@https://gitlab.com/frnmst/rserve-sandbox-bin@g" $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)/run.sh
+	@cat $(COMMONDIR_RSERVE_SANDBOX_DOCKER_BIN)/../shared_functions.sh >> $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)/run.sh
+	@cd $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN); makepkg --printsrcinfo > .SRCINFO
 	@echo "Package created."
 
 
-.PHONY: default all clean swish swish-cplint rserve-sandbox
+.PHONY: default all clean swish swish-cplint rserve-sandbox-docker rserve-sandbox-docker-bin
