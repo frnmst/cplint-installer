@@ -759,7 +759,11 @@ remove policies of the chosen distro).
 @verbatim
 archLinux-based/
 |-- Makefile
-|-- rserve-sandbox
+|-- rserve-sandbox-docker
+|   |-- .install
+|   |-- PKGBUILD
+|   `-- rserve-sandbox-docker.service
+|-- rserve-sandbox-docker-bin
 |   |-- .install
 |   |-- PKGBUILD
 |   `-- rserve-sandbox-docker.service
@@ -777,6 +781,8 @@ Once you've made changes you can run @command{$ make}
 then change directory into one of the new @code{.aur} generated
 directories and finally run @command{$ makepkg -sri} to install
 the package.
+
+You also have the possibility to run a test script... TODO ...
 
 @section Help pages
 @subsection Rserve sandbox

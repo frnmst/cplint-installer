@@ -22,23 +22,31 @@
 #
 #
 
-DESTDIR_SWISH=swish.aur
-DATADIR_SWISH=swish
-COMMONDIR_SWISH=../../common/swish
+DESTDIR=dest
+DATADIR=packages
+COMMONDIR=../../common
 
-DESTDIR_SWISH_CPLINT=swish-cplint.aur
-DATADIR_SWISH_CPLINT=swish-cplint
-COMMONDIR_SWISH_CPLINT=../../common/swish-cplint
+DESTDIR_SWISH=$(DESTDIR)/swish.aur
+DATADIR_SWISH=$(DATADIR)/swish
+COMMONDIR_SWISH=$(COMMONDIR)/swish
 
-DESTDIR_RSERVE_SANDBOX_DOCKER=rserve-sandbox-docker.aur
-DATADIR_RSERVE_SANDBOX_DOCKER=rserve-sandbox-docker
-COMMONDIR_RSERVE_SANDBOX_DOCKER=../../common/rserve-sandbox-docker
+DESTDIR_SWISH_CPLINT=$(DESTDIR)/swish-cplint.aur
+DATADIR_SWISH_CPLINT=$(DATADIR)/swish-cplint
+COMMONDIR_SWISH_CPLINT=$(COMMONDIR)/swish-cplint
 
-DESTDIR_RSERVE_SANDBOX_DOCKER_BIN=rserve-sandbox-docker-bin.aur
-DATADIR_RSERVE_SANDBOX_DOCKER_BIN=rserve-sandbox-docker-bin
-COMMONDIR_RSERVE_SANDBOX_DOCKER_BIN=../../common/rserve-sandbox-docker-bin
+DESTDIR_SWISH_CPLINT_BIN=$(DESTDIR)/swish-cplint-bin.aur
+DATADIR_SWISH_CPLINT_BIN=$(DATADIR)/swish-cplint-bin
+COMMONDIR_SWISH_CPLINT_BIN=$(COMMONDIR)/swish-cplint-bin
 
-default: swish swish-cplint rserve-sandbox-docker rserve-sandbox-docker-bin
+DESTDIR_RSERVE_SANDBOX_DOCKER=$(DESTDIR)/rserve-sandbox-docker.aur
+DATADIR_RSERVE_SANDBOX_DOCKER=$(DATADIR)/rserve-sandbox-docker
+COMMONDIR_RSERVE_SANDBOX_DOCKER=$(COMMONDIR)/rserve-sandbox-docker
+
+DESTDIR_RSERVE_SANDBOX_DOCKER_BIN=$(DESTDIR)/rserve-sandbox-docker-bin.aur
+DATADIR_RSERVE_SANDBOX_DOCKER_BIN=$(DATADIR)/rserve-sandbox-docker-bin
+COMMONDIR_RSERVE_SANDBOX_DOCKER_BIN=$(COMMONDIR)/rserve-sandbox-docker-bin
+
+default: swish swish-cplint swish-cplint-bin rserve-sandbox-docker rserve-sandbox-docker-bin
 
 all: default
 
@@ -64,6 +72,22 @@ swish-cplint:
 	@cp -r $(COMMONDIR_SWISH_CPLINT)/* $(DESTDIR_SWISH_CPLINT)
 	@cat $(COMMONDIR_SWISH_CPLINT)/../shared_functions.sh >> $(DESTDIR_SWISH_CPLINT)/run.sh
 	@cd $(DESTDIR_SWISH_CPLINT); makepkg --printsrcinfo > .SRCINFO
+	@echo "Package created."
+
+
+# Change small details in the PKGBUILD:
+#
+# description
+# dependency: rserve-sandbox-docker -> rserve-sandbox-docker-bin
+#
+# Other things might be changed in the future.
+swish-cplint-bin:
+	@echo "Creating package..."
+	@mkdir -p $(DESTDIR_SWISH_CPLINT_BIN)
+	@cp -Lr $(DATADIR_SWISH_CPLINT_BIN)/{*,.install} $(DESTDIR_SWISH_CPLINT_BIN)
+	@cp -Lr $(COMMONDIR_SWISH_CPLINT_BIN)/* $(DESTDIR_SWISH_CPLINT_BIN)
+	@cat $(COMMONDIR_SWISH_CPLINT_BIN)/../shared_functions.sh >> $(DESTDIR_SWISH_CPLINT_BIN)/run.sh
+	@cd $(DESTDIR_SWISH_CPLINT_BIN); makepkg --printsrcinfo > .SRCINFO
 	@echo "Package created."
 
 rserve-sandbox-docker:
@@ -96,4 +120,4 @@ rserve-sandbox-docker-bin:
 	@echo "Package created."
 
 
-.PHONY: default all clean swish swish-cplint rserve-sandbox-docker rserve-sandbox-docker-bin
+.PHONY: default all clean swish swish-cplint swish-cplint-bin rserve-sandbox-docker rserve-sandbox-docker-bin

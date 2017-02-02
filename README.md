@@ -1,13 +1,22 @@
 # swish-installer
 
 A set of packages that are able to build and install
-SWISH, Cplint on SWISH and an R environment.
+[SWISH](https://github.com/SWI-Prolog/swish), 
+[Cplint on SWISH](https://github.com/friguzzi/swish) 
+with an 
+[R environment and library](https://github.com/frnmst/cplint_r).
+
+![swish-screenshot.png](images/swish-screenshot.png)
+
+![swish-cplint-screenshot.png](images/swish-cplint-screenshot.png)
+
+![swish-cplint-systemd-screenshot.png](images/swish-cplint-systemd-screenshot.png)
 
 ## Instructions
 
 [Documentation](https://frnmst.github.io/swish-installer)
 
-## Tests
+## Supported and tested distributions
 
 Only GNU/Linux Arch-based distros are currently supported.
 
