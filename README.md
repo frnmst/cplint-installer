@@ -6,11 +6,9 @@ A set of packages that are able to build and install
 with an 
 [R environment and library](https://github.com/frnmst/cplint_r).
 
-![swish-screenshot.png](images/swish-screenshot.png)
-
-![swish-cplint-screenshot.png](images/swish-cplint-screenshot.png)
-
-![swish-cplint-systemd-screenshot.png](images/swish-cplint-systemd-screenshot.png)
+<img src="images/swish-screenshot.png" alt="swish-screenshot.png" width="256"/>
+<img src="images/swish-cplint-screenshot.png"alt="swish-cplint-screenshot.png" width="256"/>
+<img src="images/swish-cplint-systemd-screenshot.png" alt="swish-cplint-systemd-screenshot.png" width="256"/>
 
 ## Instructions
 
