@@ -16,7 +16,8 @@ depends=('libxinerama'
 makedepends=('git'
              'bower'
              'sed')
-conflicts=('swish')
+conflicts=('swish'
+           'swish-cplint-bin')
 install=.install
 source=('git+https://github.com/friguzzi/swish#branch=master')
 md5sums=('SKIP')

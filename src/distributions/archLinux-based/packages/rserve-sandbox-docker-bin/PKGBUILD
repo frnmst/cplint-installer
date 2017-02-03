@@ -30,7 +30,7 @@ package() {
     install -d "${pkgdir}"/usr/bin
     install -D -m644 rserve-sandbox-bin/Makefile "${pkgdir}"/usr/share/"${pkgname%-bin}"/Makefile
     install -D -m644 rserve-sandbox-bin/LICENSE "${pkgdir}"/usr/share/licenses/${pkgname%-bin}/LICENSE
-    install -D -m644 rserve-sandbox-bin/rserve.tar "${pkgdir}"/usr/share/licenses/${pkgname%-bin}/rserve.tar
+    install -D -m644 rserve-sandbox-bin/rserve.tar "${pkgdir}"/usr/share/${pkgname%-bin}/rserve.tar
     install -D -m755 ../run.sh "${pkgdir}"/usr/share/${pkgname%-bin}/run.sh
     install -D -m644 ../${pkgname%-bin}.service "${pkgdir}"/usr/lib/systemd/system/"${pkgname%-bin}".service
     ln -s /usr/share/"${pkgname%-bin}"/run.sh "${pkgdir}"/usr/bin/"${pkgname%-bin}"

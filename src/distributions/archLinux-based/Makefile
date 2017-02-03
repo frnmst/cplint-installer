@@ -74,13 +74,6 @@ swish-cplint:
 	@cd $(DESTDIR_SWISH_CPLINT); makepkg --printsrcinfo > .SRCINFO
 	@echo "Package created."
 
-
-# Change small details in the PKGBUILD:
-#
-# description
-# dependency: rserve-sandbox-docker -> rserve-sandbox-docker-bin
-#
-# Other things might be changed in the future.
 swish-cplint-bin:
 	@echo "Creating package..."
 	@mkdir -p $(DESTDIR_SWISH_CPLINT_BIN)

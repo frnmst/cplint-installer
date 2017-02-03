@@ -85,6 +85,7 @@ install_swish_installer()
     local swish_installer="https://github.com/frnmst/swish-installer.git"
     local swish_installer_dest="swish-installer"
     local make_dir="src/distributions/archLinux-based"
+    local package_dest_dir="dest"
 
 
     mkdir -p "$build_dir"
@@ -94,6 +95,7 @@ install_swish_installer()
     git checkout "$branch"
     pushd "$make_dir"
     make
+    pushd "$package_dest_dir"
 }
 
 install_remote_package()
