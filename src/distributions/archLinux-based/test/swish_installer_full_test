@@ -170,13 +170,12 @@ chain()
         fi
     else
         if [ "$dev" = "true" ]; then
-            install_local_package "rserve-sandbox-docker" "dev" \
-&& sudo -u rsd /usr/bin/rserve-sandbox-docker -i
+            install_local_package "rserve-sandbox-docker" "dev"
         else
-            install_local_package "rserve-sandbox-docker" "distro-package" \
-&& sudo -u rsd /usr/bin/rserve-sandbox-docker -i
+            install_local_package "rserve-sandbox-docker" "distro-package"
         fi
     fi; } \
+&& sudo -u rsd /usr/bin/rserve-sandbox-docker -i \
 && { if [ "$dev" = "true" ]; then
         install_local_package "swish-cplint" "c3js-2-R"
         # Exception handled manually

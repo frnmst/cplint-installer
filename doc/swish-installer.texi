@@ -1,4 +1,4 @@
-\input texinfo
+\input texinfo @c -*-texinfo-*-
 
 @settitle SWISH Installer Manual
 @include my-bib-macros.texi
@@ -63,6 +63,10 @@ as well as the "vanilla" version of SWISH.
 
 SWISH relies on SWI Prolog@footnote{@mybibcite{Swipl}}, 
 a prolog interpteter.
+
+@image{swish-screenshot,1pt}
+@image{swish-cplint-screenshot,1pt}
+@image{swish-cplint-systemd-screenshot,1pt}
 
 @subsection Terminology
 
@@ -239,6 +243,9 @@ $ sudo -u rsd rserve-sandbox-docker -i
 @end verbatim
 
 @section Cplint on SWISH and Cplint on SWISH binary
+Before reading on, start the Rserve sandbox service, to avoid errors
+on some prolog tests executed by the Cplint R library.
+
 To download all the prolog packages necessary in order to run
 Cplint on SWISH correcly:
 @verbatim
@@ -452,8 +459,8 @@ Post
 Add @code{rserve} user and group.
 
 @verbatim
-# getent group rserve &>/dev/null || groupadd -r rserve >/dev/null
-# getent passwd rserve &>/dev/null || useradd -m -d /home/rserve \
+# getent group rserve &>/dev/null || groupadd -g 32749 -r rserve >/dev/null
+# getent passwd rserve &>/dev/null || useradd -u 32749 -m -d /home/rserve \
 -s /bin/false -r -g rserve rserve >/dev/null
 # chmod 750 /home/rserve
 @end verbatim

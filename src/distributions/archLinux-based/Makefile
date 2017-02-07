@@ -98,6 +98,8 @@ rserve-sandbox-docker:
 # help "install image ..." -> "load image"
 # help link line
 #
+# post install message
+#
 # as well as the link line in the systemd service.
 rserve-sandbox-docker-bin:
 	@echo "Creating package..."
@@ -108,6 +110,8 @@ rserve-sandbox-docker-bin:
 	@sed -i "s/make image/make load/g" $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)/run.sh
 	@sed -i "s/install image and dependencies/load image/g" $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)/run.sh
 	@sed -i "s@https://github.com/frnmst/rserve-sandbox@https://gitlab.com/frnmst/rserve-sandbox-bin@g" $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)/run.sh
+	@sed -i 's@To initialize.*@Before starting the service \\ @g' $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)/.install
+	@sed -i 's@components you must run.*@you must run \\ @g' $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)/.install
 	@cat $(COMMONDIR_RSERVE_SANDBOX_DOCKER_BIN)/../shared_functions.sh >> $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN)/run.sh
 	@cd $(DESTDIR_RSERVE_SANDBOX_DOCKER_BIN); makepkg --printsrcinfo > .SRCINFO
 	@echo "Package created."
