@@ -64,9 +64,11 @@ as well as the "vanilla" version of SWISH.
 SWISH relies on SWI Prolog@footnote{@mybibcite{Swipl}}, 
 a prolog interpteter.
 
-@image{swish-screenshot,1pt}
-@image{swish-cplint-screenshot,1pt}
-@image{swish-cplint-systemd-screenshot,1pt}
+@image{swish-screenshot}
+
+@image{swish-cplint-screenshot}
+
+@image{swish-cplint-systemd-screenshot}
 
 @subsection Terminology
 
@@ -350,7 +352,7 @@ The @file{common} directory contains all the files which
 are not distribution specific.
 
 @subsection Distribution-specific files
-@xref{Development, , Building the packages}
+@xref{Development, ,Building the packages}
 
 @subsection Common files
 
