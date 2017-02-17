@@ -32,15 +32,16 @@ notice and this notice are preserved.
 This manual is for SWISH Installer.
 
 @menu
-* Description::     A brief description of what this is all about
+* Description::                         A brief description of what this is all about
+* Demonstrations::                      Public available example websites
 * Available packages and descriptions:: Table of available packages for each system and their descriptions
-* Installation::    Installation procedures on various systems
-* Components download:: Components to be downloaded after the installation
-* Daemons management:: How to start, stop and enable the daemons
-* Accessing the server:: How to access and use the servers
-* Development::    A thorough description on how to develop over this installer
-* Thanks:: People and communities
-* @mybibnode{}:: References to the technologies used
+* Installation::                        Installation procedures on various systems
+* Components download::                 Components to be downloaded after the installation
+* Daemons management::                  How to start, stop and enable the daemons
+* Accessing the server::                How to access and use the servers
+* Development::                         A thorough description on how to develop over this installer
+* Thanks::                              People and communities
+* @mybibnode{}::                        References to the technologies used
 @end menu
 @end ifnottex
 
@@ -51,9 +52,8 @@ This manual is for SWISH Installer.
 
 @node Description
 @chapter About
-@cindex test
+@c index test
 @section About
-
 The purpose of this repository is to handle the creation 
 of serveral packages and helpers in order to
 install Cplint@footnote{@mybibcite{Cplint}}
@@ -99,6 +99,17 @@ common/
 @c ----
 @c ----
 
+@node Demonstrations
+@chapter Demonstrations
+If you want to see how the final result might look like, have a look at
+@uref{http://cplint.lamping.unife.it/} for Cplint on SWISH
+and @uref{http://swish.swi-prolog.org/} for the "vanilla" version of SWISH.
+
+@c ----
+@c ----
+@c ----
+@c ----
+
 @node Available packages and descriptions
 @chapter Available packages and descriptions
 @section Available packages
@@ -133,7 +144,7 @@ packages in a generic manner (non-distribution specific).
 @item Description
 @tab the vanilla version of SWISH
 @tab SWISH with the Cplint suite. Uses Rserve sandbox as a main dependency
-@tab precompiled version of Cplint on SWISH. Uses Rserve sandbox binary
+@tab precompiled version of Cplint on SWISH. Uses Rserve sandbox binary as well as precompiled web components
 @tab an R environment running inside a docker container
 @tab precompiled version of Rserve sandbox
 @end multitable
@@ -333,18 +344,25 @@ For example: @code{http://localhost:3050} or @code{http://127.0.0.1:3050}
 @verbatim
 .
 |-- common
-|   |-- rserve-sandbox
+|   |-- rserve-sandbox-docker
+|   |-- rserve-sandbox-docker-bin
 |   |-- swish
-|   `-- swish-cplint
+|   |-- swish-cplint
+|   `-- swish-cplint-bin -> swish-cplint/
 `-- distributions
     |-- archLinux-based
-    |   |-- rserve-sandbox
-    |   |-- swish
-    |   `-- swish-cplint
+    |   |-- dest
+    |   |-- packages
+    |   |   |-- rserve-sandbox-docker
+    |   |   |-- rserve-sandbox-docker-bin
+    |   |   |-- swish
+    |   |   |-- swish-cplint
+    |   |   `-- swish-cplint-bin
+    |   `-- test
     `-- debian-based
 @end verbatim
 
-The @file{distributions} directory all the files useful to
+The @file{distributions} directory contains all the files useful to
 build packages for a specific distribution. Makefiles
 are used to achieve this.
 
@@ -358,18 +376,19 @@ are not distribution specific.
 
 @verbatim
 common/
-|-- rserve-sandbox
+|-- rserve-sandbox-docker
 |   `-- run.sh
-|-- rserve-sandbox-bin
-|   `-- run.sh
+|-- rserve-sandbox-docker-bin
+|   `-- run.sh -> ../rserve-sandbox-docker/run.sh
 |-- shared_functions.sh
 |-- swish
 |   |-- run.pl
 |   `-- run.sh
-`-- swish-cplint
-    |-- install_web_iface_deps.pl
-    |-- run.pl
-    `-- run.sh
+|-- swish-cplint
+|   |-- install_web_iface_deps.pl
+|   |-- run.pl
+|   `-- run.sh
+`-- swish-cplint-bin -> swish-cplint/
 @end verbatim
 
 The @file{run.sh} files are helpers to start and stop the daemons.
@@ -407,6 +426,11 @@ all their install and remove actions and how to build
 your version of the modified packages.
 
 Installation and removal actions must be done sequentially.
+
+@c ----
+@c ----
+@c ----
+@c ----
 
 @subsection Rserve sandbox
 @subsubsection General information
@@ -532,8 +556,21 @@ on the package remove policies of the chosen distro).
 
 @end itemize
 
+@c ----
+@c ----
+@c ----
+@c ----
+
 @subsection Rserve sandbox binary
+@itemize @bullet
+@item
 Same as Rserve sandbox.
+@end itemize
+
+@c ----
+@c ----
+@c ----
+@c ----
 
 @subsection Cplint on SWISH
 @subsubsection General information
@@ -577,7 +614,7 @@ Pre
 
 @itemize @minus
 @item
-Compile the server
+Compile the web dependencies
 
 @verbatim
 $ bower --allow-root install
@@ -666,6 +703,105 @@ remove policies of the chosen distro).
 
 @end itemize
 
+@c ----
+@c ----
+@c ----
+@c ----
+
+@subsection Cplint on SWISH binary
+@subsubsection General information
+@itemize @bullet
+@item
+Data directory
+
+@file{/usr/share/swish}
+
+@item
+Dependencies
+@itemize @minus
+@item
+SWI Prolog (developement version)
+
+@item
+Git
+
+@item
+Graphviz
+
+@item
+libXinerama
+
+@item
+libXpm
+
+@item
+Rserve sandbox binary
+
+@item
+curl (make dependency)@footnote{@mybibcite{curl}}
+
+@item
+UnZip (make dependency)@footnote{@mybibcite{UnZip}}
+@end itemize
+
+@end itemize
+
+@subsubsection Install actions
+@itemize @bullet
+@item
+Pre
+
+@itemize @minus
+@item
+Download and unzip the web dependencies
+
+@verbatim
+$ curl -o swish-bower-components.zip \
+http://www.swi-prolog.org/download/swish/swish-bower-components.zip
+$ unzip swish-bower-components.zip
+$ rm -rf swish-bower-components.zip
+@end verbatim
+
+@item
+Copy @file{run.pl}, @file{run.sh} and
+@file{install_web_iface_deps.pl} in SWISH's root directory.
+@end itemize
+
+@end itemize
+
+@itemize @bullet
+@item
+During
+
+@itemize @minus
+@item
+Same as Cplint on SWISH
+@end itemize
+
+@end itemize
+
+@itemize @bullet
+@item
+Post
+
+@itemize @minus
+@item
+Same as Cplint on SWISH
+@end itemize
+
+@end itemize
+
+@subsubsection Remove actions
+@itemize @bullet
+@item
+Same as Cplint on SWISH
+@end itemize
+
+@c ----
+@c ----
+@c ----
+@c ----
+
 @subsection SWISH
 @subsubsection General information
 @itemize @bullet
@@ -699,7 +835,7 @@ Pre
 
 @itemize @minus
 @item
-Compile the server
+Compile the web dependencies
 
 @verbatim
 $ bower --allow-root install
@@ -1094,6 +1230,14 @@ See @uref{https://cgit.freedesktop.org/xorg/lib/libXpm}
 @*
 
 @mybibitem{Bower} "A package manager for the web". See @uref{https://bower.io/}
+@*
+
+@mybibitem{curl} "An URL retrieval utility and library".
+See @uref{https://curl.haxx.se}
+@*
+
+@mybibitem{UnZip} "For extracting and viewing files in .zip archives".
+See @uref{http://www.info-zip.org/UnZip.html}
 
 @end itemize
 
