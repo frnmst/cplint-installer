@@ -14,8 +14,9 @@ depends=('libxinerama'
          'swi-prolog-devel'
          'rserve-sandbox-docker-bin')
 makedepends=('git'
-             'bower'
-             'sed')
+             'sed'
+             'unzip'
+             'curl')
 conflicts=('swish'
            'swish-cplint')
 install=.install
@@ -24,11 +25,11 @@ md5sums=('SKIP')
 
 build() {
     cd ${srcdir}/swish
-    # Instead of compiling with bower, use the zip instruction on the 
-    # README in swish.
-    # TODO
-    bower --allow-root install
-    make src
+    # Unzip in swish/web/bower_components
+    curl -o swish-bower-components.zip \
+        http://www.swi-prolog.org/download/swish/swish-bower-components.zip
+    unzip swish-bower-components.zip
+    rm -rf swish-bower-components.zip
     # Patch
     cp ../../run.pl .
     cp ../../run.sh .
