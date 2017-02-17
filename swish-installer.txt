@@ -3,49 +3,60 @@ SWISH Installer
   1.1 About
     1.1.1 Terminology
     1.1.2 Directory listings
-2 Installation
-  2.1 Arch Linux
-    2.1.1 Using an AUR helper
-    2.1.2 Without using an AUR helper
-      2.1.2.1 Cplint on SWISH
-      2.1.2.2 SWISH
-    2.1.3 Daemons management
-  2.2 Debian
-3 Components download
-  3.1 Docker
-  3.2 Rserve sandbox
-  3.3 Cplint on SWISH
-4 Daemons management
-  4.1 Systemd
-    4.1.1 Cplint on SWISH
-    4.1.2 SWISH
-5 Accessing the server
-6 Development
-  6.1 Repository structure
-    6.1.1 Distribution-specific files
-    6.1.2 Common files
-  6.2 Guidelines to create packages
-    6.2.1 Rserve sandbox
-      6.2.1.1 General information
-      6.2.1.2 Install actions
-      6.2.1.3 Remove actions
-    6.2.2 Cplint on SWISH
-      6.2.2.1 General information
-      6.2.2.2 Install actions
-      6.2.2.3 Remove actions
-    6.2.3 SWISH
-      6.2.3.1 General information
-      6.2.3.2 Install actions
-      6.2.3.3 Remove actions
-  6.3 Building the packages
-    6.3.1 Arch Linux
-  6.4 Help pages
-    6.4.1 Rserve sandbox
-    6.4.2 Cplint on SWISH
-    6.4.3 SWISH
-  6.5 Compiling this documentation
-7 Thanks
-8 References
+2 Demonstrations
+3 Available packages and descriptions
+  3.1 Available packages
+  3.2 Descriptions
+4 Installation
+  4.1 Arch Linux
+    4.1.1 Using an AUR helper
+    4.1.2 Without using an AUR helper
+      4.1.2.1 Cplint on SWISH
+      4.1.2.2 Cplint on SWISH binary
+      4.1.2.3 SWISH
+    4.1.3 Daemons management
+  4.2 Debian
+5 Components download
+  5.1 Rserve sandbox and Rserve sandbox binary
+  5.2 Cplint on SWISH and Cplint on SWISH binary
+6 Daemons management
+  6.1 Systemd
+    6.1.1 Cplint on SWISH
+    6.1.2 Cplint on SWISH binary
+    6.1.3 SWISH
+7 Accessing the server
+8 Development
+  8.1 Repository structure
+    8.1.1 Distribution-specific files
+    8.1.2 Common files
+  8.2 Guidelines to create packages
+    8.2.1 Rserve sandbox
+      8.2.1.1 General information
+      8.2.1.2 Install actions
+      8.2.1.3 Remove actions
+    8.2.2 Rserve sandbox binary
+    8.2.3 Cplint on SWISH
+      8.2.3.1 General information
+      8.2.3.2 Install actions
+      8.2.3.3 Remove actions
+    8.2.4 Cplint on SWISH binary
+      8.2.4.1 General information
+      8.2.4.2 Install actions
+      8.2.4.3 Remove actions
+    8.2.5 SWISH
+      8.2.5.1 General information
+      8.2.5.2 Install actions
+      8.2.5.3 Remove actions
+  8.3 Building the packages
+    8.3.1 Arch Linux
+  8.4 Help pages
+    8.4.1 Rserve sandbox
+    8.4.2 Rserve sandbox binary
+    8.4.3 Cplint on SWISH
+    8.4.4 SWISH
+  8.5 Compiling this documentation
+9 Thanks
+10 References
 SWISH Installer
 ***************
 
@@ -63,11 +74,16 @@ Rserve(3) environment, as well as the "vanilla" version of SWISH.
 
 SWISH relies on SWI Prolog(4), a prolog interpteter.
 
+[swish-screenshot]
+[swish-cplint-screenshot]
+[swish-cplint-systemd-screenshot]
 1.1.1 Terminology
 -----------------
 
 In order to understand this documentation correctly some terminology
 used here must be explained.
+
+'<' and '>' means pseudocode.
 
 '#' means that the command must be executed by 'root'.
 
@@ -95,85 +111,111 @@ generated from '$ tree --charset=ascii -d <dirname>'.
 
    (4) See item *[Swipl]* in *note Swipl: References.
 
-2 Installation
+2 Demonstrations
+****************
+
+If you want to see how the final result might look like, have a look at
+<http://cplint.lamping.unife.it/> for Cplint on SWISH and
+<http://swish.swi-prolog.org/> for the "vanilla" version of SWISH.
+
+3 Available packages and descriptions
+*************************************
+
+3.1 Available packages
+======================
+
+DistributionsSWISH        Cplint on    Cplint on    Rserve       Rserve
+                          SWISH        SWISH        sandbox      sandbox
+                                       binary                    binary
+------------------------------------------------------------------------------
+Arch Linux   'swish'      'swish-cplint''swish-cplint-bin''rserve-sandbox-docker''rserve-sandbox-docker-bin'
+
+3.2 Descriptions
+================
+
+The following terms will be used throughout the document to identify the
+packages in a generic manner (non-distribution specific).
+
+-            SWISH        Cplint on    Cplint on    Rserve       Rserve
+                          SWISH        SWISH        sandbox      sandbox
+                                       binary                    binary
+------------------------------------------------------------------------------
+Description  the          SWISH with   precompiled  an R         precompiled
+             vanilla      the Cplint   version of   environment  version of
+             version of   suite.       Cplint on    running      Rserve
+             SWISH        Uses         SWISH.       inside a     sandbox
+                          Rserve       Uses         docker
+                          sandbox as   Rserve       container
+                          a main       sandbox
+                          dependency   binary as
+                                       well as
+                                       precompiled
+                                       web
+                                       components
+
+4 Installation
 **************
 
-2.1 Arch Linux
+4.1 Arch Linux
 ==============
 
-In order to have a fully functional installation of SWISH or Cplint on
-SWISH you either have to install the packages 'swish' or 'swish-cplint'.
+There at least two possibilities to install the packages.
 
-There at least two possibilities to install both packages.
-
-2.1.1 Using an AUR helper
+4.1.1 Using an AUR helper
 -------------------------
 
 Yaourt(1) is among the most popular AUR(2) helpers available.  The
-following commands(3) will install all the dependencies automatically.
-$ yaourt -Sa swish-cplint --noconfirm
-or
-$ yaourt -Sa swish --noconfirm
+following command(3) will install all the dependencies automatically.
+Use the package names described in the *note Available packages:
+Available packages and descriptions. section.
+
+$ yaourt -Sa s <package name> --noconfirm
 
      Note: When you install Yaourt on Parabola GNU/Linux-libre(4) you
      will be asked to remove 'your-freedom'.
 
-2.1.2 Without using an AUR helper
+4.1.2 Without using an AUR helper
 ---------------------------------
 
-2.1.2.1 Cplint on SWISH
+Adapt this command to match the to be installed package:
+
+$ wget "https://aur.archlinux.org/cgit/\
+aur.git/snapshot/<package name>.tar.gz"
+$ tar -zxvf <package name>.tar.gz
+$ cd <package name>
+$ makepkg -sri --noconfirm
+
+4.1.2.1 Cplint on SWISH
 .......................
 
-Execute the following commands sequentially.
+   * Install 'swi-prolog-devel'
 
-   * Install 'swi-prolog-devel':
+   * Install 'rserve-sandbox-docker'
 
-     $ wget "https://aur.archlinux.org/cgit/\
-     aur.git/snapshot/swi-prolog-devel.tar.gz"
-     $ tar -zxvf swi-prolog-devel.tar.gz
-     $ cd swi-prolog-devel
-     $ makepkg -sri --noconfirm
+   * Install 'swish-cplint'
 
-   * Install 'rserve-sandbox-docker':
-     $ wget "https://aur.archlinux.org/cgit/\
-     aur.git/snapshot/rserve-sandbox-docker.tar.gz"
-     $ tar -zxvf rserve-sandbox-docker.tar.gz
-     $ cd rserve-sandbox-docker
-     $ makepkg -sri --noconfirm
+4.1.2.2 Cplint on SWISH binary
+..............................
 
-   * Install 'swish-cplint':
-     $ wget "https://aur.archlinux.org/cgit/\
-     aur.git/snapshot/swish-cplint.tar.gz"
-     $ tar -zxvf swish-cplint.tar.gz
-     $ cd swish-cplint
-     $ makepkg -sri --noconfirm
+   * Install 'swi-prolog-devel'
 
-2.1.2.2 SWISH
+   * Install 'rserve-sandbox-docker-bin'
+
+   * Install 'swish-cplint-bin'
+
+4.1.2.3 SWISH
 .............
 
-   * Install 'swi-prolog-devel':
+   * Install 'swish'
 
-     $ wget "https://aur.archlinux.org/cgit/\
-     aur.git/snapshot/swi-prolog-devel.tar.gz"
-     $ tar -zxvf swi-prolog-devel.tar.gz
-     $ cd swi-prolog-devel
-     $ makepkg -sri --noconfirm
-
-   * Install 'swish':
-     $ wget "https://aur.archlinux.org/cgit/\
-     aur.git/snapshot/swish.tar.gz"
-     $ tar -zxvf swish.tar.gz
-     $ cd swish
-     $ makepkg -sri --noconfirm
-
-2.1.3 Daemons management
+4.1.3 Daemons management
 ------------------------
 
 Arch Linux and derivative distros use Systemd(5) as the init system.
 First see *note Components download:: and then see *note Daemons
 management::.
 
-2.2 Debian
+4.2 Debian
 ==========
 
 TODO
@@ -191,28 +233,27 @@ References.
 
    (5) See item *[systemd]* in *note systemd: References.
 
-3 Components download
+5 Components download
 *********************
 
-Before running the daemons some components must be downloaded.
+This section only applies to Cplint on SWISH and Cplint on SWISH binary.
 
-This section only applies to Cplint on SWISH.
+Before running the daemons some components must be downloaded.  The
+first thing to do is to start Docker(1) manually.  See *note Daemons
+management:: for more information.
 
-3.1 Docker
-==========
-
-Before doing anything else you must start Docker(1) manually.  See *note
-Daemons management::.
-
-3.2 Rserve sandbox
-==================
+5.1 Rserve sandbox and Rserve sandbox binary
+============================================
 
 To download the Docker image file as well as all dependencies for R(2),
-run the following command:
+or to load the docker image, run the following command:
 $ sudo -u rsd rserve-sandbox-docker -i
 
-3.3 Cplint on SWISH
-===================
+5.2 Cplint on SWISH and Cplint on SWISH binary
+==============================================
+
+Before reading on, start the Rserve sandbox service, to avoid errors on
+some prolog tests executed by the Cplint R library.
 
 To download all the prolog packages necessary in order to run Cplint on
 SWISH correcly:
@@ -224,18 +265,18 @@ $ sudo -u swish swish-cplint -i
 
    (2) See item *[R]* in *note R: References.
 
-4 Daemons management
+6 Daemons management
 ********************
 
 Commands to manage the daemons depend on the init system in use.
 
-4.1 Systemd
+6.1 Systemd
 ===========
 
-4.1.1 Cplint on SWISH
+6.1.1 Cplint on SWISH
 ---------------------
 
-Docker is a dependency which must be started manually.
+Docker is a dependency which must be started manually during the setup.
 # systemctl start docker
 
 The following command will run 'swish-cplint' as well as
@@ -256,67 +297,84 @@ To check the status of both daemons:
 # systemctl status swish-cplint
 # systemctl status rserve-sandbox-docker
 
-4.1.2 SWISH
+6.1.2 Cplint on SWISH binary
+----------------------------
+
+For simplicity, services names do not change, so the same instructions
+of Cplint on SWISH are also applicable here.
+
+6.1.3 SWISH
 -----------
 
 Running and managing SWISH alone is very similar to the previous method:
 instead of using 'swish-cplint' as part of the commands, you must use
 'swish'.  You don't need to worry about Rserve or Docker.
 
-5 Accessing the server
+7 Accessing the server
 **********************
 
-To access Cplint on SWISH or SWISH you need a JavaScript (1) enabled
-browser and you have to connect to port 3050.  For example:
+To access the web interface you need a JavaScript (1) enabled browser
+and you have to connect to port 3050.  For example:
 'http://localhost:3050' or 'http://127.0.0.1:3050'
 
    ---------- Footnotes ----------
 
    (1) See item *[JavaScript]* in *note JavaScript: References.
 
-6 Development
+8 Development
 *************
 
-6.1 Repository structure
+8.1 Repository structure
 ========================
 
 .
 |-- common
-|   |-- rserve-sandbox
+|   |-- rserve-sandbox-docker
+|   |-- rserve-sandbox-docker-bin
 |   |-- swish
-|   `-- swish-cplint
+|   |-- swish-cplint
+|   `-- swish-cplint-bin -> swish-cplint/
 `-- distributions
     |-- archLinux-based
-    |   |-- rserve-sandbox
-    |   |-- swish
-    |   `-- swish-cplint
+    |   |-- dest
+    |   |-- packages
+    |   |   |-- rserve-sandbox-docker
+    |   |   |-- rserve-sandbox-docker-bin
+    |   |   |-- swish
+    |   |   |-- swish-cplint
+    |   |   `-- swish-cplint-bin
+    |   `-- test
     `-- debian-based
 
-The 'distributions' directory all the files useful to build packages for
-a specific distribution.  Makefiles are used to achieve this.
+The 'distributions' directory contains all the files useful to build
+packages for a specific distribution.  Makefiles are used to achieve
+this.
 
 The 'common' directory contains all the files which are not distribution
 specific.
 
-6.1.1 Distribution-specific files
+8.1.1 Distribution-specific files
 ---------------------------------
 
 *Note Building the packages: Development.
 
-6.1.2 Common files
+8.1.2 Common files
 ------------------
 
 common/
-|-- rserve-sandbox
+|-- rserve-sandbox-docker
 |   `-- run.sh
+|-- rserve-sandbox-docker-bin
+|   `-- run.sh -> ../rserve-sandbox-docker/run.sh
 |-- shared_functions.sh
 |-- swish
 |   |-- run.pl
 |   `-- run.sh
-`-- swish-cplint
-    |-- install_web_iface_deps.pl
-    |-- run.pl
-    `-- run.sh
+|-- swish-cplint
+|   |-- install_web_iface_deps.pl
+|   |-- run.pl
+|   `-- run.sh
+`-- swish-cplint-bin -> swish-cplint/
 
 The 'run.sh' files are helpers to start and stop the daemons.  These
 helpers should work on any distribution.  You can edit the variables at
@@ -331,13 +389,13 @@ Another important file is 'shared_functions.sh' which contains all
 common functions for the 'run.sh' files.  It must be appended to every
 'run.sh', within a Makefile for example with the following:
 
-     $ cat shared_functions.sh >> {rserve-sandbox,swish,swish-cplint}/run.sh
+     $ cat shared_functions.sh >> {rserve-sandbox*,swish,swish-cplint}/run.sh
 
 Cplint on SWISH contains a post installation script called
 'install_web_iface_deps.pl'.  This script, called by 'run.sh', simply
 installs all the necessary Prolog dependencies automatically.
 
-6.2 Guidelines to create packages
+8.2 Guidelines to create packages
 =================================
 
 Makefiles are used to build the package in a new directory by copying
@@ -348,17 +406,13 @@ You will read general information about the packages, all their install
 and remove actions and how to build your version of the modified
 packages.
 
-The install and remove actions have to be done sequentially.
+Installation and removal actions must be done sequentially.
 
-6.2.1 Rserve sandbox
+8.2.1 Rserve sandbox
 --------------------
 
-6.2.1.1 General information
+8.2.1.1 General information
 ...........................
-
-   * Name
-
-     'rserve-sandbox-docker'
 
    * Data directory
 
@@ -369,7 +423,7 @@ The install and remove actions have to be done sequentially.
 
         - Docker
 
-6.2.1.2 Install actions
+8.2.1.2 Install actions
 .......................
 
    * Pre
@@ -388,8 +442,8 @@ The install and remove actions have to be done sequentially.
 
         - Add 'rserve' user and group.
 
-          # getent group rserve &>/dev/null || groupadd -r rserve >/dev/null
-          # getent passwd rserve &>/dev/null || useradd -m -d /home/rserve \
+          # getent group rserve &>/dev/null || groupadd -g 32749 -r rserve >/dev/null
+          # getent passwd rserve &>/dev/null || useradd -u 32749 -m -d /home/rserve \
           -s /bin/false -r -g rserve rserve >/dev/null
           # chmod 750 /home/rserve
 
@@ -407,7 +461,11 @@ The install and remove actions have to be done sequentially.
 
           # chown -R rsd:rsd /usr/share/rserve-sandbox-docker
 
-6.2.1.3 Remove actions
+          Note: the 'rsd' user and group was created in order to avoid
+          privilege escalation, since any user which belongs to the
+          'docker' group is equivalent to 'root'(1).
+
+8.2.1.3 Remove actions
 ......................
 
    * Pre
@@ -425,15 +483,16 @@ The install and remove actions have to be done sequentially.
           removed (this depends on the package remove policies of the
           chosen distro).
 
-6.2.2 Cplint on SWISH
+8.2.2 Rserve sandbox binary
+---------------------------
+
+   * Same as Rserve sandbox.
+
+8.2.3 Cplint on SWISH
 ---------------------
 
-6.2.2.1 General information
+8.2.3.1 General information
 ...........................
-
-   * Name
-
-     'swish-cplint'
 
    * Data directory
 
@@ -442,24 +501,24 @@ The install and remove actions have to be done sequentially.
    * Dependencies
         - SWI Prolog (developement version)
 
-        - Git(1)
+        - Git(2)
 
-        - Graphviz(2)
+        - Graphviz(3)
 
-        - libXinerama(3)
+        - libXinerama(4)
 
-        - libXpm(4)
+        - libXpm(5)
 
         - Rserve sandbox
 
-        - Bower (make dependency)(5)
+        - Bower (make dependency)(6)
 
-6.2.2.2 Install actions
+8.2.3.2 Install actions
 .......................
 
    * Pre
 
-        - Compile the server
+        - Compile the web dependencies
 
           $ bower --allow-root install
           $ make src
@@ -490,7 +549,7 @@ The install and remove actions have to be done sequentially.
 
           # chown -R swish:swish /usr/share/swish-cplint
 
-6.2.2.3 Remove actions
+8.2.3.3 Remove actions
 ......................
 
    * Pre
@@ -507,15 +566,66 @@ The install and remove actions have to be done sequentially.
           can be removed (this depends on the package remove policies of
           the chosen distro).
 
-6.2.3 SWISH
------------
+8.2.4 Cplint on SWISH binary
+----------------------------
 
-6.2.3.1 General information
+8.2.4.1 General information
 ...........................
 
-   * Name
+   * Data directory
 
-     'swish'
+     '/usr/share/swish'
+
+   * Dependencies
+        - SWI Prolog (developement version)
+
+        - Git
+
+        - Graphviz
+
+        - libXinerama
+
+        - libXpm
+
+        - Rserve sandbox binary
+
+        - curl (make dependency)(7)
+
+        - UnZip (make dependency)(8)
+
+8.2.4.2 Install actions
+.......................
+
+   * Pre
+
+        - Download and unzip the web dependencies
+
+          $ curl -o swish-bower-components.zip \
+          http://www.swi-prolog.org/download/swish/swish-bower-components.zip
+          $ unzip swish-bower-components.zip
+          $ rm -rf swish-bower-components.zip
+
+        - Copy 'run.pl', 'run.sh' and 'install_web_iface_deps.pl' in
+          SWISH's root directory.
+
+   * During
+
+        - Same as Cplint on SWISH
+
+   * Post
+
+        - Same as Cplint on SWISH
+
+8.2.4.3 Remove actions
+......................
+
+   * Same as Cplint on SWISH
+
+8.2.5 SWISH
+-----------
+
+8.2.5.1 General information
+...........................
 
    * Data directory
 
@@ -530,12 +640,12 @@ The install and remove actions have to be done sequentially.
 
         - Bower (make dependency)
 
-6.2.3.2 Install actions
+8.2.5.2 Install actions
 .......................
 
    * Pre
 
-        - Compile the server
+        - Compile the web dependencies
 
           $ bower --allow-root install
           $ make src
@@ -560,7 +670,7 @@ The install and remove actions have to be done sequentially.
 
           # chown -R swish:swish /usr/share/swish
 
-6.2.3.3 Remove actions
+8.2.5.3 Remove actions
 ......................
 
    * Pre
@@ -577,45 +687,94 @@ The install and remove actions have to be done sequentially.
           can be removed (this depends on the package remove policies of
           the chosen distro).
 
-6.3 Building the packages
+8.3 Building the packages
 =========================
 
-6.3.1 Arch Linux
+8.3.1 Arch Linux
 ----------------
 
 archLinux-based/
 |-- Makefile
-|-- rserve-sandbox
-|   |-- .install
-|   |-- PKGBUILD
-|   `-- rserve-sandbox-docker.service
-|-- swish
-|   |-- .install
-|   |-- PKGBUILD
-|   `-- swish.service
-`-- swish-cplint
-    |-- .install
-    |-- PKGBUILD
-    `-- swish-cplint.service
+|-- packages
+|   |-- rserve-sandbox-docker
+|   |   |-- .install
+|   |   |-- PKGBUILD
+|   |   `-- rserve-sandbox-docker.service
+|   |-- rserve-sandbox-docker-bin
+|   |   |-- .install -> ../rserve-sandbox-docker/.install
+|   |   |-- PKGBUILD
+|   |   `-- rserve-sandbox-docker.service -> ../rserve-sandbox-docker/rserve-sandbox-docker.service
+|   |-- swish
+|   |   |-- .install
+|   |   |-- PKGBUILD
+|   |   `-- swish.service
+|   |-- swish-cplint
+|   |   |-- .install
+|   |   |-- PKGBUILD
+|   |   `-- swish-cplint.service
+|   `-- swish-cplint-bin
+|       |-- .install -> ../swish-cplint/.install
+|       |-- PKGBUILD
+|       `-- swish-cplint.service -> ../swish-cplint/swish-cplint.service
+`-- test
+    `-- swish_installer_full_test
 
 Once you've made changes you can run '$ make' then change directory into
-one of the new '.aur' generated directories and finally run '$ makepkg
--sri' to install the package.
+one of the new 'dest/*.aur' generated directories and finally run '$
+makepkg -sri' to install the package.
 
-6.4 Help pages
+You also have the possibility to run the test script '$
+./test/swish_installer_full_test'.  Here is the help page:
+Usage: swish_installer_full_test [OPTION]
+Full automated install test for the Arch Linux packages in swish-installer
+
+Options are grouped in couples: one excludes the other
+
+Options:
+    -b, --binary                use binary packages where available
+    -c, --compile               compile packages where available
+
+    -d, --dev                   use development branches where available
+    -m, --master                use default branches where available
+
+    -e, --experimental          use swish-installer's dev branch
+    -s, --stable                use swish-installer's master branch
+
+    -h, --help                  print this help
+
+
+Default: --compile --master --stable
+Dependencies: git, wget.
+
+Exit status:
+ 0  if OK,
+ 1  if an error occurred.
+
+swish_installer_full_test online help:
+<https://frnmst.github.io/swish-installer/swish-installer.html#Help-pages>
+Full documentation at:
+<https://frnmst.github.io/swish-installer/swish-installer.html>
+
+Copyright  ©  2017  Franco Masotti.  License GPLv3+: GNU GPL version 3 or
+later <http://gnu.org/licenses/gpl.html>.
+This  is  free  software: you are free to change and redistribute it.  There
+is NO WARRANTY, to the extent  permitted by law.
+
+8.4 Help pages
 ==============
 
-6.4.1 Rserve sandbox
+8.4.1 Rserve sandbox
 --------------------
 
-rsd [OPTION]
+rserve-sandbox-docker [OPTION]
 Docker spec for running Rserve in a sandbox
 
 Only a single option is permitted.
     -h      print this help
-    -i      install dependencies
-    -k      kill rserve-sandbox-docker
-    -s      start rserve-sandbox-docker
+    -i      install image and dependencies
+    -k      kill the container
+    -r      remove the docker image
+    -s      start the container
 
 Exit status:
  0  if OK,
@@ -623,7 +782,26 @@ Exit status:
 
 Full documentation at: <https://github.com/frnmst/rserve-sandbox>
 
-6.4.2 Cplint on SWISH
+8.4.2 Rserve sandbox binary
+---------------------------
+
+rserve-sandbox-docker [OPTION]
+Docker spec for running Rserve in a sandbox
+
+Only a single option is permitted.
+    -h      print this help
+    -i      load image
+    -k      kill the container
+    -r      remove the docker image
+    -s      start the container
+
+Exit status:
+ 0  if OK,
+ 1  some error occurred.
+
+Full documentation at: <https://gitlab.com/frnmst/rserve-sandbox-bin>
+
+8.4.3 Cplint on SWISH
 ---------------------
 
 swish-cplint [OPTION]
@@ -642,7 +820,7 @@ Exit status:
 Full documentation at: <https://github.com/friguzzi/swish>
 and at: <https://github.com/friguzzi/cplint>
 
-6.4.3 SWISH
+8.4.4 SWISH
 -----------
 
 swish [OPTION]
@@ -659,7 +837,7 @@ Exit status:
 
 Full documentation at: <https://github.com/SWI-Prolog/swish>
 
-6.5 Compiling this documentation
+8.5 Compiling this documentation
 ================================
 
 The source of this documentation is under the 'doc' directory.
@@ -681,17 +859,24 @@ access the files by opening 'index.html' with a browser.
 
    ---------- Footnotes ----------
 
-   (1) See item *[Git]* in *note Git: References.
+   (1) See item *[Docker root privileges]* in *note Docker root
+privileges: References.
 
-   (2) See item *[Graphviz]* in *note Graphviz: References.
+   (2) See item *[Git]* in *note Git: References.
 
-   (3) See item *[libXinerama]* in *note libXinerama: References.
+   (3) See item *[Graphviz]* in *note Graphviz: References.
 
-   (4) See item *[libXpm]* in *note libXpm: References.
+   (4) See item *[libXinerama]* in *note libXinerama: References.
 
-   (5) See item *[Bower]* in *note Bower: References.
+   (5) See item *[libXpm]* in *note libXpm: References.
 
-7 Thanks
+   (6) See item *[Bower]* in *note Bower: References.
+
+   (7) See item *[curl]* in *note curl: References.
+
+   (8) See item *[UnZip]* in *note UnZip: References.
+
+9 Thanks
 ********
 
 I want to thank the SWI Prolog, Arch Linux and Systemd communities as
@@ -701,8 +886,8 @@ of these packages possible.
 I also want to thank Fabrizio Riguzzi which tested the packages and gave
 me advices about them.
 
-8 References
-************
+10 References
+*************
 
 Some quotations reported here are taken directly from the respective web
 sites.
@@ -783,6 +968,10 @@ sites.
      interpreted programming language".  See
      <https://en.wikipedia.org/wiki/JavaScript>
 
+   * *[Docker root privileges]* See
+     <https://docs.docker.com/engine/security/security/#/docker-daemon-attack-surface>
+
+
    * *[Git]* "Git is a free and open source distributed version control
      system designed to handle everything from small to very large
      projects with speed and efficiency".  See <https://git-scm.com/>
@@ -798,4 +987,11 @@ sites.
      See <https://cgit.freedesktop.org/xorg/lib/libXpm>
 
    * *[Bower]* "A package manager for the web".  See <https://bower.io/>
+
+
+   * *[curl]* "An URL retrieval utility and library".  See
+     <https://curl.haxx.se>
+
+   * *[UnZip]* "For extracting and viewing files in .zip archives".  See
+     <http://www.info-zip.org/UnZip.html>
 

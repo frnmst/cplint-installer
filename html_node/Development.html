@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 2016 Franco Masotti franco.masotti@student.unife.it
+<!-- Copyright (C) 2016-2017 Franco Masotti franco.masotti@student.unife.it
 
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
@@ -110,23 +110,30 @@ Next: <a href="Thanks.html#Thanks" accesskey="n" rel="next">Thanks</a>, Previous
 </div>
 <hr>
 <a name="Development-1"></a>
-<h2 class="chapter">6 Development</h2>
+<h2 class="chapter">8 Development</h2>
 <a name="Repository-structure"></a>
-<h3 class="section">6.1 Repository structure</h3>
+<h3 class="section">8.1 Repository structure</h3>
 
 <pre class="verbatim">.
 |-- common
-|   |-- rserve-sandbox
+|   |-- rserve-sandbox-docker
+|   |-- rserve-sandbox-docker-bin
 |   |-- swish
-|   `-- swish-cplint
+|   |-- swish-cplint
+|   `-- swish-cplint-bin -&gt; swish-cplint/
 `-- distributions
     |-- archLinux-based
-    |   |-- rserve-sandbox
-    |   |-- swish
-    |   `-- swish-cplint
+    |   |-- dest
+    |   |-- packages
+    |   |   |-- rserve-sandbox-docker
+    |   |   |-- rserve-sandbox-docker-bin
+    |   |   |-- swish
+    |   |   |-- swish-cplint
+    |   |   `-- swish-cplint-bin
+    |   `-- test
     `-- debian-based
 </pre>
-<p>The <samp>distributions</samp> directory all the files useful to
+<p>The <samp>distributions</samp> directory contains all the files useful to
 build packages for a specific distribution. Makefiles
 are used to achieve this.
 </p>
@@ -134,23 +141,26 @@ are used to achieve this.
 are not distribution specific.
 </p>
 <a name="Distribution_002dspecific-files"></a>
-<h4 class="subsection">6.1.1 Distribution-specific files</h4>
+<h4 class="subsection">8.1.1 Distribution-specific files</h4>
 <p>See <a href="#Development">Building the packages</a>
 </p>
 <a name="Common-files"></a>
-<h4 class="subsection">6.1.2 Common files</h4>
+<h4 class="subsection">8.1.2 Common files</h4>
 
 <pre class="verbatim">common/
-|-- rserve-sandbox
+|-- rserve-sandbox-docker
 |   `-- run.sh
+|-- rserve-sandbox-docker-bin
+|   `-- run.sh -&gt; ../rserve-sandbox-docker/run.sh
 |-- shared_functions.sh
 |-- swish
 |   |-- run.pl
 |   `-- run.sh
-`-- swish-cplint
-    |-- install_web_iface_deps.pl
-    |-- run.pl
-    `-- run.sh
+|-- swish-cplint
+|   |-- install_web_iface_deps.pl
+|   |-- run.pl
+|   `-- run.sh
+`-- swish-cplint-bin -&gt; swish-cplint/
 </pre>
 <p>The <samp>run.sh</samp> files are helpers to start and stop the daemons.
 These helpers should work on any distribution. You can 
@@ -168,7 +178,7 @@ files. It must be appended to every <samp>run.sh</samp>, within
 a Makefile for example with the following:
 </p>
 <div class="example">
-<pre class="example">$ cat shared_functions.sh &gt;&gt; {rserve-sandbox,swish,swish-cplint}/run.sh
+<pre class="example">$ cat shared_functions.sh &gt;&gt; {rserve-sandbox*,swish,swish-cplint}/run.sh
 </pre></div>
 
 <p>Cplint on SWISH contains a post installation script called
@@ -177,7 +187,7 @@ a Makefile for example with the following:
 dependencies automatically.
 </p>
 <a name="Guidelines-to-create-packages"></a>
-<h3 class="section">6.2 Guidelines to create packages</h3>
+<h3 class="section">8.2 Guidelines to create packages</h3>
 <p>Makefiles are used to build the package in a new directory
 by copying all necessary files (also from
 the <samp>common</samp> directory). Each Makefile is
@@ -187,18 +197,15 @@ distribution-based specific.
 all their install and remove actions and how to build
 your version of the modified packages.
 </p>
-<p>The install and remove actions have to be done sequentially.
+<p>Installation and removal actions must be done sequentially.
 </p>
-<a name="Rserve-sandbox-1"></a>
-<h4 class="subsection">6.2.1 Rserve sandbox</h4>
-<a name="General-information"></a>
-<h4 class="subsubsection">6.2.1.1 General information</h4>
-<ul>
-<li> Name
 
-<p><code>rserve-sandbox-docker</code>
-</p>
-</li><li> Data directory
+<a name="Rserve-sandbox"></a>
+<h4 class="subsection">8.2.1 Rserve sandbox</h4>
+<a name="General-information"></a>
+<h4 class="subsubsection">8.2.1.1 General information</h4>
+<ul>
+<li> Data directory
 
 <p><samp>/usr/share/rserve-sandbox-docker</samp>
 </p>
@@ -212,7 +219,7 @@ your version of the modified packages.
 </li></ul>
 
 <a name="Install-actions"></a>
-<h4 class="subsubsection">6.2.1.2 Install actions</h4>
+<h4 class="subsubsection">8.2.1.2 Install actions</h4>
 <ul>
 <li> Pre
 
@@ -235,8 +242,8 @@ your version of the modified packages.
 <ul class="no-bullet">
 <li>- Add <code>rserve</code> user and group.
 
-<pre class="verbatim"># getent group rserve &amp;&gt;/dev/null || groupadd -r rserve &gt;/dev/null
-# getent passwd rserve &amp;&gt;/dev/null || useradd -m -d /home/rserve \
+<pre class="verbatim"># getent group rserve &amp;&gt;/dev/null || groupadd -g 32749 -r rserve &gt;/dev/null
+# getent passwd rserve &amp;&gt;/dev/null || useradd -u 32749 -m -d /home/rserve \
 -s /bin/false -r -g rserve rserve &gt;/dev/null
 # chmod 750 /home/rserve
 </pre>
@@ -246,7 +253,7 @@ your version of the modified packages.
 # getent passwd rsd &amp;&gt;/dev/null || useradd \
 -s /bin/false -r -g rsd rsd &gt;/dev/null
 </pre>
-</li><li>- Add the new user to the &lsquo;docker&lsquo; group
+</li><li>- Add the new user to the <code>docker</code> group
 
 <pre class="verbatim"># gpasswd -a rsd docker &gt;/dev/null
 </pre>
@@ -256,10 +263,16 @@ your version of the modified packages.
 </pre>
 </li></ul>
 
+<blockquote>
+<p><b>Note:</b> the <code>rsd</code> user and group was created in order to avoid privilege 
+escalation, since any user which belongs to the <code>docker</code> group is
+equivalent to <code>root</code><a name="DOCF13" href="#FOOT13"><sup>13</sup></a>.
+</p></blockquote>
+
 </li></ul>
 
 <a name="Remove-actions"></a>
-<h4 class="subsubsection">6.2.1.3 Remove actions</h4>
+<h4 class="subsubsection">8.2.1.3 Remove actions</h4>
 <ul>
 <li> Pre
 
@@ -285,16 +298,20 @@ on the package remove policies of the chosen distro).
 
 </li></ul>
 
-<a name="Cplint-on-SWISH-3"></a>
-<h4 class="subsection">6.2.2 Cplint on SWISH</h4>
-<a name="General-information-1"></a>
-<h4 class="subsubsection">6.2.2.1 General information</h4>
-<ul>
-<li> Name
 
-<p><code>swish-cplint</code>
-</p>
-</li><li> Data directory
+<a name="Rserve-sandbox-binary"></a>
+<h4 class="subsection">8.2.2 Rserve sandbox binary</h4>
+<ul>
+<li> Same as Rserve sandbox.
+</li></ul>
+
+
+<a name="Cplint-on-SWISH-2"></a>
+<h4 class="subsection">8.2.3 Cplint on SWISH</h4>
+<a name="General-information-1"></a>
+<h4 class="subsubsection">8.2.3.1 General information</h4>
+<ul>
+<li> Data directory
 
 <p><samp>/usr/share/swish-cplint</samp>
 </p>
@@ -302,28 +319,28 @@ on the package remove policies of the chosen distro).
 <ul class="no-bullet">
 <li>- SWI Prolog (developement version)
 
-</li><li>- Git<a name="DOCF13" href="#FOOT13"><sup>13</sup></a>
+</li><li>- Git<a name="DOCF14" href="#FOOT14"><sup>14</sup></a>
 
-</li><li>- Graphviz<a name="DOCF14" href="#FOOT14"><sup>14</sup></a>
+</li><li>- Graphviz<a name="DOCF15" href="#FOOT15"><sup>15</sup></a>
 
-</li><li>- libXinerama<a name="DOCF15" href="#FOOT15"><sup>15</sup></a>
+</li><li>- libXinerama<a name="DOCF16" href="#FOOT16"><sup>16</sup></a>
 
-</li><li>- libXpm<a name="DOCF16" href="#FOOT16"><sup>16</sup></a>
+</li><li>- libXpm<a name="DOCF17" href="#FOOT17"><sup>17</sup></a>
 
 </li><li>- Rserve sandbox
 
-</li><li>- Bower (make dependency)<a name="DOCF17" href="#FOOT17"><sup>17</sup></a>
+</li><li>- Bower (make dependency)<a name="DOCF18" href="#FOOT18"><sup>18</sup></a>
 </li></ul>
 
 </li></ul>
 
 <a name="Install-actions-1"></a>
-<h4 class="subsubsection">6.2.2.2 Install actions</h4>
+<h4 class="subsubsection">8.2.3.2 Install actions</h4>
 <ul>
 <li> Pre
 
 <ul class="no-bullet">
-<li>- Compile the server
+<li>- Compile the web dependencies
 
 <pre class="verbatim">$ bower --allow-root install
 $ make src
@@ -365,7 +382,7 @@ group.
 </li></ul>
 
 <a name="Remove-actions-1"></a>
-<h4 class="subsubsection">6.2.2.3 Remove actions</h4>
+<h4 class="subsubsection">8.2.3.3 Remove actions</h4>
 <ul>
 <li> Pre
 
@@ -390,16 +407,87 @@ remove policies of the chosen distro).
 
 </li></ul>
 
-<a name="SWISH-3"></a>
-<h4 class="subsection">6.2.3 SWISH</h4>
-<a name="General-information-2"></a>
-<h4 class="subsubsection">6.2.3.1 General information</h4>
-<ul>
-<li> Name
 
-<p><code>swish</code>
+<a name="Cplint-on-SWISH-binary-2"></a>
+<h4 class="subsection">8.2.4 Cplint on SWISH binary</h4>
+<a name="General-information-2"></a>
+<h4 class="subsubsection">8.2.4.1 General information</h4>
+<ul>
+<li> Data directory
+
+<p><samp>/usr/share/swish</samp>
 </p>
-</li><li> Data directory
+</li><li> Dependencies
+<ul class="no-bullet">
+<li>- SWI Prolog (developement version)
+
+</li><li>- Git
+
+</li><li>- Graphviz
+
+</li><li>- libXinerama
+
+</li><li>- libXpm
+
+</li><li>- Rserve sandbox binary
+
+</li><li>- curl (make dependency)<a name="DOCF19" href="#FOOT19"><sup>19</sup></a>
+
+</li><li>- UnZip (make dependency)<a name="DOCF20" href="#FOOT20"><sup>20</sup></a>
+</li></ul>
+
+</li></ul>
+
+<a name="Install-actions-2"></a>
+<h4 class="subsubsection">8.2.4.2 Install actions</h4>
+<ul>
+<li> Pre
+
+<ul class="no-bullet">
+<li>- Download and unzip the web dependencies
+
+<pre class="verbatim">$ curl -o swish-bower-components.zip \
+http://www.swi-prolog.org/download/swish/swish-bower-components.zip
+$ unzip swish-bower-components.zip
+$ rm -rf swish-bower-components.zip
+</pre>
+</li><li>- Copy <samp>run.pl</samp>, <samp>run.sh</samp> and
+<samp>install_web_iface_deps.pl</samp> in SWISH&rsquo;s root directory.
+</li></ul>
+
+</li></ul>
+
+<ul>
+<li> During
+
+<ul class="no-bullet">
+<li>- Same as Cplint on SWISH
+</li></ul>
+
+</li></ul>
+
+<ul>
+<li> Post
+
+<ul class="no-bullet">
+<li>- Same as Cplint on SWISH
+</li></ul>
+
+</li></ul>
+
+<a name="Remove-actions-2"></a>
+<h4 class="subsubsection">8.2.4.3 Remove actions</h4>
+<ul>
+<li> Same as Cplint on SWISH
+</li></ul>
+
+
+<a name="SWISH-3"></a>
+<h4 class="subsection">8.2.5 SWISH</h4>
+<a name="General-information-3"></a>
+<h4 class="subsubsection">8.2.5.1 General information</h4>
+<ul>
+<li> Data directory
 
 <p><samp>/usr/share/swish</samp>
 </p>
@@ -416,13 +504,13 @@ remove policies of the chosen distro).
 
 </li></ul>
 
-<a name="Install-actions-2"></a>
-<h4 class="subsubsection">6.2.3.2 Install actions</h4>
+<a name="Install-actions-3"></a>
+<h4 class="subsubsection">8.2.5.2 Install actions</h4>
 <ul>
 <li> Pre
 
 <ul class="no-bullet">
-<li>- Compile the server
+<li>- Compile the web dependencies
 
 <pre class="verbatim">$ bower --allow-root install
 $ make src
@@ -458,8 +546,8 @@ root directory.
 
 </li></ul>
 
-<a name="Remove-actions-2"></a>
-<h4 class="subsubsection">6.2.3.3 Remove actions</h4>
+<a name="Remove-actions-3"></a>
+<h4 class="subsubsection">8.2.5.3 Remove actions</h4>
 <ul>
 <li> Pre
 
@@ -485,42 +573,90 @@ remove policies of the chosen distro).
 </li></ul>
 
 <a name="Building-the-packages"></a>
-<h3 class="section">6.3 Building the packages</h3>
+<h3 class="section">8.3 Building the packages</h3>
 <a name="Arch-Linux-1"></a>
-<h4 class="subsection">6.3.1 Arch Linux</h4>
-
+<h4 class="subsection">8.3.1 Arch Linux</h4>
 <pre class="verbatim">archLinux-based/
 |-- Makefile
-|-- rserve-sandbox
-|   |-- .install
-|   |-- PKGBUILD
-|   `-- rserve-sandbox-docker.service
-|-- swish
-|   |-- .install
-|   |-- PKGBUILD
-|   `-- swish.service
-`-- swish-cplint
-    |-- .install
-    |-- PKGBUILD
-    `-- swish-cplint.service
+|-- packages
+|   |-- rserve-sandbox-docker
+|   |   |-- .install
+|   |   |-- PKGBUILD
+|   |   `-- rserve-sandbox-docker.service
+|   |-- rserve-sandbox-docker-bin
+|   |   |-- .install -&gt; ../rserve-sandbox-docker/.install
+|   |   |-- PKGBUILD
+|   |   `-- rserve-sandbox-docker.service -&gt; ../rserve-sandbox-docker/rserve-sandbox-docker.service
+|   |-- swish
+|   |   |-- .install
+|   |   |-- PKGBUILD
+|   |   `-- swish.service
+|   |-- swish-cplint
+|   |   |-- .install
+|   |   |-- PKGBUILD
+|   |   `-- swish-cplint.service
+|   `-- swish-cplint-bin
+|       |-- .install -&gt; ../swish-cplint/.install
+|       |-- PKGBUILD
+|       `-- swish-cplint.service -&gt; ../swish-cplint/swish-cplint.service
+`-- test
+    `-- swish_installer_full_test
 </pre>
 <p>Once you&rsquo;ve made changes you can run <code>$ make</code>
-then change directory into one of the new <code>.aur</code> generated
+then change directory into one of the new <code>dest/*.aur</code> generated
 directories and finally run <code>$ makepkg -sri</code> to install
 the package.
 </p>
+<p>You also have the possibility to run the test script 
+<samp>$ ./test/swish_installer_full_test</samp>. Here is the help page:
+</p><pre class="verbatim">Usage: swish_installer_full_test [OPTION]
+Full automated install test for the Arch Linux packages in swish-installer
+
+Options are grouped in couples: one excludes the other
+
+Options:
+    -b, --binary                use binary packages where available
+    -c, --compile               compile packages where available
+
+    -d, --dev                   use development branches where available
+    -m, --master                use default branches where available
+
+    -e, --experimental          use swish-installer's dev branch
+    -s, --stable                use swish-installer's master branch
+
+    -h, --help                  print this help
+
+
+Default: --compile --master --stable
+Dependencies: git, wget.
+
+Exit status:
+ 0  if OK,
+ 1  if an error occurred.
+
+swish_installer_full_test online help: 
+&lt;https://frnmst.github.io/swish-installer/swish-installer.html#Help-pages&gt;
+Full documentation at: 
+&lt;https://frnmst.github.io/swish-installer/swish-installer.html&gt;
+
+Copyright  Â©  2017  Franco Masotti.  License GPLv3+: GNU GPL version 3 or
+later &lt;http://gnu.org/licenses/gpl.html&gt;.
+This  is  free  software: you are free to change and redistribute it.  There
+is NO WARRANTY, to the extent  permitted by law.
+</pre>
 <a name="Help-pages"></a>
-<h3 class="section">6.4 Help pages</h3>
-<a name="Rserve-sandbox-2"></a>
-<h4 class="subsection">6.4.1 Rserve sandbox</h4>
-<pre class="verbatim">rsd [OPTION]
+<h3 class="section">8.4 Help pages</h3>
+<a name="Rserve-sandbox-1"></a>
+<h4 class="subsection">8.4.1 Rserve sandbox</h4>
+<pre class="verbatim">rserve-sandbox-docker [OPTION]
 Docker spec for running Rserve in a sandbox
 
 Only a single option is permitted.
     -h      print this help
-    -i      install dependencies
-    -k      kill rserve-sandbox-docker
-    -s      start rserve-sandbox-docker
+    -i      install image and dependencies
+    -k      kill the container
+    -r      remove the docker image
+    -s      start the container
 
 Exit status:
  0  if OK,
@@ -528,8 +664,26 @@ Exit status:
 
 Full documentation at: &lt;https://github.com/frnmst/rserve-sandbox&gt;
 </pre>
-<a name="Cplint-on-SWISH-4"></a>
-<h4 class="subsection">6.4.2 Cplint on SWISH</h4>
+<a name="Rserve-sandbox-binary-1"></a>
+<h4 class="subsection">8.4.2 Rserve sandbox binary</h4>
+<pre class="verbatim">rserve-sandbox-docker [OPTION]
+Docker spec for running Rserve in a sandbox
+
+Only a single option is permitted.
+    -h      print this help
+    -i      load image
+    -k      kill the container
+    -r      remove the docker image
+    -s      start the container
+
+Exit status:
+ 0  if OK,
+ 1  some error occurred.
+
+Full documentation at: &lt;https://gitlab.com/frnmst/rserve-sandbox-bin&gt;
+</pre>
+<a name="Cplint-on-SWISH-3"></a>
+<h4 class="subsection">8.4.3 Cplint on SWISH</h4>
 <pre class="verbatim">swish-cplint [OPTION]
 SWI-Prolog for SHaring: a SWI-Prolog web IDE integrated with the cplint suite
 
@@ -547,7 +701,7 @@ Full documentation at: &lt;https://github.com/friguzzi/swish&gt;
 and at: &lt;https://github.com/friguzzi/cplint&gt;
 </pre>
 <a name="SWISH-4"></a>
-<h4 class="subsection">6.4.3 SWISH</h4>
+<h4 class="subsection">8.4.4 SWISH</h4>
 <pre class="verbatim">swish [OPTION]
 SWI-Prolog for SHaring: a SWI-Prolog web IDE
 
@@ -563,7 +717,7 @@ Exit status:
 Full documentation at: &lt;https://github.com/SWI-Prolog/swish&gt;
 </pre>
 <a name="Compiling-this-documentation"></a>
-<h3 class="section">6.5 Compiling this documentation</h3>
+<h3 class="section">8.5 Compiling this documentation</h3>
 <p>The source of this documentation is under the <samp>doc</samp>
 directory.
 </p>
@@ -589,19 +743,28 @@ is created and you can access the files by opening
 <h4 class="footnotes-heading">Footnotes</h4>
 
 <h3><a name="FOOT13" href="#DOCF13">(13)</a></h3>
-<p>See item <strong>[Git]</strong> in <a href="References.html#References">Git</a>.
+<p>See item <strong>[Docker root privileges]</strong> in <a href="References.html#References">Docker root privileges</a>.
 </p>
 <h3><a name="FOOT14" href="#DOCF14">(14)</a></h3>
-<p>See item <strong>[Graphviz]</strong> in <a href="References.html#References">Graphviz</a>.
+<p>See item <strong>[Git]</strong> in <a href="References.html#References">Git</a>.
 </p>
 <h3><a name="FOOT15" href="#DOCF15">(15)</a></h3>
-<p>See item <strong>[libXinerama]</strong> in <a href="References.html#References">libXinerama</a>.
+<p>See item <strong>[Graphviz]</strong> in <a href="References.html#References">Graphviz</a>.
 </p>
 <h3><a name="FOOT16" href="#DOCF16">(16)</a></h3>
-<p>See item <strong>[libXpm]</strong> in <a href="References.html#References">libXpm</a>.
+<p>See item <strong>[libXinerama]</strong> in <a href="References.html#References">libXinerama</a>.
 </p>
 <h3><a name="FOOT17" href="#DOCF17">(17)</a></h3>
+<p>See item <strong>[libXpm]</strong> in <a href="References.html#References">libXpm</a>.
+</p>
+<h3><a name="FOOT18" href="#DOCF18">(18)</a></h3>
 <p>See item <strong>[Bower]</strong> in <a href="References.html#References">Bower</a>.
+</p>
+<h3><a name="FOOT19" href="#DOCF19">(19)</a></h3>
+<p>See item <strong>[curl]</strong> in <a href="References.html#References">curl</a>.
+</p>
+<h3><a name="FOOT20" href="#DOCF20">(20)</a></h3>
+<p>See item <strong>[UnZip]</strong> in <a href="References.html#References">UnZip</a>.
 </p>
 </div>
 <hr>

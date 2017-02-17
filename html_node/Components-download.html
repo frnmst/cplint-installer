@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 2016 Franco Masotti franco.masotti@student.unife.it
+<!-- Copyright (C) 2016-2017 Franco Masotti franco.masotti@student.unife.it
 
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
@@ -110,25 +110,26 @@ Next: <a href="Daemons-management.html#Daemons-management" accesskey="n" rel="ne
 </div>
 <hr>
 <a name="Components-download-1"></a>
-<h2 class="chapter">3 Components download</h2>
+<h2 class="chapter">5 Components download</h2>
+<p>This section only applies to Cplint on SWISH and Cplint on SWISH binary.
+</p>
 <p>Before running the daemons some components must be downloaded.
-</p>
-<p>This section only applies to Cplint on SWISH.
-</p>
-<a name="Docker-1"></a>
-<h3 class="section">3.1 Docker</h3>
-<p>Before doing anything else you must start
+The first thing to do is to start
 Docker<a name="DOCF10" href="#FOOT10"><sup>10</sup></a> manually.
-See <a href="Daemons-management.html#Daemons-management">Daemons management</a>.
+See <a href="Daemons-management.html#Daemons-management">Daemons management</a> for more information.
 </p>
-<a name="Rserve-sandbox"></a>
-<h3 class="section">3.2 Rserve sandbox</h3>
+<a name="Rserve-sandbox-and-Rserve-sandbox-binary"></a>
+<h3 class="section">5.1 Rserve sandbox and Rserve sandbox binary</h3>
 <p>To download the Docker image file as well as all dependencies
-for R<a name="DOCF11" href="#FOOT11"><sup>11</sup></a>, run the following command:
+for R<a name="DOCF11" href="#FOOT11"><sup>11</sup></a>, or to load the docker image,
+run the following command:
 </p><pre class="verbatim">$ sudo -u rsd rserve-sandbox-docker -i
 </pre>
-<a name="Cplint-on-SWISH-1"></a>
-<h3 class="section">3.3 Cplint on SWISH</h3>
+<a name="Cplint-on-SWISH-and-Cplint-on-SWISH-binary"></a>
+<h3 class="section">5.2 Cplint on SWISH and Cplint on SWISH binary</h3>
+<p>Before reading on, start the Rserve sandbox service, to avoid errors
+on some prolog tests executed by the Cplint R library.
+</p>
 <p>To download all the prolog packages necessary in order to run
 Cplint on SWISH correcly:
 </p><pre class="verbatim">$ sudo -u swish swish-cplint -i
