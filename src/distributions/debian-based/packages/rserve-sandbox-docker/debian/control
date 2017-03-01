@@ -1,0 +1,19 @@
+Source: rserve-sandbox-docker
+Section: contrib/net
+Priority: optional
+Maintainer: Franco Masotti <franco.masotti@student.unife.it>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.5
+Homepage: https://github.com/frnmst/rserve-sandbox
+Vcs-Browser: https://github.com/frnmst/rserve-sandbox
+
+Package: rserve-sandbox-docker
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+#Depends r-base docker
+Description: Docker spec for running Rserve in a sandbox
+This directory builds a docker image based on
+Debian that safely executes Rserve.
+.
+The Rserve instance is made available as /home/rserve/socket.
+

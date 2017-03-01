@@ -127,6 +127,12 @@ and @uref{http://swish.swi-prolog.org/} for the "vanilla" version of SWISH.
 @tab @code{swish-cplint-bin}
 @tab @code{rserve-sandbox-docker}
 @tab @code{rserve-sandbox-docker-bin}
+@item Debian
+@tab @code{-}
+@tab @code{-}
+@tab @code{-}
+@tab @code{rserve-sandbox-docker}
+@tab @code{-}
 @end multitable
 
 @section Descriptions

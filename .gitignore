@@ -1,4 +1,5 @@
 src/distributions/archLinux-based/dest
+src/distributions/debian-based/dest
 
 *.aux
 *.log

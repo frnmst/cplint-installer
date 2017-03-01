@@ -1,0 +1,5 @@
+Rserv.sh usr/share
+Dockerfile.in usr/share
+Makefile usr/share
+Rserv.conf usr/share
+run.sh usr/share
