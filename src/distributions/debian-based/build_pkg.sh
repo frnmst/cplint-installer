@@ -22,11 +22,11 @@
 #
 #
 
-# source: Input source must be a .tar.gz file
-# package_name: Debian package name
+# source: input source must be a .tar.gz file
+# package_name: debian package name
 # version: debian package version
 # debian_dir: debian/ source dir
-# top_dest_dir: local dest root dir
+# top_dest_dir: local destination root directory
 
 source="$1"
 package_name="$2"
@@ -35,15 +35,20 @@ debian_dir="$4"
 top_dest_dir="$5"
 common_dir="$6"
 
-curl -L "$source" | gzip -dc - | xz > "${package_name}"_"${version}".tar.xz
+curl -L "$source" | gzip -dc - | xz > "${package_name}"_"${version}".orig.tar.xz
 mkdir -p "${package_name}"-"${version}"
-tar -xvJf "${package_name}"_"${version}".tar.xz --strip-components=1 -C "${package_name}"-"${version}"
+tar -xvJf "${package_name}"_"${version}".orig.tar.xz --strip-components=1 \
+    -C "${package_name}"-"${version}"
 
 mkdir -p "$top_dest_dir"
-mv "${package_name}"_"${version}".tar.xz "${package_name}"-"${version}" "$top_dest_dir"
+mv "${package_name}"_"${version}".orig.tar.xz "${package_name}"-"${version}" \
+    "$top_dest_dir"
 cp -r "$debian_dir" "$top_dest_dir"/"${package_name}"-"${version}"
 
 cp -r "$common_dir"/* "$top_dest_dir"/"${package_name}"-"${version}"
-mv "$top_dest_dir"/"${package_name}"-"${version}"/systemd/* "$top_dest_dir"/"${package_name}"-"${version}"/debian
+mv "$top_dest_dir"/"${package_name}"-"${version}"/systemd/* \
+    "$top_dest_dir"/"${package_name}"-"${version}"/debian
 rm -rf "$top_dest_dir"/"${package_name}"-"${version}"/systemd
 
+cat "${common_dir}"/../shared_functions.sh \
+    >> "$top_dest_dir"/"${package_name}"-"${version}"/run.sh

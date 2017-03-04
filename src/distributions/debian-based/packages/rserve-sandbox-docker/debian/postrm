@@ -22,11 +22,11 @@ set -e
 case "$1" in
     purge|remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
         printf "\n\n%s\n" "To remove images and containters: \
-                rm -rf /var/lib/docker \
-                as described in \
-                <https://docs.docker.com/engine/installation/linux/debian/#/uninstall-docker>"
+rm -rf /var/lib/docker \
+as described in \
+<https://docs.docker.com/engine/installation/linux/debian/#/uninstall-docker>"
         printf "%s\n\n" "You can also remove /home/rserve \
-                as well as rserve and rsd users and groups."
+as well as rserve and rsd users and groups."
     ;;
 
     *)

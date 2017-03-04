@@ -1,5 +1,6 @@
-Rserv.sh usr/share
-Dockerfile.in usr/share
-Makefile usr/share
-Rserv.conf usr/share
-run.sh usr/share
+Rserv.sh usr/share/rserve-sandbox-docker
+Dockerfile.in usr/share/rserve-sandbox-docker
+Makefile usr/share/rserve-sandbox-docker
+Rserv.conf usr/share/rserve-sandbox-docker
+run.sh usr/share/rserve-sandbox-docker
+
