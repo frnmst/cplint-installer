@@ -491,9 +491,11 @@ Post
 Add @code{rserve} user and group.
 
 @verbatim
-# getent group rserve &>/dev/null || groupadd -g 32749 -r rserve >/dev/null
-# getent passwd rserve &>/dev/null || useradd -u 32749 -m -d /home/rserve \
--s /bin/false -r -g rserve rserve >/dev/null
+# getent group rserve 1>/dev/null 2>/dev/null \
+    || groupadd -g 32749 -r rserve >/dev/null
+# getent passwd rserve 1>/dev/null 2>/dev/null \
+    || useradd -u 32749 -m -d /home/rserve \
+    -s /bin/false -r -g rserve rserve >/dev/null
 # chmod 750 /home/rserve
 @end verbatim
 
@@ -501,9 +503,10 @@ Add @code{rserve} user and group.
 Add @code{rsd} user and group.
 
 @verbatim
-# getent group rsd &>/dev/null || groupadd -r rsd >/dev/null
-# getent passwd rsd &>/dev/null || useradd \
--s /bin/false -r -g rsd rsd >/dev/null
+# getent group rsd 1>/dev/null 2>/dev/null \
+    || groupadd -r rsd >/dev/null
+# getent passwd rsd 1>/dev/null 2>/dev/null \
+    || useradd -s /bin/false -r -g rsd rsd >/dev/null
 @end verbatim
 
 @item
@@ -654,9 +657,10 @@ Post
 Add @code{swish} user and group
 
 @verbatim
-# getent group swish &>/dev/null || groupadd -r swish >/dev/null
-# getent passwd swish &>/dev/null || useradd -m -d /home/swish \
--r -g swish swish >/dev/null
+# getent group swish 1>/dev/null 2>/dev/null \
+    || groupadd -r swish >/dev/null
+# getent passwd swish 1>/dev/null 2>/dev/null \
+    || useradd -m -d /home/swish -r -g swish swish >/dev/null
 @end verbatim
 
 @item
@@ -875,9 +879,10 @@ Post
 Add @code{swish} user and group
 
 @verbatim
-# getent group swish &>/dev/null || groupadd -r swish >/dev/null
-# getent passwd swish &>/dev/null || useradd -m -d /home/swish \
--r -g swish swish >/dev/null
+# getent group swish 1>/dev/null 2>/dev/null \
+    || groupadd -r swish >/dev/null
+# getent passwd swish 1>/dev/null 2>/dev/null \
+    || useradd -m -d /home/swish -r -g swish swish >/dev/null
 @end verbatim
 
 @item
