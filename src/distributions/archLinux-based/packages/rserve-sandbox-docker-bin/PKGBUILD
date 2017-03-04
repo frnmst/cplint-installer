@@ -7,8 +7,11 @@ pkgdesc="Pre-compiled version of a Docker spec for running Rserve in a sandbox"
 arch=('x86_64')
 url="https://gitlab.com/frnmst/rserve-sandbox-bin"
 license=('BSD')
-depends=('r'
-         'docker')
+depends=('bash'
+         'docker'
+         'gawk'
+         'make'
+         'r')
 makedepends=('git'
              'sed')
 conflicts=('rserve-sandbox-docker')

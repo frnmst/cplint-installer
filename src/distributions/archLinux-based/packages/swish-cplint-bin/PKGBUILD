@@ -7,12 +7,14 @@ pkgdesc="SWI-Prolog for SHaring: a SWI-Prolog web IDE integrated with the cplint
 arch=('x86_64')
 url="https://github.com/friguzzi/swish"
 license=('BSD')
-depends=('libxinerama'
-         'libxpm'
+depends=('bash'
+         'gawk'
          'git'
          'graphviz'
-         'swi-prolog-devel'
-         'rserve-sandbox-docker-bin')
+         'libxinerama'
+         'libxpm'
+         'rserve-sandbox-docker-bin'
+         'swi-prolog-devel')
 makedepends=('git'
              'sed'
              'unzip'

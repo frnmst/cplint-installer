@@ -416,8 +416,8 @@ a Makefile for example with the following:
 $ cat shared_functions.sh >> @{rserve-sandbox*,swish,swish-cplint@}/run.sh
 @end example
 
-Cplint on SWISH contains a post installation script called
-@file{install_web_iface_deps.pl}. This script, called by
+Cplint on SWISH and Cplint on SWISH binary contain a post installation script 
+called @file{install_web_iface_deps.pl}. This script, called by
 @file{run.sh}, simply installs all the necessary Prolog
 dependencies automatically.
 
@@ -451,10 +451,19 @@ Data directory
 Dependencies
 @itemize @minus
 @item
-R
+GNU Bash@footnote{@mybibcite{GNU Bash}}
+
+@item
+GNU Make@footnote{@mybibcite{GNU Make}}
+
+@item
+Gawk@footnote{@mybibcite{Gawk}}
 
 @item
 Docker
+
+@item
+R
 @end itemize
 
 @end itemize
@@ -593,7 +602,16 @@ Data directory
 Dependencies
 @itemize @minus
 @item
-SWI Prolog (developement version)
+Bower (make dependency)@footnote{@mybibcite{Bower}}
+
+@item
+GNU Bash
+
+@item
+GNU Make (make dependency)
+
+@item
+Gawk
 
 @item
 Git@footnote{@mybibcite{Git}}
@@ -611,7 +629,7 @@ libXpm@footnote{@mybibcite{libXpm}}
 Rserve sandbox
 
 @item
-Bower (make dependency)@footnote{@mybibcite{Bower}}
+SWI Prolog (development version)
 @end itemize
 
 @end itemize
@@ -730,7 +748,13 @@ Data directory
 Dependencies
 @itemize @minus
 @item
-SWI Prolog (developement version)
+curl (make dependency)@footnote{@mybibcite{curl}}
+
+@item
+GNU Bash
+
+@item
+Gawk
 
 @item
 Git
@@ -748,7 +772,7 @@ libXpm
 Rserve sandbox binary
 
 @item
-curl (make dependency)@footnote{@mybibcite{curl}}
+SWI Prolog (development version)
 
 @item
 UnZip (make dependency)@footnote{@mybibcite{UnZip}}
@@ -824,7 +848,16 @@ Data directory
 Dependencies
 @itemize @minus
 @item
-SWI Prolog (developement version)
+Bower (make dependency)
+
+@item
+GNU Bash
+
+@item
+GNU Make (make dependency)
+
+@item
+Gawk
 
 @item
 libXinerama
@@ -833,7 +866,7 @@ libXinerama
 libXpm
 
 @item
-Bower (make dependency)
+SWI Prolog (development version)
 @end itemize
 
 @end itemize
@@ -922,7 +955,6 @@ Post
 Tell the user that @file{/home/swish} and @code{swish} user 
 and group can be removed (this depends on the package 
 remove policies of the chosen distro).
-
 @end itemize
 
 @end itemize
@@ -931,6 +963,7 @@ remove policies of the chosen distro).
 @subsection Arch Linux
 @verbatim
 archLinux-based/
+|-- build_pkg.sh
 |-- Makefile
 |-- packages
 |   |-- rserve-sandbox-docker
@@ -957,6 +990,22 @@ archLinux-based/
     `-- swish_installer_full_test
 @end verbatim
 
+@subsubsection Needed tools
+@itemize @bullet
+@item
+GNU Bash
+
+@item
+GNU Make
+
+@item
+Gawk
+
+@item
+Pacman@footnote{@mybibcite{Pacman}}
+@end itemize
+
+@subsubsection Modifications
 Once you've made changes you can run @command{$ make}
 then change directory into one of the new @code{dest/*.aur} generated
 directories and finally run @command{$ makepkg -sri} to install
@@ -1000,6 +1049,26 @@ later <http://gnu.org/licenses/gpl.html>.
 This  is  free  software: you are free to change and redistribute it.  There
 is NO WARRANTY, to the extent  permitted by law.
 @end verbatim
+
+@subsection Debian
+
+@subsubsection Needed tools
+@itemize @bullet
+@item
+GNU Bash
+
+@item
+GNU Make
+
+@item
+<debtools...>
+
+@item
+Gawk
+@end itemize
+
+@subsubsection Modifications
+TODO
 
 @section Help pages
 @subsection Rserve sandbox
@@ -1157,7 +1226,7 @@ of real world applications. SWI-Prolog is widely used in research and
 education as well as commercial applications". See 
 @uref{http://www.swi-prolog.org/}
 and @uref{https://github.com/SWI-Prolog/swipl-devel}
-which is the developement version used here.
+which is the development version used here.
 @*
 
 @mybibitem{Yaourt} "A pacman wrapper with extended features 
@@ -1196,7 +1265,7 @@ environment". See @uref{https://www.docker.com/}.
 @itemize @minus
 
 @item
-SWI Prolog (developement version)
+SWI Prolog (development version)
 @uref{https://aur.archlinux.org/packages/swi-prolog-devel}
 
 @item
@@ -1249,6 +1318,23 @@ See @uref{https://curl.haxx.se}
 
 @mybibitem{UnZip} "For extracting and viewing files in .zip archives".
 See @uref{http://www.info-zip.org/UnZip.html}
+@*
+
+@mybibitem{GNU Bash} "The GNU Bourne Again shell".
+See @uref{http://www.gnu.org/software/bash/bash.html}
+@*
+
+@mybibitem{Gawk} "GNU version of awk".
+See @uref{http://www.gnu.org/software/gawk/}
+@*
+
+@mybibitem{Pacman} "A library-based package manager with dependency support".
+See @uref{http://www.archlinux.org/pacman/}
+@*
+
+@mybibitem{GNU Make} "GNU make utility to maintain groups of programs".
+See @uref{http://www.gnu.org/software/make}
+@*
 
 @end itemize
 

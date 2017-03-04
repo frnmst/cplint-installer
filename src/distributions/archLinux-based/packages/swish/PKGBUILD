@@ -7,10 +7,13 @@ pkgdesc="SWI-Prolog for SHaring: a SWI-Prolog web IDE"
 arch=('x86_64')
 url="https://github.com/SWI-Prolog/swish"
 license=('BSD')
-depends=('libxinerama'
+depends=('bash'
+         'gawk'
+         'libxinerama'
          'libxpm'
          'swi-prolog-devel')
 makedepends=('git'
+             'make'
              'bower'
              'sed')
 conflicts=('swish-cplint'
