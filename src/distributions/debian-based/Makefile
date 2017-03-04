@@ -26,8 +26,6 @@ DESTDIR=dest
 DATADIR=packages
 COMMONDIR=../../common
 
-
-# Howto install docker: https://stackoverflow.com/questions/38728693/cannot-install-docker-on-debian-jessie
 SOURCE_RSERVE_SANDBOX_DOCKER=https://github.com/frnmst/rserve-sandbox/tarball/distro-package
 PACKAGE_NAME_DEBIAN_RSERVE_SANDBOX_DOCKER=rserve-sandbox-docker
 VERSION_DEBIAN_RSERVE_SANDBOX_DOCKER=31.0
@@ -35,7 +33,6 @@ DESTDIR_TOP_RSERVE_SANDBOX_DOCKER=$(DESTDIR)/rserve-sandbox-docker.debian
 DESTDIR_RSERVE_SANDBOX_DOCKER=$(PACKAGE_NAME_DEBIAN_RSERVE_SANDBOX_DOCKER)-$(VERSION_DEBIAN_RSERVE_SANDBOX_DOCKER)
 DESTDIR_DEBIAN_RSERVE_SANDBOX_DOCKER=$(DESTDIR_TOP)/$(DESTDIR_RSERVE_SANDBOX_DOCKER)/debian
 TARXZ_SOURCE_RSERVE_SANDBOX_DOCKER=$(PACKAGE_NAME_DEBIAN_RSERVE_SANDBOX_DOCKER)_$(VERSION_DEBIAN_RSERVE_SANDBOX_DOCKER).orig.tar.xz
-
 DATADIR_RSERVE_SANDBOX_DOCKER=$(DATADIR)/rserve-sandbox-docker/debian
 COMMONDIR_RSERVE_SANDBOX_DOCKER=$(COMMONDIR)/rserve-sandbox-docker
 
@@ -50,7 +47,6 @@ clean:
 	@echo "Object files removed."
 
 rserve-sandbox-docker:
-	@echo "Creating package..."
 	@./build_pkg.sh $(SOURCE_RSERVE_SANDBOX_DOCKER) \
 $(PACKAGE_NAME_DEBIAN_RSERVE_SANDBOX_DOCKER) \
 $(VERSION_DEBIAN_RSERVE_SANDBOX_DOCKER) \

@@ -35,6 +35,10 @@ debian_dir="$4"
 top_dest_dir="$5"
 common_dir="$6"
 
+[ -z "$6" ] && printf "Use the Makefile\n" 1>&2 && exit 1
+
+printf "Creating package in "${top_dest_dir}" ...\n"
+
 curl -L "$source" | gzip -dc - | xz > "${package_name}"_"${version}".orig.tar.xz
 mkdir -p "${package_name}"-"${version}"
 tar -xvJf "${package_name}"_"${version}".orig.tar.xz --strip-components=1 \
@@ -52,3 +56,5 @@ rm -rf "$top_dest_dir"/"${package_name}"-"${version}"/systemd
 
 cat "${common_dir}"/../shared_functions.sh \
     >> "$top_dest_dir"/"${package_name}"-"${version}"/run.sh
+
+printf "Package created in "${top_dest_dir}"\n"
