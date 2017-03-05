@@ -1,9 +1,0 @@
-sudo apt-get install build-essential devscripts
-# https://stackoverflow.com/questions/38728693/cannot-install-docker-on-debian-jessie
-pushd rserve-sandbox-docker-31.0
-debuild -us -uc
-popd
-sudo dpkg -i rserve-sandbox-docker_31.0-1_amd64.deb
-
-# Will install deps and pkg.
-sudo apt-get install -f

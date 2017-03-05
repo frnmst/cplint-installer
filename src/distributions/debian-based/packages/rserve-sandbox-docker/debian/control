@@ -9,7 +9,7 @@ Vcs-Browser: https://github.com/frnmst/rserve-sandbox
 
 Package: rserve-sandbox-docker
 Architecture: amd64
-Depends: ${shlibs:Depends}, ${misc:Depends}, bash (>= 4.3), make, r-base, r-base-dev, docker.io, gawk
+Depends: ${shlibs:Depends}, ${misc:Depends}, bash (>= 4.3), coreutils, make, r-base, r-base-dev, docker.io, gawk
 Description: Docker spec for running Rserve in a sandbox
  This directory builds a docker image based on
  Debian that safely executes Rserve.

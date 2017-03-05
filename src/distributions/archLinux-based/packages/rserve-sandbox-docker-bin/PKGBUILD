@@ -8,6 +8,7 @@ arch=('x86_64')
 url="https://gitlab.com/frnmst/rserve-sandbox-bin"
 license=('BSD')
 depends=('bash'
+         'coreutls'
          'docker'
          'gawk'
          'make'

@@ -237,7 +237,21 @@ init system. First see @ref{Components download} and then
 see @ref{Daemons management}.
 
 @section Debian
-TODO
+
+Rserve sandbox needs Docker as a dependency, however, in Debian
+Jessie (8.x), this package is not included in the main repositories.
+For this reason you need to enable the "backports" first and update the 
+repositories:
+@verbatim
+# printf "deb http://ftp.debian.org/debian jessie-backports main" \
+    >> /etc/apt/sources.list
+# apt-get update
+@end verbatim
+
+@subsection Manual installation
+Manual installation involves a building phase. Please read 
+the Development@xref{Development, ,Building the packages}
+chapter.
 
 @c ----
 @c ----
@@ -454,13 +468,16 @@ Dependencies
 GNU Bash@footnote{@mybibcite{GNU Bash}}
 
 @item
+GNU Core Utilities@footnote{@mybibcite{GNU Core Utilities}}
+
+@item
 GNU Make@footnote{@mybibcite{GNU Make}}
 
 @item
 Gawk@footnote{@mybibcite{Gawk}}
 
 @item
-Docker
+Docker@footnote{@mybibcite{Docker}}
 
 @item
 R
@@ -606,6 +623,9 @@ Bower (make dependency)@footnote{@mybibcite{Bower}}
 
 @item
 GNU Bash
+
+@item
+GNU Core Utilities
 
 @item
 GNU Make (make dependency)
@@ -754,6 +774,9 @@ curl (make dependency)@footnote{@mybibcite{curl}}
 GNU Bash
 
 @item
+GNU Core Utilities
+
+@item
 Gawk
 
 @item
@@ -852,6 +875,9 @@ Bower (make dependency)
 
 @item
 GNU Bash
+
+@item
+GNU Core Utilities
 
 @item
 GNU Make (make dependency)
@@ -960,6 +986,11 @@ remove policies of the chosen distro).
 @end itemize
 
 @section Building the packages
+Before actually building the packages, a set of tools is necessary in order to 
+build (and install) the modified packages. You will find a list of package 
+dependencies under the "Needed tools" sections. These lists use the real 
+package names in the correspondent distribution.
+
 @subsection Arch Linux
 @verbatim
 archLinux-based/
@@ -993,20 +1024,23 @@ archLinux-based/
 @subsubsection Needed tools
 @itemize @bullet
 @item
-GNU Bash
+@code{bash}
 
 @item
-GNU Make
+@code{coreutils}
 
 @item
-Gawk
+@code{gawk}
 
 @item
-Pacman@footnote{@mybibcite{Pacman}}
+@code{make}
+
+@item
+@code{pacman}@footnote{@mybibcite{Pacman}}
 @end itemize
 
-@subsubsection Modifications
-Once you've made changes you can run @command{$ make}
+@subsubsection Changes
+Once you have made your changes you can run @command{$ make}
 then change directory into one of the new @code{dest/*.aur} generated
 directories and finally run @command{$ makepkg -sri} to install
 the package.
@@ -1055,20 +1089,54 @@ is NO WARRANTY, to the extent  permitted by law.
 @subsubsection Needed tools
 @itemize @bullet
 @item
-GNU Bash
+@code{apt}
 
 @item
-GNU Make
+@code{bash}
 
 @item
-<debtools...>
+@code{build-essential}
 
 @item
-Gawk
+@code{coreutils}
+
+@item
+@code{curl}
+
+@item
+@code{devscripts}
+
+@item
+@code{dpkg}
+
+@item
+@code{gawk}
+
+@item
+@code{gzip}
+
+@item
+@code{make}
+
+@item
+@code{tar}
+
+@item
+@code{xz-utils}
 @end itemize
 
-@subsubsection Modifications
-TODO
+@subsubsection Changes
+Once you have made your changes you can run @command{$ make}
+then change directory into one of the new @code{dest/*.debian} generated.
+
+To build the package move inside one of the
+@code{dest/<package>.debian/<package>-<version>}
+directories and run @code{$ debuild -us -uc}.
+
+Done that, you can move to the previous level (@code{..}).
+You should see a @file{<package>.deb} file (among other new files).
+Run @code{# dpkg -i <package>.deb}, then @code{# apt-get install -f}
+to install the package and all its dependencies.
 
 @section Help pages
 @subsection Rserve sandbox
@@ -1334,6 +1402,11 @@ See @uref{http://www.archlinux.org/pacman/}
 
 @mybibitem{GNU Make} "GNU make utility to maintain groups of programs".
 See @uref{http://www.gnu.org/software/make}
+@*
+
+@mybibitem{GNU Core Utilities} "The basic file, shell and text manipulation 
+utilities of the GNU operating system".
+See @uref{https://www.gnu.org/software/coreutils/coreutils.html}
 @*
 
 @end itemize
