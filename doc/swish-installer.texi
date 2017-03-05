@@ -1095,7 +1095,7 @@ is NO WARRANTY, to the extent  permitted by law.
 @code{bash}
 
 @item
-@code{build-essential}
+@code{build-essential}@footnote{@mybibcite{build-essential}}
 
 @item
 @code{coreutils}
@@ -1104,7 +1104,7 @@ is NO WARRANTY, to the extent  permitted by law.
 @code{curl}
 
 @item
-@code{devscripts}
+@code{devscripts}@footnote{@mybibcite{devscripts}}
 
 @item
 @code{dpkg}
@@ -1407,6 +1407,20 @@ See @uref{http://www.gnu.org/software/make}
 @mybibitem{GNU Core Utilities} "The basic file, shell and text manipulation 
 utilities of the GNU operating system".
 See @uref{https://www.gnu.org/software/coreutils/coreutils.html}
+@*
+
+@mybibitem{build-essential} "Informational list of build-essential packages. 
+If you do not plan to build Debian packages, you don't need this package. 
+Starting with dpkg (>= 1.14.18) this package is required for building Debian 
+packages. This package contains an informational list of packages which are 
+considered essential for building Debian packages. This package also depends 
+on the packages on that list, to make it easy to have the build-essential 
+packages installed".
+See @uref{https://packages.debian.org/jessie/build-essential}
+@*
+
+@mybibitem{devscripts} "scripts to make the life of a Debian Package 
+maintainer easier". See @uref{https://packages.debian.org/jessie/devscripts}
 @*
 
 @end itemize
