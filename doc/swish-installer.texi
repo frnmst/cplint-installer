@@ -1098,6 +1098,9 @@ is NO WARRANTY, to the extent  permitted by law.
 @code{build-essential}@footnote{@mybibcite{build-essential}}
 
 @item
+@code{dh-systemd}@footnote{@mybibcite{dh-systemd}}
+
+@item
 @code{coreutils}
 
 @item
@@ -1421,6 +1424,10 @@ See @uref{https://packages.debian.org/jessie/build-essential}
 
 @mybibitem{devscripts} "scripts to make the life of a Debian Package 
 maintainer easier". See @uref{https://packages.debian.org/jessie/devscripts}
+@*
+
+@mybibitem{dh-systemd} "debhelper add-on to handle systemd unit files".
+See @uref{https://packages.debian.org/jessie/dh-systemd}
 @*
 
 @end itemize

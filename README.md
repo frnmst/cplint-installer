@@ -16,12 +16,14 @@ with an
 
 ## Supported and tested distributions
 
-Only GNU/Linux Arch-based distros are currently supported.
+- GNU/Linux Arch-based distros.
+- GNU/Linux Debian-based Jessie version 8.7
 
 ### [qvm](https://github.com/frnmst/qvm)
 
 - GNU/Linux-libre distribution Parabola.
 - GNU/Linux distribution Antergos.
+- GNU/Linux Debian Jessie version 8.7.
 
 ### VirtualBox and OS Boxes
 
