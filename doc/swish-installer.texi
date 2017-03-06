@@ -116,8 +116,8 @@ and @uref{http://swish.swi-prolog.org/} for the "vanilla" version of SWISH.
 
 @multitable @columnfractions .166 .166 .166 .166 .166 .166
 @headitem Distributions
-@tab SWISH 
-@tab Cplint on SWISH 
+@tab SWISH
+@tab Cplint on SWISH
 @tab Cplint on SWISH binary
 @tab Rserve sandbox
 @tab Rserve sandbox binary
@@ -129,7 +129,7 @@ and @uref{http://swish.swi-prolog.org/} for the "vanilla" version of SWISH.
 @tab @code{rserve-sandbox-docker-bin}
 @item Debian
 @tab @code{-}
-@tab @code{-}
+@tab @code{swish-cplint}
 @tab @code{-}
 @tab @code{rserve-sandbox-docker}
 @tab @code{-}
@@ -1085,6 +1085,9 @@ is NO WARRANTY, to the extent  permitted by law.
 @end verbatim
 
 @subsection Debian
+In the process of writing Debian packages, some 
+conventions@footnote{@mybibcite{Debian packaging conventions}} have been 
+followed (at least in part).
 
 @subsubsection Needed tools
 @itemize @bullet
@@ -1099,6 +1102,9 @@ is NO WARRANTY, to the extent  permitted by law.
 
 @item
 @code{dh-systemd}@footnote{@mybibcite{dh-systemd}}
+
+@item
+@code{cleancss}@footnote{@mybibcite{cleancss}}
 
 @item
 @code{coreutils}
@@ -1428,6 +1434,17 @@ maintainer easier". See @uref{https://packages.debian.org/jessie/devscripts}
 
 @mybibitem{dh-systemd} "debhelper add-on to handle systemd unit files".
 See @uref{https://packages.debian.org/jessie/dh-systemd}
+@*
+
+@mybibitem{Debian packaging conventions} See 
+@uref{https://www.debian.org/doc/manuals/packaging-tutorial/packaging-tutorial.en.pdf}
+and @uref{https://www.debian.org/doc/manuals/maint-guide/index.en.html}
+This repository offers a slightly different approach in packaging:
+@uref{https://github.com/vincentbernat/pragmatic-debian-packages}
+@*
+
+@mybibitem{cleancss} "Tool for minifying CSS files".
+See @uref{https://packages.debian.org/jessie/cleancss}
 @*
 
 @end itemize

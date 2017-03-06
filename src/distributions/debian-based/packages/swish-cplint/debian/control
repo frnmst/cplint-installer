@@ -1,0 +1,18 @@
+Source: swish-cplint
+Section: contrib/net
+Priority: optional
+Maintainer: Franco Masotti <franco.masotti@student.unife.it>
+Build-Depends: debhelper (>= 9), dh-systemd, make, cleancss, swi-prolog
+Standards-Version: 3.9.6
+Homepage: https://github.com/friguzzi/swish
+Vcs-Browser: https://github.com/friguzzi/swish
+
+Package: swish-cplint
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}, bash (>= 4.3), coreutils (>= 8.23), gawk, git, graphviz, libxinerama1, libxpm4, rserve-sandbox-docker, swi-prolog
+Description: Docker spec for running Rserve in a sandbox
+ This directory builds a docker image based on
+ Debian that safely executes Rserve.
+ .
+ The Rserve instance is made available as /home/rserve/socket.
+

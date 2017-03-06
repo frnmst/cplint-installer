@@ -1,0 +1,19 @@
+bower.json usr/share/swish-cplint
+daemon.pl usr/share/swish-cplint
+examples usr/share/swish-cplint
+install_web_iface_deps.pl usr/share/swish-cplint
+profiles usr/share/swish-cplint
+robots.txt usr/share/swish-cplint
+run.sh usr/share/swish-cplint
+sitemap.xml usr/share/swish-cplint
+test usr/share/swish-cplint
+tutorial usr/share/swish-cplint
+client usr/share/swish-cplint
+ide.pl usr/share/swish-cplint
+lib usr/share/swish-cplint
+Makefile usr/share/swish-cplint
+run.pl usr/share/swish-cplint
+server.pl usr/share/swish-cplint
+swish.pl usr/share/swish-cplint
+web usr/share/swish-cplint
+
