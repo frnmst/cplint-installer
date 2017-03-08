@@ -40,6 +40,7 @@ This manual is for SWISH Installer.
 * Daemons management::                  How to start, stop and enable the daemons
 * Accessing the server::                How to access and use the servers
 * Development::                         A thorough description on how to develop over this installer
+* Tests::                               Tables explaining on what distributions the packages have been tested
 * Thanks::                              People and communities
 * @mybibnode{}::                        References to the technologies used
 @end menu
@@ -238,20 +239,62 @@ see @ref{Daemons management}.
 
 @section Debian
 
-Rserve sandbox needs Docker as a dependency, however, in Debian
-Jessie (8.x), this package is not included in the main repositories.
-For this reason you need to enable the "backports" first and update the 
-repositories:
-@verbatim
-# printf "deb http://ftp.debian.org/debian jessie-backports main" \
-    >> /etc/apt/sources.list
-# apt-get update
-@end verbatim
-
 @subsection Manual installation
 Manual installation involves a building phase. Please read 
-the Development@xref{Development, ,Building the packages}
+the Development @ref{Development, ,Building the packages}
 chapter.
+
+@subsubsection Rserve sandbox
+See the previous section
+
+@subsubsection Cplint on SWISH
+Before installing the actual package some dependecies must be installed
+manually:
+@itemize @bullet
+@item
+Install Bower:
+@verbatim
+# apt-get install npm nodejs-legacy
+# npm install -g bower
+@end verbatim
+
+@item
+Install the development version of SWI Prolog from the official
+SWI Prolog PPA@footnote{@mybibcite{SWI Prolog PPA}}:
+@verbatim
+# apt-get install software-properties-common
+# sudo apt-add-repository ppa:swi-prolog/devel
+# sudo apt-get update
+# sudo apt-get install swi-prolog
+@end verbatim
+@end itemize
+
+@quotation Note
+Installation of SWI Prolog dev on Trisquel 8.0 
+Alpha@footnote{@mybibcite{Trisquel}} is a bit tricky:
+
+@itemize @minus
+@item
+Install this library first:
+@uref{http://packages.ubuntu.com/yakkety/amd64/libreadline7/download}
+
+@item
+Install the SWI Prolog dev version like this:
+@verbatim
+# echo "deb http://ppa.launchpad.net/swi-prolog/devel/ubuntu yakkety main" \
+    >> /etc/apt/sources.list.d/swi-prolog.list
+# apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6DBFCA18
+# apt-get update
+# apt-get install swi-prolog
+@end verbatim
+@end itemize
+@end quotation
+
+@subsection Daemons management
+Debian and derivative distros @emph{now} use 
+Systemd@footnote{@mybibcite{systemd}} as the 
+init system. First see @ref{Components download} and then
+see @ref{Daemons management}.
 
 @c ----
 @c ----
@@ -283,6 +326,12 @@ To download all the prolog packages necessary in order to run
 Cplint on SWISH correcly:
 @verbatim
 $ sudo -u swish swish-cplint -i
+@end verbatim
+
+If this method does not work you can run the following:
+@verbatim
+$ sudo -u swish -i
+$ swish-cplint -i
 @end verbatim
 
 @c ----
@@ -338,7 +387,7 @@ same instructions of Cplint on SWISH are also applicable here.
 Running and managing SWISH alone is very similar to the 
 previous method: instead of using @command{swish-cplint} 
 as part of the commands, you must use @command{swish}. 
-You don't need to worry about Rserve or Docker.
+You also don't need to worry about Docker.
 
 @c ----
 @c ----
@@ -365,9 +414,12 @@ For example: @code{http://localhost:3050} or @code{http://127.0.0.1:3050}
 .
 |-- common
 |   |-- rserve-sandbox-docker
-|   |-- rserve-sandbox-docker-bin
+|   |   `-- systemd
+|   |-- rserve-sandbox-docker-bin -> rserve-sandbox-docker
 |   |-- swish
+|   |   `-- systemd
 |   |-- swish-cplint
+|   |   `-- systemd
 |   `-- swish-cplint-bin -> swish-cplint/
 `-- distributions
     |-- archLinux-based
@@ -380,6 +432,12 @@ For example: @code{http://localhost:3050} or @code{http://127.0.0.1:3050}
     |   |   `-- swish-cplint-bin
     |   `-- test
     `-- debian-based
+        |-- dest
+        `-- packages
+            |-- rserve-sandbox-docker
+            |   `-- debian
+            `-- swish-cplint
+                `-- debian
 @end verbatim
 
 The @file{distributions} directory contains all the files useful to
@@ -397,17 +455,22 @@ are not distribution specific.
 @verbatim
 common/
 |-- rserve-sandbox-docker
-|   `-- run.sh
-|-- rserve-sandbox-docker-bin
-|   `-- run.sh -> ../rserve-sandbox-docker/run.sh
+|   |-- run.sh
+|   `-- systemd
+|       `-- rserve-sandbox-docker.service
+|-- rserve-sandbox-docker-bin -> rserve-sandbox-docker
 |-- shared_functions.sh
 |-- swish
 |   |-- run.pl
-|   `-- run.sh
+|   |-- run.sh
+|   `-- systemd
+|       `-- swish.service
 |-- swish-cplint
 |   |-- install_web_iface_deps.pl
 |   |-- run.pl
-|   `-- run.sh
+|   |-- run.sh
+|   `-- systemd
+|       `-- swish-cplint.service
 `-- swish-cplint-bin -> swish-cplint/
 @end verbatim
 
@@ -438,14 +501,14 @@ dependencies automatically.
 @section Guidelines to create packages
 Makefiles are used to build the package in a new directory
 by copying all necessary files (also from
-the @file{common} directory). Each Makefile is
-distribution-based specific.
+the @file{common} directory). Each Makefile and @file{build_pkg.sh} script is
+distribution specific.
 
 You will read general information about the packages,
 all their install and remove actions and how to build
 your version of the modified packages.
 
-Installation and removal actions must be done sequentially.
+All actions described here must be done sequentially.
 
 @c ----
 @c ----
@@ -762,7 +825,7 @@ remove policies of the chosen distro).
 @item
 Data directory
 
-@file{/usr/share/swish}
+@file{/usr/share/swish-cplint}
 
 @item
 Dependencies
@@ -995,28 +1058,24 @@ package names in the correspondent distribution.
 @verbatim
 archLinux-based/
 |-- build_pkg.sh
+|-- dest
 |-- Makefile
 |-- packages
 |   |-- rserve-sandbox-docker
 |   |   |-- .install
-|   |   |-- PKGBUILD
-|   |   `-- rserve-sandbox-docker.service
+|   |   `-- PKGBUILD
 |   |-- rserve-sandbox-docker-bin
 |   |   |-- .install -> ../rserve-sandbox-docker/.install
-|   |   |-- PKGBUILD
-|   |   `-- rserve-sandbox-docker.service -> ../rserve-sandbox-docker/rserve-sandbox-docker.service
+|   |   `-- PKGBUILD
 |   |-- swish
 |   |   |-- .install
-|   |   |-- PKGBUILD
-|   |   `-- swish.service
+|   |   `-- PKGBUILD
 |   |-- swish-cplint
 |   |   |-- .install
-|   |   |-- PKGBUILD
-|   |   `-- swish-cplint.service
+|   |   `-- PKGBUILD
 |   `-- swish-cplint-bin
 |       |-- .install -> ../swish-cplint/.install
-|       |-- PKGBUILD
-|       `-- swish-cplint.service -> ../swish-cplint/swish-cplint.service
+|       `-- PKGBUILD
 `-- test
     `-- swish_installer_full_test
 @end verbatim
@@ -1089,6 +1148,38 @@ In the process of writing Debian packages, some
 conventions@footnote{@mybibcite{Debian packaging conventions}} have been 
 followed (at least in part).
 
+@verbatim
+debian-based/
+|-- build_pkg.sh
+|-- dest
+|-- Makefile
+`-- packages
+    |-- rserve-sandbox-docker
+    |   `-- debian
+    |       |-- changelog
+    |       |-- compat
+    |       |-- control
+    |       |-- copyright
+    |       |-- docs
+    |       |-- install
+    |       |-- postinst
+    |       |-- postrm
+    |       |-- rserve-sandbox-docker.links
+    |       `-- rules
+    `-- swish-cplint
+        `-- debian
+            |-- changelog
+            |-- compat
+            |-- control
+            |-- copyright
+            |-- docs
+            |-- install
+            |-- postinst
+            |-- postrm
+            |-- rules
+            `-- swish-cplint.links
+@end verbatim
+
 @subsubsection Needed tools
 @itemize @bullet
 @item
@@ -1133,6 +1224,9 @@ followed (at least in part).
 @item
 @code{xz-utils}
 @end itemize
+
+Also install Bower, as indicated in the Debian install
+section @ref{Installation}
 
 @subsubsection Changes
 Once you have made your changes you can run @command{$ make}
@@ -1249,6 +1343,50 @@ is created and you can access the files by opening
 @c ----
 @c ----
 
+@node Tests
+@chapter Tests
+A list of tested packages and distributions using virtual machine environments:
+(either qvm@footnote{@mybibcite{qvm}} or VirtualBox and OS 
+Boxes@footnote{@mybibcite{VirtualBox and OS Boxes}})
+
+@multitable @columnfractions .166 .166 .166 .166 .166 .166
+@headitem Distributions
+@tab SWISH
+@tab Cplint on SWISH
+@tab Cplint on SWISH binary
+@tab Rserve sandbox
+@tab Rserve sandbox binary
+@item Arch Linux (VirtualBox and OS Boxes)
+@tab -
+@tab OK
+@tab -
+@tab OK
+@tab -
+@item Debian 8.7 Jessie (qvm)
+@tab -
+@tab Doesn't work because the system packages are too old, but with some changes it might work as well
+@tab -
+@tab OK, once you enable backports and install the @code{docker.io} package
+@tab -
+@item Parabola GNU/Linux-libre (qvm)
+@tab OK
+@tab OK
+@tab OK
+@tab OK
+@tab OK
+@item Trisquel 8.0 Alpha (qvm)
+@tab -
+@tab Problems with the rserve_client pack but the non R-related parts will work if you follow the installation instructions.
+@tab -
+@tab OK
+@tab -
+@end multitable
+
+@c ----
+@c ----
+@c ----
+@c ----
+
 @node Thanks
 @chapter Thanks
 I want to thank the SWI Prolog, Arch Linux and Systemd communities as well the 
@@ -1350,8 +1488,16 @@ Rserve sandbox
 @uref{https://aur.archlinux.org/packages/rserve-sandbox-docker/}
 
 @item
+Rserve sandbox binary
+@uref{https://aur.archlinux.org/packages/rserve-sandbox-docker-bin/}
+
+@item
 Cplint on SWISH
 @uref{https://aur.archlinux.org/packages/swish-cplint/}
+
+@item
+Cplint on SWISH binary
+@uref{https://aur.archlinux.org/packages/swish-cplint-bin/}
 
 @item
 SWISH
@@ -1445,6 +1591,29 @@ This repository offers a slightly different approach in packaging:
 
 @mybibitem{cleancss} "Tool for minifying CSS files".
 See @uref{https://packages.debian.org/jessie/cleancss}
+@*
+
+@mybibitem{qvm} "Trivial management of 64 bit virtual machines with qemu".
+See @uref{https://github.com/frnmst/qvm}
+@*
+
+@mybibitem{VirtalBox and OS Boxes} "OSBoxes offers you ready-to-use VMware 
+VirtualBox Linux/Unix guest operating systems". "VirtualBox is a powerful x86 
+and AMD64/Intel64 virtualization product for enterprise as well as home use".
+See @uref{http://www.osboxes.org/} and @uref{https://www.virtualbox.org/}
+@*
+
+@mybibitem{SWI Prolog PPA} "There are PPAs for SWI-Prolog stable and 
+SWI-Prolog development based on the official Debian packaging structure and 
+corresponding SWI-Prolog release".
+See @uref{http://www.swi-prolog.org/build/PPA.txt}
+and @uref{https://launchpad.net/~swi-prolog/+archive/ubuntu/devel}
+@*
+
+@mybibitem{Trisquel} "Trisquel GNU/Linux is a fully free operating system for 
+home users, small enterprises and educational centers".
+See @uref{https://trisquel.info/}
+and @uref{http://jenkins.trisquel.info/makeiso/iso/}
 @*
 
 @end itemize

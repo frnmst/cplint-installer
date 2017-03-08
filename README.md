@@ -10,30 +10,15 @@ with an
 ![images/swish-cplint-screenshot.png](images/swish-cplint-screenshot.png)
 ![images/swish-cplint-systemd-screenshot.png](images/swish-cplint-systemd-screenshot.png)
 
-## Instructions
+[Full Documentation](https://frnmst.github.io/swish-installer)
 
-[Documentation](https://frnmst.github.io/swish-installer)
-
-## Supported and tested distributions
-
-- GNU/Linux Arch-based distros.
-- GNU/Linux Debian-based Jessie version 8.7
-
-### [qvm](https://github.com/frnmst/qvm)
-
-- GNU/Linux-libre distribution Parabola.
-- GNU/Linux distribution Antergos.
-- GNU/Linux Debian Jessie version 8.7.
-
-### VirtualBox and OS Boxes
-
-- GNU/Linux distribution Arch.
+[Supported and tested distributions](https://frnmst.github.io/swish-installer/swish-installer.html#Tests)
 
 ## Warning
 
-I'm not 100% sure that all the software present in
-every component is free (libre) software. Since lots of external
-components are used, it's difficult to check them one by one.
+There is a possibility that some software component is proprietary.
+Since lots of external programs are used, it's difficult to check them one 
+by one.
 
 ## License
 
