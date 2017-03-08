@@ -120,22 +120,23 @@ install_local_package()
     makepkg -sri --noconfirm
     popd
 
-    # Exceptions.
     if [ "$package_name" = "rserve-sandbox-docker" ] \
 || [ "$package_name" = "rserve-sandbox-docker-bin" ]; then
-        sudo systemctl start docker
-    elif [ "$package_name" = "swish-cplint" ]; then
+        sudo systemctl start docker \
+    && sudo -u rsd /usr/bin/rserve-sandbox-docker -i
+    elif [ "$package_name" = "swish-cplint" ] \
+|| [ "$package_name" = "swish-cplint-bin" ]; then
         sudo -u swish /usr/bin/swish-cplint -i
     fi
 
-    sudo systemctl start "$package_name"
+    sudo systemctl start "${package_name%-bin}"
 }
 
 remove_package()
 {
     local package_name="$1"
 
-    sudo systemctl stop "$package_name"
+    sudo systemctl stop "${package_name%-bin}"
 
     sudo pacman -Rnus --noconfirm "$package_name"
 }
@@ -175,17 +176,30 @@ chain()
             install_local_package "rserve-sandbox-docker" "distro-package"
         fi
     fi; } \
-&& sudo -u rsd /usr/bin/rserve-sandbox-docker -i \
-&& { if [ "$dev" = "true" ]; then
-        install_local_package "swish-cplint" "c3js-2-R"
-        # Exception handled manually
-        sed -i 's/friguzzi/frnmst/g' PKGBUILD
+&& { if [ "$binary" = "true" ]; then
+        if [ "$dev" = "true" ]; then
+            install_local_package "swish-cplint-bin" "c3js-2-R"
+            # Exception handled manually
+            sed -i 's/friguzzi/frnmst/g' PKGBUILD
+        else
+            install_local_package "swish-cplint-bin" "master"
+        fi
     else
-        install_local_package "swish-cplint" "master"
+        if [ "$dev" = "true" ]; then
+            install_local_package "swish-cplint" "c3js-2-R"
+            # Exception handled manually
+            sed -i 's/friguzzi/frnmst/g' PKGBUILD
+        else
+            install_local_package "swish-cplint" "master"
+        fi
     fi; } \
 && printf "Open http://127.0.0.1:3050\n" \
 &&  wait_user_input \
-&& remove_package "swish-cplint" \
+&& { if [ "$binary" = "true" ]; then
+        remove_package "swish-cplint-bin"
+    else
+        remove_package "swish-cplint"
+    fi; } \
 && { if [ "$binary" = "true" ]; then
         remove_package "rserve-sandbox-docker-bin"
     else
