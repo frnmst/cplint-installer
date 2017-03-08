@@ -16,6 +16,10 @@ SWISH Installer
       4.1.2.3 SWISH
     4.1.3 Daemons management
   4.2 Debian
+    4.2.1 Manual installation
+      4.2.1.1 Rserve sandbox
+      4.2.1.2 Cplint on SWISH
+    4.2.2 Daemons management
 5 Components download
   5.1 Rserve sandbox and Rserve sandbox binary
   5.2 Cplint on SWISH and Cplint on SWISH binary
@@ -49,14 +53,20 @@ SWISH Installer
       8.2.5.3 Remove actions
   8.3 Building the packages
     8.3.1 Arch Linux
+      8.3.1.1 Needed tools
+      8.3.1.2 Changes
+    8.3.2 Debian
+      8.3.2.1 Needed tools
+      8.3.2.2 Changes
   8.4 Help pages
     8.4.1 Rserve sandbox
     8.4.2 Rserve sandbox binary
     8.4.3 Cplint on SWISH
     8.4.4 SWISH
   8.5 Compiling this documentation
-9 Thanks
-10 References
+9 Tests
+10 Thanks
+11 References
 SWISH Installer
 ***************
 
@@ -129,6 +139,7 @@ DistributionsSWISH        Cplint on    Cplint on    Rserve       Rserve
                                        binary                    binary
 ------------------------------------------------------------------------------
 Arch Linux   'swish'      'swish-cplint''swish-cplint-bin''rserve-sandbox-docker''rserve-sandbox-docker-bin'
+Debian       '-'          'swish-cplint''-'         'rserve-sandbox-docker''-'
 
 3.2 Descriptions
 ================
@@ -218,7 +229,52 @@ management::.
 4.2 Debian
 ==========
 
-TODO
+4.2.1 Manual installation
+-------------------------
+
+Manual installation involves a building phase.  Please read the
+Development *note Building the packages: Development. chapter.
+
+4.2.1.1 Rserve sandbox
+......................
+
+See the previous section
+
+4.2.1.2 Cplint on SWISH
+.......................
+
+Before installing the actual package some dependecies must be installed
+manually:
+   * Install Bower:
+     # apt-get install npm nodejs-legacy
+     # npm install -g bower
+
+   * Install the development version of SWI Prolog from the official SWI
+     Prolog PPA(6):
+     # apt-get install software-properties-common
+     # sudo apt-add-repository ppa:swi-prolog/devel
+     # sudo apt-get update
+     # sudo apt-get install swi-prolog
+
+     Note: Installation of SWI Prolog dev on Trisquel 8.0 Alpha(7) is a
+     bit tricky:
+
+        - Install this library first:
+          <http://packages.ubuntu.com/yakkety/amd64/libreadline7/download>
+
+        - Install the SWI Prolog dev version like this:
+          # echo "deb http://ppa.launchpad.net/swi-prolog/devel/ubuntu yakkety main" \
+              >> /etc/apt/sources.list.d/swi-prolog.list
+          # apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6DBFCA18
+          # apt-get update
+          # apt-get install swi-prolog
+
+4.2.2 Daemons management
+------------------------
+
+Debian and derivative distros _now_ use Systemd(8) as the init system.
+First see *note Components download:: and then see *note Daemons
+management::.
 
    ---------- Footnotes ----------
 
@@ -232,6 +288,12 @@ References.
    (4) See item *[Parabola]* in *note Parabola: References.
 
    (5) See item *[systemd]* in *note systemd: References.
+
+   (6) See item *[SWI Prolog PPA]* in *note SWI Prolog PPA: References.
+
+   (7) See item *[Trisquel]* in *note Trisquel: References.
+
+   (8) See item *[systemd]* in *note systemd: References.
 
 5 Components download
 *********************
@@ -258,6 +320,10 @@ some prolog tests executed by the Cplint R library.
 To download all the prolog packages necessary in order to run Cplint on
 SWISH correcly:
 $ sudo -u swish swish-cplint -i
+
+If this method does not work you can run the following:
+$ sudo -u swish -i
+$ swish-cplint -i
 
    ---------- Footnotes ----------
 
@@ -308,7 +374,7 @@ of Cplint on SWISH are also applicable here.
 
 Running and managing SWISH alone is very similar to the previous method:
 instead of using 'swish-cplint' as part of the commands, you must use
-'swish'.  You don't need to worry about Rserve or Docker.
+'swish'.  You also don't need to worry about Docker.
 
 7 Accessing the server
 **********************
@@ -330,9 +396,12 @@ and you have to connect to port 3050.  For example:
 .
 |-- common
 |   |-- rserve-sandbox-docker
-|   |-- rserve-sandbox-docker-bin
+|   |   `-- systemd
+|   |-- rserve-sandbox-docker-bin -> rserve-sandbox-docker
 |   |-- swish
+|   |   `-- systemd
 |   |-- swish-cplint
+|   |   `-- systemd
 |   `-- swish-cplint-bin -> swish-cplint/
 `-- distributions
     |-- archLinux-based
@@ -345,6 +414,12 @@ and you have to connect to port 3050.  For example:
     |   |   `-- swish-cplint-bin
     |   `-- test
     `-- debian-based
+        |-- dest
+        `-- packages
+            |-- rserve-sandbox-docker
+            |   `-- debian
+            `-- swish-cplint
+                `-- debian
 
 The 'distributions' directory contains all the files useful to build
 packages for a specific distribution.  Makefiles are used to achieve
@@ -363,17 +438,22 @@ specific.
 
 common/
 |-- rserve-sandbox-docker
-|   `-- run.sh
-|-- rserve-sandbox-docker-bin
-|   `-- run.sh -> ../rserve-sandbox-docker/run.sh
+|   |-- run.sh
+|   `-- systemd
+|       `-- rserve-sandbox-docker.service
+|-- rserve-sandbox-docker-bin -> rserve-sandbox-docker
 |-- shared_functions.sh
 |-- swish
 |   |-- run.pl
-|   `-- run.sh
+|   |-- run.sh
+|   `-- systemd
+|       `-- swish.service
 |-- swish-cplint
 |   |-- install_web_iface_deps.pl
 |   |-- run.pl
-|   `-- run.sh
+|   |-- run.sh
+|   `-- systemd
+|       `-- swish-cplint.service
 `-- swish-cplint-bin -> swish-cplint/
 
 The 'run.sh' files are helpers to start and stop the daemons.  These
@@ -391,22 +471,23 @@ common functions for the 'run.sh' files.  It must be appended to every
 
      $ cat shared_functions.sh >> {rserve-sandbox*,swish,swish-cplint}/run.sh
 
-Cplint on SWISH contains a post installation script called
-'install_web_iface_deps.pl'.  This script, called by 'run.sh', simply
-installs all the necessary Prolog dependencies automatically.
+Cplint on SWISH and Cplint on SWISH binary contain a post installation
+script called 'install_web_iface_deps.pl'.  This script, called by
+'run.sh', simply installs all the necessary Prolog dependencies
+automatically.
 
 8.2 Guidelines to create packages
 =================================
 
 Makefiles are used to build the package in a new directory by copying
 all necessary files (also from the 'common' directory).  Each Makefile
-is distribution-based specific.
+and 'build_pkg.sh' script is distribution specific.
 
 You will read general information about the packages, all their install
 and remove actions and how to build your version of the modified
 packages.
 
-Installation and removal actions must be done sequentially.
+All actions described here must be done sequentially.
 
 8.2.1 Rserve sandbox
 --------------------
@@ -419,9 +500,17 @@ Installation and removal actions must be done sequentially.
      '/usr/share/rserve-sandbox-docker'
 
    * Dependencies
-        - R
+        - GNU Bash(1)
 
-        - Docker
+        - GNU Core Utilities(2)
+
+        - GNU Make(3)
+
+        - Gawk(4)
+
+        - Docker(5)
+
+        - R
 
 8.2.1.2 Install actions
 .......................
@@ -442,16 +531,19 @@ Installation and removal actions must be done sequentially.
 
         - Add 'rserve' user and group.
 
-          # getent group rserve &>/dev/null || groupadd -g 32749 -r rserve >/dev/null
-          # getent passwd rserve &>/dev/null || useradd -u 32749 -m -d /home/rserve \
-          -s /bin/false -r -g rserve rserve >/dev/null
+          # getent group rserve 1>/dev/null 2>/dev/null \
+              || groupadd -g 32749 -r rserve >/dev/null
+          # getent passwd rserve 1>/dev/null 2>/dev/null \
+              || useradd -u 32749 -m -d /home/rserve \
+              -s /bin/false -r -g rserve rserve >/dev/null
           # chmod 750 /home/rserve
 
         - Add 'rsd' user and group.
 
-          # getent group rsd &>/dev/null || groupadd -r rsd >/dev/null
-          # getent passwd rsd &>/dev/null || useradd \
-          -s /bin/false -r -g rsd rsd >/dev/null
+          # getent group rsd 1>/dev/null 2>/dev/null \
+              || groupadd -r rsd >/dev/null
+          # getent passwd rsd 1>/dev/null 2>/dev/null \
+              || useradd -s /bin/false -r -g rsd rsd >/dev/null
 
         - Add the new user to the 'docker' group
 
@@ -463,7 +555,7 @@ Installation and removal actions must be done sequentially.
 
           Note: the 'rsd' user and group was created in order to avoid
           privilege escalation, since any user which belongs to the
-          'docker' group is equivalent to 'root'(1).
+          'docker' group is equivalent to 'root'(6).
 
 8.2.1.3 Remove actions
 ......................
@@ -499,19 +591,27 @@ Installation and removal actions must be done sequentially.
      '/usr/share/swish-cplint'
 
    * Dependencies
-        - SWI Prolog (developement version)
+        - Bower (make dependency)(7)
 
-        - Git(2)
+        - GNU Bash
 
-        - Graphviz(3)
+        - GNU Core Utilities
 
-        - libXinerama(4)
+        - GNU Make (make dependency)
 
-        - libXpm(5)
+        - Gawk
+
+        - Git(8)
+
+        - Graphviz(9)
+
+        - libXinerama(10)
+
+        - libXpm(11)
 
         - Rserve sandbox
 
-        - Bower (make dependency)(6)
+        - SWI Prolog (development version)
 
 8.2.3.2 Install actions
 .......................
@@ -537,9 +637,10 @@ Installation and removal actions must be done sequentially.
 
         - Add 'swish' user and group
 
-          # getent group swish &>/dev/null || groupadd -r swish >/dev/null
-          # getent passwd swish &>/dev/null || useradd -m -d /home/swish \
-          -r -g swish swish >/dev/null
+          # getent group swish 1>/dev/null 2>/dev/null \
+              || groupadd -r swish >/dev/null
+          # getent passwd swish 1>/dev/null 2>/dev/null \
+              || useradd -m -d /home/swish -r -g swish swish >/dev/null
 
         - Add 'swish' user to the previously created 'rserve' group.
 
@@ -574,10 +675,16 @@ Installation and removal actions must be done sequentially.
 
    * Data directory
 
-     '/usr/share/swish'
+     '/usr/share/swish-cplint'
 
    * Dependencies
-        - SWI Prolog (developement version)
+        - curl (make dependency)(12)
+
+        - GNU Bash
+
+        - GNU Core Utilities
+
+        - Gawk
 
         - Git
 
@@ -589,9 +696,9 @@ Installation and removal actions must be done sequentially.
 
         - Rserve sandbox binary
 
-        - curl (make dependency)(7)
+        - SWI Prolog (development version)
 
-        - UnZip (make dependency)(8)
+        - UnZip (make dependency)(13)
 
 8.2.4.2 Install actions
 .......................
@@ -632,13 +739,21 @@ Installation and removal actions must be done sequentially.
      '/usr/share/swish'
 
    * Dependencies
-        - SWI Prolog (developement version)
+        - Bower (make dependency)
+
+        - GNU Bash
+
+        - GNU Core Utilities
+
+        - GNU Make (make dependency)
+
+        - Gawk
 
         - libXinerama
 
         - libXpm
 
-        - Bower (make dependency)
+        - SWI Prolog (development version)
 
 8.2.5.2 Install actions
 .......................
@@ -662,9 +777,10 @@ Installation and removal actions must be done sequentially.
 
         - Add 'swish' user and group
 
-          # getent group swish &>/dev/null || groupadd -r swish >/dev/null
-          # getent passwd swish &>/dev/null || useradd -m -d /home/swish \
-          -r -g swish swish >/dev/null
+          # getent group swish 1>/dev/null 2>/dev/null \
+              || groupadd -r swish >/dev/null
+          # getent passwd swish 1>/dev/null 2>/dev/null \
+              || useradd -m -d /home/swish -r -g swish swish >/dev/null
 
         - Change ownership of the package data directory
 
@@ -690,38 +806,56 @@ Installation and removal actions must be done sequentially.
 8.3 Building the packages
 =========================
 
+Before actually building the packages, a set of tools is necessary in
+order to build (and install) the modified packages.  You will find a
+list of package dependencies under the "Needed tools" sections.  These
+lists use the real package names in the correspondent distribution.
+
 8.3.1 Arch Linux
 ----------------
 
 archLinux-based/
+|-- build_pkg.sh
+|-- dest
 |-- Makefile
 |-- packages
 |   |-- rserve-sandbox-docker
 |   |   |-- .install
-|   |   |-- PKGBUILD
-|   |   `-- rserve-sandbox-docker.service
+|   |   `-- PKGBUILD
 |   |-- rserve-sandbox-docker-bin
 |   |   |-- .install -> ../rserve-sandbox-docker/.install
-|   |   |-- PKGBUILD
-|   |   `-- rserve-sandbox-docker.service -> ../rserve-sandbox-docker/rserve-sandbox-docker.service
+|   |   `-- PKGBUILD
 |   |-- swish
 |   |   |-- .install
-|   |   |-- PKGBUILD
-|   |   `-- swish.service
+|   |   `-- PKGBUILD
 |   |-- swish-cplint
 |   |   |-- .install
-|   |   |-- PKGBUILD
-|   |   `-- swish-cplint.service
+|   |   `-- PKGBUILD
 |   `-- swish-cplint-bin
 |       |-- .install -> ../swish-cplint/.install
-|       |-- PKGBUILD
-|       `-- swish-cplint.service -> ../swish-cplint/swish-cplint.service
+|       `-- PKGBUILD
 `-- test
     `-- swish_installer_full_test
 
-Once you've made changes you can run '$ make' then change directory into
-one of the new 'dest/*.aur' generated directories and finally run '$
-makepkg -sri' to install the package.
+8.3.1.1 Needed tools
+....................
+
+   * 'bash'
+
+   * 'coreutils'
+
+   * 'gawk'
+
+   * 'make'
+
+   * 'pacman'(14)
+
+8.3.1.2 Changes
+...............
+
+Once you have made your changes you can run '$ make' then change
+directory into one of the new 'dest/*.aur' generated directories and
+finally run '$ makepkg -sri' to install the package.
 
 You also have the possibility to run the test script '$
 ./test/swish_installer_full_test'.  Here is the help page:
@@ -759,6 +893,91 @@ Copyright  ©  2017  Franco Masotti.  License GPLv3+: GNU GPL version 3 or
 later <http://gnu.org/licenses/gpl.html>.
 This  is  free  software: you are free to change and redistribute it.  There
 is NO WARRANTY, to the extent  permitted by law.
+
+8.3.2 Debian
+------------
+
+In the process of writing Debian packages, some conventions(15) have
+been followed (at least in part).
+
+debian-based/
+|-- build_pkg.sh
+|-- dest
+|-- Makefile
+`-- packages
+    |-- rserve-sandbox-docker
+    |   `-- debian
+    |       |-- changelog
+    |       |-- compat
+    |       |-- control
+    |       |-- copyright
+    |       |-- docs
+    |       |-- install
+    |       |-- postinst
+    |       |-- postrm
+    |       |-- rserve-sandbox-docker.links
+    |       `-- rules
+    `-- swish-cplint
+        `-- debian
+            |-- changelog
+            |-- compat
+            |-- control
+            |-- copyright
+            |-- docs
+            |-- install
+            |-- postinst
+            |-- postrm
+            |-- rules
+            `-- swish-cplint.links
+
+8.3.2.1 Needed tools
+....................
+
+   * 'apt'
+
+   * 'bash'
+
+   * 'build-essential'(16)
+
+   * 'dh-systemd'(17)
+
+   * 'cleancss'(18)
+
+   * 'coreutils'
+
+   * 'curl'
+
+   * 'devscripts'(19)
+
+   * 'dpkg'
+
+   * 'gawk'
+
+   * 'gzip'
+
+   * 'make'
+
+   * 'tar'
+
+   * 'xz-utils'
+
+Also install Bower, as indicated in the Debian install section *note
+Installation::
+
+8.3.2.2 Changes
+...............
+
+Once you have made your changes you can run '$ make' then change
+directory into one of the new 'dest/*.debian' generated.
+
+To build the package move inside one of the
+'dest/<package>.debian/<package>-<version>' directories and run '$
+debuild -us -uc'.
+
+Done that, you can move to the previous level ('..').  You should see a
+'<package>.deb' file (among other new files).  Run '# dpkg -i
+<package>.deb', then '# apt-get install -f' to install the package and
+all its dependencies.
 
 8.4 Help pages
 ==============
@@ -859,25 +1078,98 @@ access the files by opening 'index.html' with a browser.
 
    ---------- Footnotes ----------
 
-   (1) See item *[Docker root privileges]* in *note Docker root
+   (1) See item *[GNU Bash]* in *note GNU Bash: References.
+
+   (2) See item *[GNU Core Utilities]* in *note GNU Core Utilities:
+References.
+
+   (3) See item *[GNU Make]* in *note GNU Make: References.
+
+   (4) See item *[Gawk]* in *note Gawk: References.
+
+   (5) See item *[Docker]* in *note Docker: References.
+
+   (6) See item *[Docker root privileges]* in *note Docker root
 privileges: References.
 
-   (2) See item *[Git]* in *note Git: References.
+   (7) See item *[Bower]* in *note Bower: References.
 
-   (3) See item *[Graphviz]* in *note Graphviz: References.
+   (8) See item *[Git]* in *note Git: References.
 
-   (4) See item *[libXinerama]* in *note libXinerama: References.
+   (9) See item *[Graphviz]* in *note Graphviz: References.
 
-   (5) See item *[libXpm]* in *note libXpm: References.
+   (10) See item *[libXinerama]* in *note libXinerama: References.
 
-   (6) See item *[Bower]* in *note Bower: References.
+   (11) See item *[libXpm]* in *note libXpm: References.
 
-   (7) See item *[curl]* in *note curl: References.
+   (12) See item *[curl]* in *note curl: References.
 
-   (8) See item *[UnZip]* in *note UnZip: References.
+   (13) See item *[UnZip]* in *note UnZip: References.
 
-9 Thanks
-********
+   (14) See item *[Pacman]* in *note Pacman: References.
+
+   (15) See item *[Debian packaging conventions]* in *note Debian
+packaging conventions: References.
+
+   (16) See item *[build-essential]* in *note build-essential:
+References.
+
+   (17) See item *[dh-systemd]* in *note dh-systemd: References.
+
+   (18) See item *[cleancss]* in *note cleancss: References.
+
+   (19) See item *[devscripts]* in *note devscripts: References.
+
+9 Tests
+*******
+
+A list of tested packages and distributions using virtual machine
+environments: (either qvm(1) or VirtualBox and OS Boxes(2))
+
+DistributionsSWISH        Cplint on    Cplint on    Rserve       Rserve
+                          SWISH        SWISH        sandbox      sandbox
+                                       binary                    binary
+------------------------------------------------------------------------------
+Arch Linux   -            OK           -            OK           -
+(VirtualBox
+and OS
+Boxes)
+Debian 8.7   -            Doesn't      -            OK, once     -
+Jessie                    work                      you enable
+(qvm)                     because                   backports
+                          the system                and
+                          packages                  install
+                          are too                   the
+                          old, but                  'docker.io'
+                          with some                 package
+                          changes it
+                          might work
+                          as well
+Parabola     OK           OK           OK           OK           OK
+GNU/Linux-libre
+(qvm)
+Trisquel     -            Problems     -            OK           -
+8.0 Alpha                 with the
+(qvm)                     rserve_client
+                          pack but
+                          the non
+                          R-related
+                          parts will
+                          work if
+                          you follow
+                          the
+                          installation
+                          instructions.
+
+   ---------- Footnotes ----------
+
+   (1) See item *[qvm]* in *note qvm: References.
+
+   (2) See item *[VirtualBox and OS Boxes]* in *note VirtualBox and OS
+Boxes: References.
+
+10 Thanks
+*********
 
 I want to thank the SWI Prolog, Arch Linux and Systemd communities as
 well the authors of the free software used here, which made the creation
@@ -886,7 +1178,7 @@ of these packages possible.
 I also want to thank Fabrizio Riguzzi which tested the packages and gave
 me advices about them.
 
-10 References
+11 References
 *************
 
 Some quotations reported here are taken directly from the respective web
@@ -919,7 +1211,7 @@ sites.
      widely used in research and education as well as commercial
      applications".  See <http://www.swi-prolog.org/> and
      <https://github.com/SWI-Prolog/swipl-devel> which is the
-     developement version used here.
+     development version used here.
 
    * *[Yaourt]* "A pacman wrapper with extended features and AUR
      support".  To install Yaourt follow the instructions reported on
@@ -952,14 +1244,20 @@ sites.
 
    * *[Packages on the AUR]* Here follows a list to the AUR packages:
 
-        - SWI Prolog (developement version)
+        - SWI Prolog (development version)
           <https://aur.archlinux.org/packages/swi-prolog-devel>
 
         - Rserve sandbox
           <https://aur.archlinux.org/packages/rserve-sandbox-docker/>
 
+        - Rserve sandbox binary
+          <https://aur.archlinux.org/packages/rserve-sandbox-docker-bin/>
+
         - Cplint on SWISH
           <https://aur.archlinux.org/packages/swish-cplint/>
+
+        - Cplint on SWISH binary
+          <https://aur.archlinux.org/packages/swish-cplint-bin/>
 
         - SWISH <https://aur.archlinux.org/packages/swish/>
 
@@ -994,4 +1292,66 @@ sites.
 
    * *[UnZip]* "For extracting and viewing files in .zip archives".  See
      <http://www.info-zip.org/UnZip.html>
+
+   * *[GNU Bash]* "The GNU Bourne Again shell".  See
+     <http://www.gnu.org/software/bash/bash.html>
+
+   * *[Gawk]* "GNU version of awk".  See
+     <http://www.gnu.org/software/gawk/>
+
+   * *[Pacman]* "A library-based package manager with dependency
+     support".  See <http://www.archlinux.org/pacman/>
+
+   * *[GNU Make]* "GNU make utility to maintain groups of programs".
+     See <http://www.gnu.org/software/make>
+
+   * *[GNU Core Utilities]* "The basic file, shell and text manipulation
+     utilities of the GNU operating system".  See
+     <https://www.gnu.org/software/coreutils/coreutils.html>
+
+   * *[build-essential]* "Informational list of build-essential
+     packages.  If you do not plan to build Debian packages, you don't
+     need this package.  Starting with dpkg (>= 1.14.18) this package is
+     required for building Debian packages.  This package contains an
+     informational list of packages which are considered essential for
+     building Debian packages.  This package also depends on the
+     packages on that list, to make it easy to have the build-essential
+     packages installed".  See
+     <https://packages.debian.org/jessie/build-essential>
+
+   * *[devscripts]* "scripts to make the life of a Debian Package
+     maintainer easier".  See
+     <https://packages.debian.org/jessie/devscripts>
+
+   * *[dh-systemd]* "debhelper add-on to handle systemd unit files".
+     See <https://packages.debian.org/jessie/dh-systemd>
+
+   * *[Debian packaging conventions]* See
+     <https://www.debian.org/doc/manuals/packaging-tutorial/packaging-tutorial.en.pdf>
+     and <https://www.debian.org/doc/manuals/maint-guide/index.en.html>
+     This repository offers a slightly different approach in packaging:
+     <https://github.com/vincentbernat/pragmatic-debian-packages>
+
+   * *[cleancss]* "Tool for minifying CSS files".  See
+     <https://packages.debian.org/jessie/cleancss>
+
+   * *[qvm]* "Trivial management of 64 bit virtual machines with qemu".
+     See <https://github.com/frnmst/qvm>
+
+   * *[VirtalBox and OS Boxes]* "OSBoxes offers you ready-to-use VMware
+     VirtualBox Linux/Unix guest operating systems".  "VirtualBox is a
+     powerful x86 and AMD64/Intel64 virtualization product for
+     enterprise as well as home use".  See <http://www.osboxes.org/> and
+     <https://www.virtualbox.org/>
+
+   * *[SWI Prolog PPA]* "There are PPAs for SWI-Prolog stable and
+     SWI-Prolog development based on the official Debian packaging
+     structure and corresponding SWI-Prolog release".  See
+     <http://www.swi-prolog.org/build/PPA.txt> and
+     <https://launchpad.net/~swi-prolog/+archive/ubuntu/devel>
+
+   * *[Trisquel]* "Trisquel GNU/Linux is a fully free operating system
+     for home users, small enterprises and educational centers".  See
+     <https://trisquel.info/> and
+     <http://jenkins.trisquel.info/makeiso/iso/>
 

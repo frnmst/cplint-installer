@@ -18,7 +18,7 @@ notice and this notice are preserved. -->
 <link href="index.html#Top" rel="start" title="Top">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="index.html#Top" rel="up" title="Top">
-<link href="Thanks.html#Thanks" rel="next" title="Thanks">
+<link href="Tests.html#Tests" rel="next" title="Tests">
 <link href="Accessing-the-server.html#Accessing-the-server" rel="prev" title="Accessing the server">
 <style type="text/css">
 <!--
@@ -106,7 +106,7 @@ td {
 <a name="Development"></a>
 <div class="header">
 <p>
-Next: <a href="Thanks.html#Thanks" accesskey="n" rel="next">Thanks</a>, Previous: <a href="Accessing-the-server.html#Accessing-the-server" accesskey="p" rel="prev">Accessing the server</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+Next: <a href="Tests.html#Tests" accesskey="n" rel="next">Tests</a>, Previous: <a href="Accessing-the-server.html#Accessing-the-server" accesskey="p" rel="prev">Accessing the server</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
 </div>
 <hr>
 <a name="Development-1"></a>
@@ -117,9 +117,12 @@ Next: <a href="Thanks.html#Thanks" accesskey="n" rel="next">Thanks</a>, Previous
 <pre class="verbatim">.
 |-- common
 |   |-- rserve-sandbox-docker
-|   |-- rserve-sandbox-docker-bin
+|   |   `-- systemd
+|   |-- rserve-sandbox-docker-bin -&gt; rserve-sandbox-docker
 |   |-- swish
+|   |   `-- systemd
 |   |-- swish-cplint
+|   |   `-- systemd
 |   `-- swish-cplint-bin -&gt; swish-cplint/
 `-- distributions
     |-- archLinux-based
@@ -132,6 +135,12 @@ Next: <a href="Thanks.html#Thanks" accesskey="n" rel="next">Thanks</a>, Previous
     |   |   `-- swish-cplint-bin
     |   `-- test
     `-- debian-based
+        |-- dest
+        `-- packages
+            |-- rserve-sandbox-docker
+            |   `-- debian
+            `-- swish-cplint
+                `-- debian
 </pre>
 <p>The <samp>distributions</samp> directory contains all the files useful to
 build packages for a specific distribution. Makefiles
@@ -149,17 +158,22 @@ are not distribution specific.
 
 <pre class="verbatim">common/
 |-- rserve-sandbox-docker
-|   `-- run.sh
-|-- rserve-sandbox-docker-bin
-|   `-- run.sh -&gt; ../rserve-sandbox-docker/run.sh
+|   |-- run.sh
+|   `-- systemd
+|       `-- rserve-sandbox-docker.service
+|-- rserve-sandbox-docker-bin -&gt; rserve-sandbox-docker
 |-- shared_functions.sh
 |-- swish
 |   |-- run.pl
-|   `-- run.sh
+|   |-- run.sh
+|   `-- systemd
+|       `-- swish.service
 |-- swish-cplint
 |   |-- install_web_iface_deps.pl
 |   |-- run.pl
-|   `-- run.sh
+|   |-- run.sh
+|   `-- systemd
+|       `-- swish-cplint.service
 `-- swish-cplint-bin -&gt; swish-cplint/
 </pre>
 <p>The <samp>run.sh</samp> files are helpers to start and stop the daemons.
@@ -181,8 +195,8 @@ a Makefile for example with the following:
 <pre class="example">$ cat shared_functions.sh &gt;&gt; {rserve-sandbox*,swish,swish-cplint}/run.sh
 </pre></div>
 
-<p>Cplint on SWISH contains a post installation script called
-<samp>install_web_iface_deps.pl</samp>. This script, called by
+<p>Cplint on SWISH and Cplint on SWISH binary contain a post installation script 
+called <samp>install_web_iface_deps.pl</samp>. This script, called by
 <samp>run.sh</samp>, simply installs all the necessary Prolog
 dependencies automatically.
 </p>
@@ -190,17 +204,17 @@ dependencies automatically.
 <h3 class="section">8.2 Guidelines to create packages</h3>
 <p>Makefiles are used to build the package in a new directory
 by copying all necessary files (also from
-the <samp>common</samp> directory). Each Makefile is
-distribution-based specific.
+the <samp>common</samp> directory). Each Makefile and <samp>build_pkg.sh</samp> script is
+distribution specific.
 </p>
 <p>You will read general information about the packages,
 all their install and remove actions and how to build
 your version of the modified packages.
 </p>
-<p>Installation and removal actions must be done sequentially.
+<p>All actions described here must be done sequentially.
 </p>
 
-<a name="Rserve-sandbox"></a>
+<a name="Rserve-sandbox-1"></a>
 <h4 class="subsection">8.2.1 Rserve sandbox</h4>
 <a name="General-information"></a>
 <h4 class="subsubsection">8.2.1.1 General information</h4>
@@ -211,9 +225,17 @@ your version of the modified packages.
 </p>
 </li><li> Dependencies
 <ul class="no-bullet">
-<li>- R
+<li>- GNU Bash<a name="DOCF16" href="#FOOT16"><sup>16</sup></a>
 
-</li><li>- Docker
+</li><li>- GNU Core Utilities<a name="DOCF17" href="#FOOT17"><sup>17</sup></a>
+
+</li><li>- GNU Make<a name="DOCF18" href="#FOOT18"><sup>18</sup></a>
+
+</li><li>- Gawk<a name="DOCF19" href="#FOOT19"><sup>19</sup></a>
+
+</li><li>- Docker<a name="DOCF20" href="#FOOT20"><sup>20</sup></a>
+
+</li><li>- R
 </li></ul>
 
 </li></ul>
@@ -242,16 +264,19 @@ your version of the modified packages.
 <ul class="no-bullet">
 <li>- Add <code>rserve</code> user and group.
 
-<pre class="verbatim"># getent group rserve &amp;&gt;/dev/null || groupadd -g 32749 -r rserve &gt;/dev/null
-# getent passwd rserve &amp;&gt;/dev/null || useradd -u 32749 -m -d /home/rserve \
--s /bin/false -r -g rserve rserve &gt;/dev/null
+<pre class="verbatim"># getent group rserve 1&gt;/dev/null 2&gt;/dev/null \
+    || groupadd -g 32749 -r rserve &gt;/dev/null
+# getent passwd rserve 1&gt;/dev/null 2&gt;/dev/null \
+    || useradd -u 32749 -m -d /home/rserve \
+    -s /bin/false -r -g rserve rserve &gt;/dev/null
 # chmod 750 /home/rserve
 </pre>
 </li><li>- Add <code>rsd</code> user and group.
 
-<pre class="verbatim"># getent group rsd &amp;&gt;/dev/null || groupadd -r rsd &gt;/dev/null
-# getent passwd rsd &amp;&gt;/dev/null || useradd \
--s /bin/false -r -g rsd rsd &gt;/dev/null
+<pre class="verbatim"># getent group rsd 1&gt;/dev/null 2&gt;/dev/null \
+    || groupadd -r rsd &gt;/dev/null
+# getent passwd rsd 1&gt;/dev/null 2&gt;/dev/null \
+    || useradd -s /bin/false -r -g rsd rsd &gt;/dev/null
 </pre>
 </li><li>- Add the new user to the <code>docker</code> group
 
@@ -266,7 +291,7 @@ your version of the modified packages.
 <blockquote>
 <p><b>Note:</b> the <code>rsd</code> user and group was created in order to avoid privilege 
 escalation, since any user which belongs to the <code>docker</code> group is
-equivalent to <code>root</code><a name="DOCF13" href="#FOOT13"><sup>13</sup></a>.
+equivalent to <code>root</code><a name="DOCF21" href="#FOOT21"><sup>21</sup></a>.
 </p></blockquote>
 
 </li></ul>
@@ -306,7 +331,7 @@ on the package remove policies of the chosen distro).
 </li></ul>
 
 
-<a name="Cplint-on-SWISH-2"></a>
+<a name="Cplint-on-SWISH-3"></a>
 <h4 class="subsection">8.2.3 Cplint on SWISH</h4>
 <a name="General-information-1"></a>
 <h4 class="subsubsection">8.2.3.1 General information</h4>
@@ -317,19 +342,27 @@ on the package remove policies of the chosen distro).
 </p>
 </li><li> Dependencies
 <ul class="no-bullet">
-<li>- SWI Prolog (developement version)
+<li>- Bower (make dependency)<a name="DOCF22" href="#FOOT22"><sup>22</sup></a>
 
-</li><li>- Git<a name="DOCF14" href="#FOOT14"><sup>14</sup></a>
+</li><li>- GNU Bash
 
-</li><li>- Graphviz<a name="DOCF15" href="#FOOT15"><sup>15</sup></a>
+</li><li>- GNU Core Utilities
 
-</li><li>- libXinerama<a name="DOCF16" href="#FOOT16"><sup>16</sup></a>
+</li><li>- GNU Make (make dependency)
 
-</li><li>- libXpm<a name="DOCF17" href="#FOOT17"><sup>17</sup></a>
+</li><li>- Gawk
+
+</li><li>- Git<a name="DOCF23" href="#FOOT23"><sup>23</sup></a>
+
+</li><li>- Graphviz<a name="DOCF24" href="#FOOT24"><sup>24</sup></a>
+
+</li><li>- libXinerama<a name="DOCF25" href="#FOOT25"><sup>25</sup></a>
+
+</li><li>- libXpm<a name="DOCF26" href="#FOOT26"><sup>26</sup></a>
 
 </li><li>- Rserve sandbox
 
-</li><li>- Bower (make dependency)<a name="DOCF18" href="#FOOT18"><sup>18</sup></a>
+</li><li>- SWI Prolog (development version)
 </li></ul>
 
 </li></ul>
@@ -364,9 +397,10 @@ $ make src
 <ul class="no-bullet">
 <li>- Add <code>swish</code> user and group
 
-<pre class="verbatim"># getent group swish &amp;&gt;/dev/null || groupadd -r swish &gt;/dev/null
-# getent passwd swish &amp;&gt;/dev/null || useradd -m -d /home/swish \
--r -g swish swish &gt;/dev/null
+<pre class="verbatim"># getent group swish 1&gt;/dev/null 2&gt;/dev/null \
+    || groupadd -r swish &gt;/dev/null
+# getent passwd swish 1&gt;/dev/null 2&gt;/dev/null \
+    || useradd -m -d /home/swish -r -g swish swish &gt;/dev/null
 </pre>
 </li><li>- Add <code>swish</code> user to the previously created <code>rserve</code>
 group.
@@ -415,11 +449,17 @@ remove policies of the chosen distro).
 <ul>
 <li> Data directory
 
-<p><samp>/usr/share/swish</samp>
+<p><samp>/usr/share/swish-cplint</samp>
 </p>
 </li><li> Dependencies
 <ul class="no-bullet">
-<li>- SWI Prolog (developement version)
+<li>- curl (make dependency)<a name="DOCF27" href="#FOOT27"><sup>27</sup></a>
+
+</li><li>- GNU Bash
+
+</li><li>- GNU Core Utilities
+
+</li><li>- Gawk
 
 </li><li>- Git
 
@@ -431,9 +471,9 @@ remove policies of the chosen distro).
 
 </li><li>- Rserve sandbox binary
 
-</li><li>- curl (make dependency)<a name="DOCF19" href="#FOOT19"><sup>19</sup></a>
+</li><li>- SWI Prolog (development version)
 
-</li><li>- UnZip (make dependency)<a name="DOCF20" href="#FOOT20"><sup>20</sup></a>
+</li><li>- UnZip (make dependency)<a name="DOCF28" href="#FOOT28"><sup>28</sup></a>
 </li></ul>
 
 </li></ul>
@@ -493,13 +533,21 @@ $ rm -rf swish-bower-components.zip
 </p>
 </li><li> Dependencies
 <ul class="no-bullet">
-<li>- SWI Prolog (developement version)
+<li>- Bower (make dependency)
+
+</li><li>- GNU Bash
+
+</li><li>- GNU Core Utilities
+
+</li><li>- GNU Make (make dependency)
+
+</li><li>- Gawk
 
 </li><li>- libXinerama
 
 </li><li>- libXpm
 
-</li><li>- Bower (make dependency)
+</li><li>- SWI Prolog (development version)
 </li></ul>
 
 </li></ul>
@@ -534,9 +582,10 @@ root directory.
 <ul class="no-bullet">
 <li>- Add <code>swish</code> user and group
 
-<pre class="verbatim"># getent group swish &amp;&gt;/dev/null || groupadd -r swish &gt;/dev/null
-# getent passwd swish &amp;&gt;/dev/null || useradd -m -d /home/swish \
--r -g swish swish &gt;/dev/null
+<pre class="verbatim"># getent group swish 1&gt;/dev/null 2&gt;/dev/null \
+    || groupadd -r swish &gt;/dev/null
+# getent passwd swish 1&gt;/dev/null 2&gt;/dev/null \
+    || useradd -m -d /home/swish -r -g swish swish &gt;/dev/null
 </pre>
 </li><li>- Change ownership of the package data directory
 
@@ -567,42 +616,59 @@ root directory.
 <li>- Tell the user that <samp>/home/swish</samp> and <code>swish</code> user 
 and group can be removed (this depends on the package 
 remove policies of the chosen distro).
-
 </li></ul>
 
 </li></ul>
 
 <a name="Building-the-packages"></a>
 <h3 class="section">8.3 Building the packages</h3>
+<p>Before actually building the packages, a set of tools is necessary in order to 
+build (and install) the modified packages. You will find a list of package 
+dependencies under the &quot;Needed tools&quot; sections. These lists use the real 
+package names in the correspondent distribution.
+</p>
 <a name="Arch-Linux-1"></a>
 <h4 class="subsection">8.3.1 Arch Linux</h4>
 <pre class="verbatim">archLinux-based/
+|-- build_pkg.sh
+|-- dest
 |-- Makefile
 |-- packages
 |   |-- rserve-sandbox-docker
 |   |   |-- .install
-|   |   |-- PKGBUILD
-|   |   `-- rserve-sandbox-docker.service
+|   |   `-- PKGBUILD
 |   |-- rserve-sandbox-docker-bin
 |   |   |-- .install -&gt; ../rserve-sandbox-docker/.install
-|   |   |-- PKGBUILD
-|   |   `-- rserve-sandbox-docker.service -&gt; ../rserve-sandbox-docker/rserve-sandbox-docker.service
+|   |   `-- PKGBUILD
 |   |-- swish
 |   |   |-- .install
-|   |   |-- PKGBUILD
-|   |   `-- swish.service
+|   |   `-- PKGBUILD
 |   |-- swish-cplint
 |   |   |-- .install
-|   |   |-- PKGBUILD
-|   |   `-- swish-cplint.service
+|   |   `-- PKGBUILD
 |   `-- swish-cplint-bin
 |       |-- .install -&gt; ../swish-cplint/.install
-|       |-- PKGBUILD
-|       `-- swish-cplint.service -&gt; ../swish-cplint/swish-cplint.service
+|       `-- PKGBUILD
 `-- test
     `-- swish_installer_full_test
 </pre>
-<p>Once you&rsquo;ve made changes you can run <code>$ make</code>
+<a name="Needed-tools"></a>
+<h4 class="subsubsection">8.3.1.1 Needed tools</h4>
+<ul>
+<li> <code>bash</code>
+
+</li><li> <code>coreutils</code>
+
+</li><li> <code>gawk</code>
+
+</li><li> <code>make</code>
+
+</li><li> <code>pacman</code><a name="DOCF29" href="#FOOT29"><sup>29</sup></a>
+</li></ul>
+
+<a name="Changes"></a>
+<h4 class="subsubsection">8.3.1.2 Changes</h4>
+<p>Once you have made your changes you can run <code>$ make</code>
 then change directory into one of the new <code>dest/*.aur</code> generated
 directories and finally run <code>$ makepkg -sri</code> to install
 the package.
@@ -644,9 +710,94 @@ later &lt;http://gnu.org/licenses/gpl.html&gt;.
 This  is  free  software: you are free to change and redistribute it.  There
 is NO WARRANTY, to the extent  permitted by law.
 </pre>
+<a name="Debian-1"></a>
+<h4 class="subsection">8.3.2 Debian</h4>
+<p>In the process of writing Debian packages, some 
+conventions<a name="DOCF30" href="#FOOT30"><sup>30</sup></a> have been 
+followed (at least in part).
+</p>
+<pre class="verbatim">debian-based/
+|-- build_pkg.sh
+|-- dest
+|-- Makefile
+`-- packages
+    |-- rserve-sandbox-docker
+    |   `-- debian
+    |       |-- changelog
+    |       |-- compat
+    |       |-- control
+    |       |-- copyright
+    |       |-- docs
+    |       |-- install
+    |       |-- postinst
+    |       |-- postrm
+    |       |-- rserve-sandbox-docker.links
+    |       `-- rules
+    `-- swish-cplint
+        `-- debian
+            |-- changelog
+            |-- compat
+            |-- control
+            |-- copyright
+            |-- docs
+            |-- install
+            |-- postinst
+            |-- postrm
+            |-- rules
+            `-- swish-cplint.links
+</pre>
+<a name="Needed-tools-1"></a>
+<h4 class="subsubsection">8.3.2.1 Needed tools</h4>
+<ul>
+<li> <code>apt</code>
+
+</li><li> <code>bash</code>
+
+</li><li> <code>build-essential</code><a name="DOCF31" href="#FOOT31"><sup>31</sup></a>
+
+</li><li> <code>dh-systemd</code><a name="DOCF32" href="#FOOT32"><sup>32</sup></a>
+
+</li><li> <code>cleancss</code><a name="DOCF33" href="#FOOT33"><sup>33</sup></a>
+
+</li><li> <code>coreutils</code>
+
+</li><li> <code>curl</code>
+
+</li><li> <code>devscripts</code><a name="DOCF34" href="#FOOT34"><sup>34</sup></a>
+
+</li><li> <code>dpkg</code>
+
+</li><li> <code>gawk</code>
+
+</li><li> <code>gzip</code>
+
+</li><li> <code>make</code>
+
+</li><li> <code>tar</code>
+
+</li><li> <code>xz-utils</code>
+</li></ul>
+
+<p>Also install Bower, as indicated in the Debian install
+section <a href="Installation.html#Installation">Installation</a>
+</p>
+<a name="Changes-1"></a>
+<h4 class="subsubsection">8.3.2.2 Changes</h4>
+<p>Once you have made your changes you can run <code>$ make</code>
+then change directory into one of the new <code>dest/*.debian</code> generated.
+</p>
+<p>To build the package move inside one of the
+<code>dest/&lt;package&gt;.debian/&lt;package&gt;-&lt;version&gt;</code>
+directories and run <code>$ debuild -us -uc</code>.
+</p>
+<p>Done that, you can move to the previous level (<code>..</code>).
+You should see a <samp>&lt;package&gt;.deb</samp> file (among other new files).
+Run <code># dpkg -i &lt;package&gt;.deb</code>, then <code># apt-get install -f</code>
+to install the package and all its dependencies.
+</p>
 <a name="Help-pages"></a>
 <h3 class="section">8.4 Help pages</h3>
-<a name="Rserve-sandbox-1"></a>
+<a name="Rserve-sandbox-2"></a>
 <h4 class="subsection">8.4.1 Rserve sandbox</h4>
 <pre class="verbatim">rserve-sandbox-docker [OPTION]
 Docker spec for running Rserve in a sandbox
@@ -682,7 +833,7 @@ Exit status:
 
 Full documentation at: &lt;https://gitlab.com/frnmst/rserve-sandbox-bin&gt;
 </pre>
-<a name="Cplint-on-SWISH-3"></a>
+<a name="Cplint-on-SWISH-4"></a>
 <h4 class="subsection">8.4.3 Cplint on SWISH</h4>
 <pre class="verbatim">swish-cplint [OPTION]
 SWI-Prolog for SHaring: a SWI-Prolog web IDE integrated with the cplint suite
@@ -742,35 +893,68 @@ is created and you can access the files by opening
 <hr>
 <h4 class="footnotes-heading">Footnotes</h4>
 
-<h3><a name="FOOT13" href="#DOCF13">(13)</a></h3>
-<p>See item <strong>[Docker root privileges]</strong> in <a href="References.html#References">Docker root privileges</a>.
-</p>
-<h3><a name="FOOT14" href="#DOCF14">(14)</a></h3>
-<p>See item <strong>[Git]</strong> in <a href="References.html#References">Git</a>.
-</p>
-<h3><a name="FOOT15" href="#DOCF15">(15)</a></h3>
-<p>See item <strong>[Graphviz]</strong> in <a href="References.html#References">Graphviz</a>.
-</p>
 <h3><a name="FOOT16" href="#DOCF16">(16)</a></h3>
-<p>See item <strong>[libXinerama]</strong> in <a href="References.html#References">libXinerama</a>.
+<p>See item <strong>[GNU Bash]</strong> in <a href="References.html#References">GNU Bash</a>.
 </p>
 <h3><a name="FOOT17" href="#DOCF17">(17)</a></h3>
-<p>See item <strong>[libXpm]</strong> in <a href="References.html#References">libXpm</a>.
+<p>See item <strong>[GNU Core Utilities]</strong> in <a href="References.html#References">GNU Core Utilities</a>.
 </p>
 <h3><a name="FOOT18" href="#DOCF18">(18)</a></h3>
-<p>See item <strong>[Bower]</strong> in <a href="References.html#References">Bower</a>.
+<p>See item <strong>[GNU Make]</strong> in <a href="References.html#References">GNU Make</a>.
 </p>
 <h3><a name="FOOT19" href="#DOCF19">(19)</a></h3>
-<p>See item <strong>[curl]</strong> in <a href="References.html#References">curl</a>.
+<p>See item <strong>[Gawk]</strong> in <a href="References.html#References">Gawk</a>.
 </p>
 <h3><a name="FOOT20" href="#DOCF20">(20)</a></h3>
+<p>See item <strong>[Docker]</strong> in <a href="References.html#References">Docker</a>.
+</p>
+<h3><a name="FOOT21" href="#DOCF21">(21)</a></h3>
+<p>See item <strong>[Docker root privileges]</strong> in <a href="References.html#References">Docker root privileges</a>.
+</p>
+<h3><a name="FOOT22" href="#DOCF22">(22)</a></h3>
+<p>See item <strong>[Bower]</strong> in <a href="References.html#References">Bower</a>.
+</p>
+<h3><a name="FOOT23" href="#DOCF23">(23)</a></h3>
+<p>See item <strong>[Git]</strong> in <a href="References.html#References">Git</a>.
+</p>
+<h3><a name="FOOT24" href="#DOCF24">(24)</a></h3>
+<p>See item <strong>[Graphviz]</strong> in <a href="References.html#References">Graphviz</a>.
+</p>
+<h3><a name="FOOT25" href="#DOCF25">(25)</a></h3>
+<p>See item <strong>[libXinerama]</strong> in <a href="References.html#References">libXinerama</a>.
+</p>
+<h3><a name="FOOT26" href="#DOCF26">(26)</a></h3>
+<p>See item <strong>[libXpm]</strong> in <a href="References.html#References">libXpm</a>.
+</p>
+<h3><a name="FOOT27" href="#DOCF27">(27)</a></h3>
+<p>See item <strong>[curl]</strong> in <a href="References.html#References">curl</a>.
+</p>
+<h3><a name="FOOT28" href="#DOCF28">(28)</a></h3>
 <p>See item <strong>[UnZip]</strong> in <a href="References.html#References">UnZip</a>.
+</p>
+<h3><a name="FOOT29" href="#DOCF29">(29)</a></h3>
+<p>See item <strong>[Pacman]</strong> in <a href="References.html#References">Pacman</a>.
+</p>
+<h3><a name="FOOT30" href="#DOCF30">(30)</a></h3>
+<p>See item <strong>[Debian packaging conventions]</strong> in <a href="References.html#References">Debian packaging conventions</a>.
+</p>
+<h3><a name="FOOT31" href="#DOCF31">(31)</a></h3>
+<p>See item <strong>[build-essential]</strong> in <a href="References.html#References">build-essential</a>.
+</p>
+<h3><a name="FOOT32" href="#DOCF32">(32)</a></h3>
+<p>See item <strong>[dh-systemd]</strong> in <a href="References.html#References">dh-systemd</a>.
+</p>
+<h3><a name="FOOT33" href="#DOCF33">(33)</a></h3>
+<p>See item <strong>[cleancss]</strong> in <a href="References.html#References">cleancss</a>.
+</p>
+<h3><a name="FOOT34" href="#DOCF34">(34)</a></h3>
+<p>See item <strong>[devscripts]</strong> in <a href="References.html#References">devscripts</a>.
 </p>
 </div>
 <hr>
 <div class="header">
 <p>
-Next: <a href="Thanks.html#Thanks" accesskey="n" rel="next">Thanks</a>, Previous: <a href="Accessing-the-server.html#Accessing-the-server" accesskey="p" rel="prev">Accessing the server</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+Next: <a href="Tests.html#Tests" accesskey="n" rel="next">Tests</a>, Previous: <a href="Accessing-the-server.html#Accessing-the-server" accesskey="p" rel="prev">Accessing the server</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
 </div>
 
 

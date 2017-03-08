@@ -115,13 +115,13 @@ Next: <a href="Daemons-management.html#Daemons-management" accesskey="n" rel="ne
 </p>
 <p>Before running the daemons some components must be downloaded.
 The first thing to do is to start
-Docker<a name="DOCF10" href="#FOOT10"><sup>10</sup></a> manually.
+Docker<a name="DOCF13" href="#FOOT13"><sup>13</sup></a> manually.
 See <a href="Daemons-management.html#Daemons-management">Daemons management</a> for more information.
 </p>
 <a name="Rserve-sandbox-and-Rserve-sandbox-binary"></a>
 <h3 class="section">5.1 Rserve sandbox and Rserve sandbox binary</h3>
 <p>To download the Docker image file as well as all dependencies
-for R<a name="DOCF11" href="#FOOT11"><sup>11</sup></a>, or to load the docker image,
+for R<a name="DOCF14" href="#FOOT14"><sup>14</sup></a>, or to load the docker image,
 run the following command:
 </p><pre class="verbatim">$ sudo -u rsd rserve-sandbox-docker -i
 </pre>
@@ -134,15 +134,19 @@ on some prolog tests executed by the Cplint R library.
 Cplint on SWISH correcly:
 </p><pre class="verbatim">$ sudo -u swish swish-cplint -i
 </pre>
+<p>If this method does not work you can run the following:
+</p><pre class="verbatim">$ sudo -u swish -i
+$ swish-cplint -i
+</pre>
 
 <div class="footnote">
 <hr>
 <h4 class="footnotes-heading">Footnotes</h4>
 
-<h3><a name="FOOT10" href="#DOCF10">(10)</a></h3>
+<h3><a name="FOOT13" href="#DOCF13">(13)</a></h3>
 <p>See item <strong>[Docker]</strong> in <a href="References.html#References">Docker</a>.
 </p>
-<h3><a name="FOOT11" href="#DOCF11">(11)</a></h3>
+<h3><a name="FOOT14" href="#DOCF14">(14)</a></h3>
 <p>See item <strong>[R]</strong> in <a href="References.html#References">R</a>.
 </p>
 </div>

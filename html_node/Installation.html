@@ -183,7 +183,57 @@ see <a href="Daemons-management.html#Daemons-management">Daemons management</a>.
 </p>
 <a name="Debian"></a>
 <h3 class="section">4.2 Debian</h3>
-<p>TODO
+
+<a name="Manual-installation"></a>
+<h4 class="subsection">4.2.1 Manual installation</h4>
+<p>Manual installation involves a building phase. Please read 
+the Development <a href="Development.html#Development">Building the packages</a>
+chapter.
+</p>
+<a name="Rserve-sandbox"></a>
+<h4 class="subsubsection">4.2.1.1 Rserve sandbox</h4>
+<p>See the previous section
+</p>
+<a name="Cplint-on-SWISH-1"></a>
+<h4 class="subsubsection">4.2.1.2 Cplint on SWISH</h4>
+<p>Before installing the actual package some dependecies must be installed
+manually:
+</p><ul>
+<li> Install Bower:
+<pre class="verbatim"># apt-get install npm nodejs-legacy
+# npm install -g bower
+</pre>
+</li><li> Install the development version of SWI Prolog from the official
+SWI Prolog PPA<a name="DOCF10" href="#FOOT10"><sup>10</sup></a>:
+<pre class="verbatim"># apt-get install software-properties-common
+# sudo apt-add-repository ppa:swi-prolog/devel
+# sudo apt-get update
+# sudo apt-get install swi-prolog
+</pre></li></ul>
+
+<blockquote>
+<p><b>Note:</b> Installation of SWI Prolog dev on Trisquel 8.0 
+Alpha<a name="DOCF11" href="#FOOT11"><sup>11</sup></a> is a bit tricky:
+</p>
+<ul class="no-bullet">
+<li>- Install this library first:
+<a href="http://packages.ubuntu.com/yakkety/amd64/libreadline7/download">http://packages.ubuntu.com/yakkety/amd64/libreadline7/download</a>
+
+</li><li>- Install the SWI Prolog dev version like this:
+<pre class="verbatim"># echo &quot;deb http://ppa.launchpad.net/swi-prolog/devel/ubuntu yakkety main&quot; \
+    &gt;&gt; /etc/apt/sources.list.d/swi-prolog.list
+# apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6DBFCA18
+# apt-get update
+# apt-get install swi-prolog
+</pre></li></ul>
+</blockquote>
+
+<a name="Daemons-management-2"></a>
+<h4 class="subsection">4.2.2 Daemons management</h4>
+<p>Debian and derivative distros <em>now</em> use 
+Systemd<a name="DOCF12" href="#FOOT12"><sup>12</sup></a> as the 
+init system. First see <a href="Components-download.html#Components-download">Components download</a> and then
+see <a href="Daemons-management.html#Daemons-management">Daemons management</a>.
 </p>
 
 <div class="footnote">
@@ -205,6 +255,20 @@ see <a href="Daemons-management.html#Daemons-management">Daemons management</a>.
 <h3><a name="FOOT9" href="#DOCF9">(9)</a></h3>
 <p>See item <strong>[systemd]</strong> in <a href="References.html#References">systemd</a>.
 </p>
+<h3><a name="FOOT10" href="#DOCF10">(10)</a></h3>
+<p>See item <strong>[SWI Prolog PPA]</strong> in <a href="References.html#References">SWI Prolog PPA</a>.
+</p>
+<h3><a name="FOOT11" href="#DOCF11">(11)</a></h3>
+<p>See item <strong>[Trisquel]</strong> in <a href="References.html#References">Trisquel</a>.
+</p>
+<h3><a name="FOOT12" href="#DOCF12">(12)</a></h3>
+<p>See item <strong>[systemd]</strong> in <a href="References.html#References">systemd</a>.
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Components-download.html#Components-download" accesskey="n" rel="next">Components download</a>, Previous: <a href="Available-packages-and-descriptions.html#Available-packages-and-descriptions" accesskey="p" rel="prev">Available packages and descriptions</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
 </div>
 
 
