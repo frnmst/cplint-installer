@@ -29,7 +29,10 @@
 install:-
         pack_install(aleph, [url('https://github.com/friguzzi/aleph.git'),interactive(false)]),
         pack_install(real, [url('http://stoics.org.uk/~nicos/sware/packs/real/real-2.0.tgz'),interactive(false)]),
-        pack_install('cplint_r', [url('https://github.com/frnmst/cplint_r.git'),interactive(false)]).
+        pack_install('cplint_r', [url('https://github.com/frnmst/cplint_r.git'),interactive(false)]),
+        pack_install(uuid, [url('https://github.com/jamesnvc/uuid/archive/v1.1.0.zip'),interactive(false)]),
+        pack_install(sldnfdraw, [url('https://github.com/gavanelli/sldnfdraw.git'),interactive(false)]),
+        pack_install(list_util, [url('https://github.com/mndrix/list_util.git'),interactive(false)]).
 
 main:-
         catch(install, E, (print_message(error, E), fail)),
